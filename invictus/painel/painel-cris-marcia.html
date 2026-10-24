@@ -110,13 +110,14 @@ textarea { resize: vertical; min-height: 120px; font-size: .88rem; }
 @media (max-width: 560px) { .servico { grid-template-columns: 1fr; } }
 
 /* Fila */
-.toolbar { display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 10px; align-items: end; margin-bottom: 12px; }
+.toolbar { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr auto; gap: 10px; align-items: end; margin-bottom: 12px; }
 @media (max-width: 760px) { .toolbar { grid-template-columns: 1fr 1fr; } .toolbar .grow { grid-column: 1 / -1; } }
 .rows { display: grid; gap: 10px; }
 .row { border: 1px solid var(--line); border-radius: 8px; padding: 12px; display: grid; grid-template-columns: minmax(0, 1.4fr) auto; gap: 10px 16px; align-items: center; background: var(--surface); }
 .row.due { border-color: var(--warn); }
 .who { min-width: 0; display: grid; gap: 2px; }
 .who b { font-size: 1rem; overflow-wrap: anywhere; }
+.who .meta a { color: var(--gold); font-weight: 800; }
 .who .meta { color: var(--muted); font-size: .82rem; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
 .acts { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; align-items: center; }
 .acts select { width: auto; font-size: .82rem; padding: 7px 8px; font-weight: 700; }
@@ -244,6 +245,13 @@ body.ajuda [data-tip] { outline: 2px dashed var(--gold-bright); outline-offset: 
           <option value="cliente">Cliente</option>
           <option value="sem_interesse">Sem interesse</option>
           <option value="nao_contatar">Pediu para não contatar</option>
+        </select>
+      </label>
+      <label class="field" for="fLista">Lista
+        <select id="fLista" data-tip="Escolha de onde vêm os contatos: a sua lista de WhatsApp ou os escritórios de advocacia de SP que o Claude encontrou na internet, com endereço, site e fonte.">
+          <option value="">Todas</option>
+          <option value="lista">Minha lista de WhatsApp</option>
+          <option value="busca">Escritórios encontrados (SP)</option>
         </select>
       </label>
       <label class="field" for="fRegiao">Região
@@ -383,10 +391,11 @@ body.ajuda [data-tip] { outline: 2px dashed var(--gold-bright); outline-offset: 
   }
 
   function filtrados(todos) {
-    var q = $("busca").value.trim().toLowerCase(), qd = q.replace(/\D/g, ""), st = $("fStatus").value, rg = $("fRegiao").value;
+    var q = $("busca").value.trim().toLowerCase(), qd = q.replace(/\D/g, ""), st = $("fStatus").value, rg = $("fRegiao").value, ls = $("fLista").value;
     var lista = todos.filter(function (c) {
       var s = stOf(c);
       if (rg && (c.uf === "SP" ? c.r + " (SP)" : c.r) !== rg) return false;
+      if (ls && (c.o || "lista") !== ls) return false;
       if (q && !((c.nome || "").toLowerCase().indexOf(q) >= 0 || (qd && (c.n.indexOf(qd) >= 0 || c.f.replace(/\D/g, "").indexOf(qd) >= 0)))) return false;
       if (st === "fila") return s !== "nao_contatar" && (retomarDue(c) || s === "novo");
       if (st === "todos") return true;
@@ -411,7 +420,7 @@ body.ajuda [data-tip] { outline: 2px dashed var(--gold-bright); outline-offset: 
     var bloqueado = s === "nao_contatar";
     return '<article class="row' + (due ? " due" : "") + '" data-n="' + esc(c.n) + '">' +
       '<div class="who"><b>' + esc(c.nome || "Sem nome") + '</b><div class="meta"><span class="nums">' + esc(c.f) + "</span><span>" + esc(c.uf === "SP" ? c.r + " (SP)" : c.r) + "</span>" +
-      '<span class="pill st-' + s + '">' + esc(ST_LABEL[s]) + "</span>" + (due ? '<span class="pill st-interessado">Retomar hoje</span>' : "") + (ultimo ? "<span>" + esc(ultimo) + "</span>" : "") + "</div></div>" +
+      '<span class="pill st-' + s + '">' + esc(ST_LABEL[s]) + "</span>" + (due ? '<span class="pill st-interessado">Retomar hoje</span>' : "") + (ultimo ? "<span>" + esc(ultimo) + "</span>" : "") + "</div>" + extras(c) + "</div>" +
       '<div class="acts">' +
         (bloqueado ? '<span class="pill st-nao_contatar" data-tip="Esta pessoa pediu para não receber mensagens. O botão do WhatsApp fica escondido para proteger você e ela.">Não enviar</span>'
           : '<a class="btn wa" href="' + esc(link) + '" target="_blank" rel="noopener" data-act="wa" data-tip="Abre o WhatsApp com a mensagem escolhida já escrita para esta pessoa. Nada é enviado sozinho: você revisa e aperta enviar. O contato passa para \'Mensagem enviada\'.">Abrir WhatsApp</a>') +
@@ -423,6 +432,18 @@ body.ajuda [data-tip] { outline: 2px dashed var(--gold-bright); outline-offset: 
       '<div class="extra" hidden><label class="field">Anotações<textarea data-act="txtNota" placeholder="Ex.: atende trabalhista, pediu proposta para março">' + esc(p.nota || "") + "</textarea></label>" +
       '<label class="field" data-tip="Escolha o dia em que quer falar de novo com esta pessoa. Nesse dia ela volta para o topo da fila.">Retomar em<input type="date" data-act="retomar" value="' + esc(p.retomar || "") + '"></label></div>' +
       "</article>";
+  }
+
+  function extras(c) {
+    if (c.o !== "busca") return "";
+    var partes = [];
+    if (c.area) partes.push("<span>" + esc(c.area) + "</span>");
+    if (c.end) partes.push("<span>" + esc(c.end) + "</span>");
+    if (c.t === "f") partes.push('<span class="pill st-novo" tabindex="0" data-tip="Este é um telefone fixo. O WhatsApp só abre se o escritório usar WhatsApp neste número. Se não abrir, ligue ou procure o WhatsApp no site do escritório.">Telefone fixo</span>');
+    if (c.site) partes.push('<a href="' + esc(c.site) + '" target="_blank" rel="noopener" data-tip="Abre o site do escritório em outra aba. Ótimo para conhecer a área de atuação antes de mandar mensagem.">Site</a>');
+    partes.push(c.fonte ? '<a href="' + esc(c.fonte) + '" target="_blank" rel="noopener" data-tip="Página pública de onde o Claude tirou estes dados. Diretórios podem estar desatualizados: confirme antes de contatar.">Fonte</a>'
+      : '<span tabindex="0" data-tip="Dados de um diretório online. Confirme o telefone antes de contatar.">Fonte: diretório online</span>');
+    return '<div class="meta">' + partes.join("") + "</div>";
   }
 
   function renderFila(todos) {
@@ -479,6 +500,7 @@ body.ajuda [data-tip] { outline: 2px dashed var(--gold-bright); outline-offset: 
   $("busca").addEventListener("input", function () { limite = 30; foco = null; renderFila(contatos()); });
   $("fStatus").addEventListener("change", function () { limite = 30; foco = null; renderFila(contatos()); });
   $("fRegiao").addEventListener("change", function () { limite = 30; foco = null; renderFila(contatos()); });
+  $("fLista").addEventListener("change", function () { limite = 30; foco = null; renderFila(contatos()); });
   $("btnMais").addEventListener("click", function () { limite += 30; renderFila(contatos()); });
   $("btnProximo").addEventListener("click", function () {
     $("fStatus").value = "fila"; $("busca").value = ""; limite = 30; foco = null;
