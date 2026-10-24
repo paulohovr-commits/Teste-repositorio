@@ -64,7 +64,10 @@ def normalizar(bruto: str) -> str:
 
 
 def formatar(dig: str) -> str:
-    return f"({dig[:2]}) {dig[2:-4]}-{dig[-4:]}"
+    local = dig[2:]
+    if len(local) == 8 and local[0] in "6789":
+        local = "9" + local
+    return f"({dig[:2]}) {local[:-4]}-{local[-4:]}"
 
 
 def ler_linhas(path: Path) -> list[list[str]]:
@@ -119,7 +122,8 @@ def main(args: list[str]) -> int:
             continue
         vistos.add(dig)
         ddd = dig[:2]
-        celular = len(dig) == 11
+        # 10 dígitos começando com 6-9 = celular antigo sem o 9 (formato comum em exportações do WhatsApp)
+        celular = len(dig) == 11 or dig[2] in "6789"
         uf = UF_DDD[ddd]
         regiao = REGIAO_DDD_SP.get(ddd, f"DDD {ddd}")
         nome = (r[col_nome].strip() if col_nome is not None and col_nome < len(r) else "") or f"Contato {formatar(dig)}"

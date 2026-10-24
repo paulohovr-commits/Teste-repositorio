@@ -1,0 +1,596 @@
+<title>Painel Cris Márcia</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800&display=swap">
+<style>
+/* Layout: faixa vinho com a marca, resumo em números, fila de trabalho como coluna principal. */
+:root {
+  --bg: #FBF8F4; --surface: #FFFFFF; --surface-2: #F7F0E8; --line: #EADBD0;
+  --ink: #2A0C14; --muted: #6B4A54; --faint: #9A7F87;
+  --wine: #5E1726; --wine-2: #7A2236; --on-wine: #FBF3E6;
+  --gold: #8C6A24; --gold-bright: #C9A55C; --gold-soft: rgba(201,165,92,.16);
+  --ok: #1F7A4D; --ok-soft: rgba(31,122,77,.12); --warn: #9A5B00; --warn-soft: rgba(201,140,40,.15);
+  --bad: #A3243B; --bad-soft: rgba(163,36,59,.10); --info: #3D5A80; --info-soft: rgba(61,90,128,.12);
+  --tip-bg: #2A0C14; --tip-fg: #FBF3E6;
+  --display: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --body: "Nunito Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --radius: 10px;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #1A0A10; --surface: #241018; --surface-2: #2F1620; --line: #43202C;
+  --ink: #FBF6EF; --muted: #CDB8BF; --faint: #A08690;
+  --wine: #4A0F1D; --wine-2: #8A2A40; --on-wine: #FBF3E6;
+  --gold: #D9B96E; --gold-bright: #D9B96E; --gold-soft: rgba(217,185,110,.14);
+  --ok: #5CC28F; --ok-soft: rgba(92,194,143,.14); --warn: #E3AC4F; --warn-soft: rgba(227,172,79,.14);
+  --bad: #F08A9C; --bad-soft: rgba(240,138,156,.12); --info: #9CB8E0; --info-soft: rgba(156,184,224,.14);
+  --tip-bg: #FBF3E6; --tip-fg: #2A0C14; color-scheme: dark;
+} }
+:root[data-theme="dark"] {
+  --bg: #1A0A10; --surface: #241018; --surface-2: #2F1620; --line: #43202C;
+  --ink: #FBF6EF; --muted: #CDB8BF; --faint: #A08690;
+  --wine: #4A0F1D; --wine-2: #8A2A40; --on-wine: #FBF3E6;
+  --gold: #D9B96E; --gold-bright: #D9B96E; --gold-soft: rgba(217,185,110,.14);
+  --ok: #5CC28F; --ok-soft: rgba(92,194,143,.14); --warn: #E3AC4F; --warn-soft: rgba(227,172,79,.14);
+  --bad: #F08A9C; --bad-soft: rgba(240,138,156,.12); --info: #9CB8E0; --info-soft: rgba(156,184,224,.14);
+  --tip-bg: #FBF3E6; --tip-fg: #2A0C14; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.5; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--wine); }
+.wrap { max-width: 1180px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { font-family: var(--display); font-weight: 700; text-wrap: balance; margin: 0; letter-spacing: .01em; }
+h2 { font-size: 1.65rem; color: var(--ink); }
+.eyebrow { font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); font-weight: 800; }
+.nums { font-variant-numeric: tabular-nums; }
+button, select, input, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 2px; }
+
+/* Faixa da marca */
+.band { background: var(--wine); color: var(--on-wine); border-bottom: 2px solid var(--gold-bright); }
+.band .wrap { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; padding-block: 16px; }
+.mono { width: 46px; height: 46px; border-radius: 12px; border: 1.5px solid #C9A55C; display: grid; place-items: center; font-family: var(--display); font-size: 1.35rem; color: #E3CC94; flex-shrink: 0; }
+.brand { display: flex; flex-direction: column; min-width: 0; }
+.brand h1 { font-size: 1.9rem; color: #E3CC94; line-height: 1.05; }
+.brand span { font-size: .85rem; color: rgba(251,243,230,.78); }
+.band-actions { margin-left: auto; display: flex; gap: 8px; flex-wrap: wrap; }
+.btn-band { background: transparent; border: 1px solid rgba(227,204,148,.55); color: #F3E6C4; border-radius: 999px; padding: 7px 14px; font-weight: 700; font-size: .85rem; cursor: pointer; }
+.btn-band:hover { background: rgba(227,204,148,.12); }
+.btn-band[aria-pressed="true"] { background: #E3CC94; color: #3A0F1A; border-color: #E3CC94; }
+
+main { display: grid; gap: 22px; padding-block: 22px 120px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; min-width: 0; }
+.sec-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+.sec-head p { margin: 0; color: var(--muted); font-size: .9rem; }
+
+/* Como usar */
+.guide { border-color: var(--gold-bright); background: linear-gradient(0deg, var(--gold-soft), var(--gold-soft)), var(--surface); }
+.guide ol { margin: 10px 0 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; counter-reset: passo; }
+.guide li { counter-increment: passo; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 12px 12px 12px 46px; position: relative; font-size: .9rem; color: var(--muted); }
+.guide li::before { content: counter(passo); position: absolute; left: 12px; top: 12px; width: 24px; height: 24px; border-radius: 50%; background: var(--wine-2); color: #FBF3E6; display: grid; place-items: center; font-weight: 800; font-size: .8rem; }
+.guide li b { color: var(--ink); display: block; }
+.guide-foot { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 12px; font-size: .85rem; color: var(--muted); }
+
+/* Números */
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+.kpi { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; display: grid; gap: 2px; position: relative; text-align: left; cursor: default; }
+.kpi .v { font-family: var(--display); font-size: 2.2rem; line-height: 1; font-weight: 700; }
+.kpi .l { font-size: .8rem; color: var(--muted); font-weight: 700; }
+.kpi.hoje { border-color: var(--gold-bright); }
+.meter { height: 6px; border-radius: 99px; background: var(--surface-2); overflow: hidden; margin-top: 8px; }
+.meter i { display: block; height: 100%; background: var(--gold-bright); border-radius: 99px; }
+
+.duo { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 22px; }
+.bars { display: grid; gap: 9px; }
+.bar { display: grid; grid-template-columns: 150px 1fr 48px; gap: 10px; align-items: center; font-size: .86rem; }
+.bar .track { height: 12px; background: var(--surface-2); border-radius: 99px; overflow: hidden; }
+.bar .fill { height: 100%; border-radius: 99px; background: var(--wine-2); min-width: 2px; }
+.bar .n { text-align: right; font-weight: 800; }
+@media (max-width: 480px) { .bar { grid-template-columns: 110px 1fr 40px; } }
+
+/* Botões gerais */
+.btn { border: 1px solid var(--line); background: var(--surface); border-radius: 8px; padding: 8px 12px; font-weight: 700; font-size: .85rem; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; text-decoration: none; color: var(--ink); }
+.btn:hover { border-color: var(--gold-bright); }
+.btn.primary { background: var(--wine-2); border-color: var(--wine-2); color: #FBF3E6; }
+.btn.primary:hover { filter: brightness(1.08); }
+.btn.wa { background: #1E7A55; border-color: #1E7A55; color: #fff; }
+.btn.gold { background: var(--gold-bright); border-color: var(--gold-bright); color: #2A0C14; }
+.btn:disabled { opacity: .5; cursor: not-allowed; }
+
+/* Mensagens */
+.msg-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+.msg { border: 1px solid var(--line); border-radius: 8px; padding: 12px; display: grid; gap: 8px; }
+.msg.sel { border-color: var(--gold-bright); box-shadow: 0 0 0 2px var(--gold-soft); }
+.msg label.pick { display: flex; gap: 8px; align-items: center; font-weight: 800; cursor: pointer; }
+textarea, input[type=text], input[type=search], input[type=number], input[type=date], select { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; width: 100%; }
+textarea { resize: vertical; min-height: 120px; font-size: .88rem; }
+.field { display: grid; gap: 4px; font-size: .82rem; font-weight: 700; color: var(--muted); }
+.servico { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: end; margin-bottom: 14px; }
+@media (max-width: 560px) { .servico { grid-template-columns: 1fr; } }
+
+/* Fila */
+.toolbar { display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 10px; align-items: end; margin-bottom: 12px; }
+@media (max-width: 760px) { .toolbar { grid-template-columns: 1fr 1fr; } .toolbar .grow { grid-column: 1 / -1; } }
+.rows { display: grid; gap: 10px; }
+.row { border: 1px solid var(--line); border-radius: 8px; padding: 12px; display: grid; grid-template-columns: minmax(0, 1.4fr) auto; gap: 10px 16px; align-items: center; background: var(--surface); }
+.row.due { border-color: var(--warn); }
+.who { min-width: 0; display: grid; gap: 2px; }
+.who b { font-size: 1rem; overflow-wrap: anywhere; }
+.who .meta { color: var(--muted); font-size: .82rem; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.acts { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; align-items: center; }
+.acts select { width: auto; font-size: .82rem; padding: 7px 8px; font-weight: 700; }
+.extra { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 180px; gap: 10px; }
+.extra textarea { min-height: 70px; }
+@media (max-width: 760px) { .row { grid-template-columns: 1fr; } .acts { justify-content: flex-start; } .extra { grid-template-columns: 1fr; } }
+.pill { display: inline-flex; align-items: center; gap: 5px; padding: 2px 9px; border-radius: 99px; font-size: .74rem; font-weight: 800; border: 1px solid transparent; }
+.st-novo { background: var(--surface-2); color: var(--muted); }
+.st-enviado { background: var(--gold-soft); color: var(--gold); }
+.st-respondeu { background: var(--info-soft); color: var(--info); }
+.st-interessado { background: var(--warn-soft); color: var(--warn); }
+.st-cliente { background: var(--ok-soft); color: var(--ok); }
+.st-sem_interesse, .st-nao_contatar { background: var(--bad-soft); color: var(--bad); }
+.more { display: flex; justify-content: center; margin-top: 14px; gap: 10px; align-items: center; color: var(--muted); font-size: .85rem; flex-wrap: wrap; }
+.empty { text-align: center; color: var(--muted); padding: 28px 12px; border: 1px dashed var(--line); border-radius: 8px; }
+.notice { padding: 12px 14px; border-radius: 8px; background: var(--warn-soft); color: var(--ink); font-size: .9rem; }
+.notice[hidden] { display: none !important; }
+
+.tips { margin: 0; padding-left: 18px; color: var(--muted); display: grid; gap: 6px; font-size: .92rem; max-width: 75ch; }
+.tips b { color: var(--ink); }
+
+/* Balões de explicação */
+[data-tip] { position: relative; }
+@media (hover: hover) {
+  [data-tip]:hover::after, [data-tip]:focus-visible::after {
+    content: attr(data-tip); position: absolute; left: 50%; bottom: calc(100% + 10px); transform: translateX(-50%);
+    width: max-content; max-width: 260px; background: var(--tip-bg); color: var(--tip-fg); padding: 8px 11px; border-radius: 8px;
+    font: 600 .8rem/1.4 var(--body); text-align: left; white-space: normal; z-index: 30; pointer-events: none; box-shadow: 0 6px 20px rgba(0,0,0,.25);
+  }
+  [data-tip]:hover::before, [data-tip]:focus-visible::before {
+    content: ""; position: absolute; left: 50%; bottom: calc(100% + 4px); transform: translateX(-50%);
+    border: 6px solid transparent; border-top-color: var(--tip-bg); border-bottom: 0; z-index: 30; pointer-events: none;
+  }
+  .kpi[data-tip]:hover::after, .kpi[data-tip]:focus-visible::after { bottom: auto; top: calc(100% + 10px); }
+  .kpi[data-tip]:hover::before, .kpi[data-tip]:focus-visible::before { bottom: auto; top: calc(100% + 4px); border-top-color: transparent; border-bottom: 6px solid var(--tip-bg); border-top: 0; }
+}
+body.ajuda [data-tip] { outline: 2px dashed var(--gold-bright); outline-offset: 2px; cursor: help !important; }
+.helpbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; background: var(--tip-bg); color: var(--tip-fg);
+  padding: 14px max(16px, env(safe-area-inset-right, 0px)) calc(14px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
+  box-shadow: 0 -8px 24px rgba(0,0,0,.25); }
+.helpbar .wrap { display: flex; gap: 12px; align-items: flex-start; padding: 0; }
+.helpbar p { margin: 0; font-size: .95rem; flex: 1; min-width: 0; }
+.helpbar b { display: block; font-family: var(--display); font-size: 1.25rem; }
+.helpbar button { background: transparent; border: 1px solid currentColor; color: inherit; border-radius: 99px; padding: 6px 12px; font-weight: 800; cursor: pointer; }
+.toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(18px + env(safe-area-inset-bottom, 0px)); background: var(--wine-2); color: #FBF3E6; padding: 10px 16px; border-radius: 99px; font-weight: 700; font-size: .88rem; z-index: 50; box-shadow: 0 6px 20px rgba(0,0,0,.25); }
+@media (prefers-reduced-motion: no-preference) { .toast { animation: up .18s ease-out; } @keyframes up { from { opacity: 0; transform: translate(-50%, 8px); } } }
+</style>
+
+<header class="band">
+  <div class="wrap">
+    <div class="mono" aria-hidden="true">CM</div>
+    <div class="brand"><h1>Cris Márcia</h1><span>Painel de prospecção de advogados</span></div>
+    <div class="band-actions">
+      <button class="btn-band" id="btnGuia" type="button" data-tip="Abre ou fecha o passo a passo de como usar este painel.">Como usar</button>
+      <button class="btn-band" id="btnAjuda" type="button" aria-pressed="false" data-tip="Liga o modo explicação: toque em qualquer botão com contorno pontilhado para ver o que ele faz, sem executar nada. Toque de novo aqui para desligar.">Modo explicação</button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+<main>
+  <section class="card guide" id="guia" aria-labelledby="guiaT">
+    <div class="sec-head"><h2 id="guiaT">Como usar, em 4 passos</h2></div>
+    <ol>
+      <li><b>Escreva o que você oferece</b>Em "Mensagens prontas", preencha o campo do seu serviço. Ele entra sozinho nas mensagens.</li>
+      <li><b>Clique em "Próximo da fila"</b>O painel separa quem ainda não recebeu mensagem, começando por quem tem nome.</li>
+      <li><b>Toque em "Abrir WhatsApp"</b>A conversa abre com a mensagem já escrita. Revise, ajuste e envie você mesma. O contato passa para "Mensagem enviada".</li>
+      <li><b>Atualize a situação</b>Quando a pessoa responder, mude a situação e anote o que combinaram. Se marcar uma data em "Retomar em", o contato volta para a fila nesse dia.</li>
+    </ol>
+    <div class="guide-foot">
+      <span>Dica: ligue o <b>Modo explicação</b>, no topo, e toque em qualquer botão para saber o que ele faz.</span>
+      <button class="btn" type="button" id="fecharGuia" data-tip="Esconde este passo a passo. Você pode abrir de novo pelo botão 'Como usar', no topo.">Entendi, esconder</button>
+    </div>
+  </section>
+
+  <div class="notice" id="aviso" hidden></div>
+
+  <section aria-labelledby="resumoT">
+    <div class="sec-head"><span class="eyebrow" id="resumoT">Resumo de hoje</span></div>
+    <div class="kpis">
+      <div class="kpi" tabindex="0" data-tip="Quantos contatos existem na sua lista, somando todos os estados."><span class="l">Contatos na lista</span><span class="v nums" id="kTotal">0</span></div>
+      <div class="kpi hoje" tabindex="0" data-tip="Quantas pessoas você chamou hoje e a sua meta do dia. Mandar poucas mensagens por dia, escritas para cada pessoa, evita denúncias e protege o seu número."><span class="l">Chamei hoje</span><span class="v nums"><span id="kHoje">0</span><small style="font-size:1rem;color:var(--muted)"> / <span id="kMeta">20</span></small></span><div class="meter"><i id="kMeter" style="width:0%"></i></div></div>
+      <div class="kpi" tabindex="0" data-tip="Contatos que já receberam a primeira mensagem e ainda não responderam."><span class="l">Aguardando resposta</span><span class="v nums" id="kEnviado">0</span></div>
+      <div class="kpi" tabindex="0" data-tip="Pessoas que responderam ou demonstraram interesse. São as conversas mais importantes para cuidar."><span class="l">Responderam ou interessados</span><span class="v nums" id="kResp">0</span></div>
+      <div class="kpi" tabindex="0" data-tip="Contatos que viraram clientes."><span class="l">Clientes</span><span class="v nums" id="kCliente">0</span></div>
+      <div class="kpi" tabindex="0" data-tip="Retornos marcados para hoje ou atrasados. Eles aparecem no topo da fila."><span class="l">Retornos para hoje</span><span class="v nums" id="kRetomar">0</span></div>
+    </div>
+  </section>
+
+  <div class="duo">
+    <section class="card" aria-labelledby="funilT">
+      <div class="sec-head"><h2 id="funilT">Funil</h2><p>Em que etapa está cada contato.</p></div>
+      <div class="bars" id="funil"></div>
+    </section>
+    <section class="card" aria-labelledby="regT">
+      <div class="sec-head"><h2 id="regT">Onde estão</h2><p>Regiões com mais contatos, pelo DDD.</p></div>
+      <div class="bars" id="regioes"></div>
+    </section>
+  </div>
+
+  <section class="card" aria-labelledby="msgT">
+    <div class="sec-head"><h2 id="msgT">Mensagens prontas</h2><p>Escolha qual mensagem o botão do WhatsApp vai usar. <b>{nome}</b> vira o primeiro nome da pessoa e <b>{servico}</b> vira o que você escreveu abaixo.</p></div>
+    <div class="servico">
+      <label class="field" for="servico">O que você oferece aos advogados (curto, como numa conversa)
+        <input type="text" id="servico" placeholder="Ex.: captação de clientes pelo Instagram para escritórios">
+      </label>
+      <button class="btn primary" type="button" id="salvarMsgs" data-tip="Guarda o seu serviço e os textos das mensagens. Eles ficam salvos na sua conta, em qualquer aparelho.">Salvar mensagens</button>
+    </div>
+    <div class="msg-grid" id="msgs"></div>
+  </section>
+
+  <section class="card" aria-labelledby="filaT" id="fila">
+    <div class="sec-head"><h2 id="filaT">Fila de contatos</h2><p id="filaInfo"></p></div>
+    <div class="toolbar">
+      <label class="field grow" for="busca">Buscar nome ou número
+        <input type="search" id="busca" placeholder="Ex.: Marcos ou 11 9">
+      </label>
+      <label class="field" for="fStatus">Situação
+        <select id="fStatus" data-tip="Mostra só os contatos de uma etapa. 'Próximos da fila' mostra primeiro os retornos do dia e depois quem ainda não recebeu mensagem.">
+          <option value="fila">Próximos da fila</option>
+          <option value="todos">Todos</option>
+          <option value="enviado">Mensagem enviada</option>
+          <option value="respondeu">Respondeu</option>
+          <option value="interessado">Interessado</option>
+          <option value="cliente">Cliente</option>
+          <option value="sem_interesse">Sem interesse</option>
+          <option value="nao_contatar">Pediu para não contatar</option>
+        </select>
+      </label>
+      <label class="field" for="fRegiao">Região
+        <select id="fRegiao" data-tip="Filtra pela região do DDD do número. Ajuda a falar com uma cidade de cada vez."><option value="">Todas</option></select>
+      </label>
+      <button class="btn gold" type="button" id="btnProximo" data-tip="Mostra o próximo contato que ainda não recebeu mensagem (ou tem retorno marcado para hoje) no topo da lista.">Próximo da fila</button>
+    </div>
+    <div class="rows" id="rows"></div>
+    <div class="more"><span id="mostrando"></span><button class="btn" type="button" id="btnMais" data-tip="Carrega mais 30 contatos na lista.">Mostrar mais</button></div>
+  </section>
+
+  <section class="card" aria-labelledby="addT">
+    <div class="sec-head"><h2 id="addT">Adicionar contatos</h2><p>Cole uma lista: um contato por linha, com o número e, se tiver, o nome. Números repetidos são ignorados.</p></div>
+    <label class="field" for="colar">Lista para colar
+      <textarea id="colar" placeholder="5511987654321 Dra. Ana Souza&#10;(19) 99876-5432 - Escritório Lima&#10;21 98888-7777"></textarea>
+    </label>
+    <div class="more" style="justify-content:flex-start"><button class="btn primary" type="button" id="btnAdd" data-tip="Lê a lista colada, corrige o formato dos números, descarta repetidos e inválidos e coloca os novos na fila.">Adicionar à fila</button><span id="addInfo"></span></div>
+  </section>
+
+  <section class="card" aria-labelledby="boasT">
+    <div class="sec-head"><h2 id="boasT">Para não perder o seu número</h2></div>
+    <ul class="tips">
+      <li><b>Nada de extensões de disparo.</b> Elas violam as regras do WhatsApp e são a causa mais comum de bloqueio.</li>
+      <li><b>Poucas mensagens por dia, uma por uma.</b> A meta diária ajuda a manter o ritmo. O bloqueio vem de quem denuncia, então qualidade conta mais que volume.</li>
+      <li><b>Peça licença na primeira mensagem</b> e não mande link nem áudio antes de a pessoa responder.</li>
+      <li><b>Respeite quem pede para parar.</b> Marque "Pediu para não contatar", e o painel tira o contato da fila para sempre. Isso também atende à LGPD.</li>
+      <li><b>Comece por quem tem nome</b> e responda rápido a quem respondeu. Uma conversa boa vale mais que dez mensagens sem resposta.</li>
+    </ul>
+  </section>
+</main>
+</div>
+
+<div class="helpbar" id="helpbar" hidden role="status" aria-live="polite">
+  <div class="wrap"><p id="helpText"></p><button type="button" id="helpClose">Fechar</button></div>
+</div>
+<div class="toast" id="toast" hidden role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  "use strict";
+  var STATUS = [
+    ["novo", "A contatar"], ["enviado", "Mensagem enviada"], ["respondeu", "Respondeu"],
+    ["interessado", "Interessado"], ["cliente", "Cliente"], ["sem_interesse", "Sem interesse"],
+    ["nao_contatar", "Pediu para não contatar"]
+  ];
+  var ST_LABEL = {}; STATUS.forEach(function (s) { ST_LABEL[s[0]] = s[1]; });
+  var MSG_PADRAO = [
+    { titulo: "Primeiro contato", texto: "Olá, {nome}! Tudo bem? Aqui é a Cris Márcia. Trabalho com {servico} para advogados e escritórios de advocacia. Posso te mandar uma ideia rápida de como isso pode ajudar o seu escritório? Se preferir não receber, é só me avisar que eu não volto a escrever." },
+    { titulo: "Retomar conversa", texto: "Oi, {nome}, tudo bem? Passando para saber se você viu minha mensagem sobre {servico}. Se fizer sentido, te explico em 5 minutos, no horário que for melhor para você." },
+    { titulo: "Depois que a pessoa disse sim", texto: "Que bom, {nome}! Funciona assim: [explique em 2 ou 3 linhas]. Qual o melhor dia e horário para conversarmos rapidinho?" }
+  ];
+
+  var db = null;
+  var listas = {};        // id -> {ordem, contatos[]}
+  var prog = {};          // numero -> {status, nota, retomar, ultimo}
+  var config = { metaDiaria: 20, servico: "", mensagens: MSG_PADRAO, escolhida: 0 };
+  var limite = 30, foco = null;
+
+  var $ = function (id) { return document.getElementById(id); };
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function hojeStr(d) { d = d || new Date(); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+  function store(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
+
+  function toast(t) { var el = $("toast"); el.textContent = t; el.hidden = false; clearTimeout(toast._t); toast._t = setTimeout(function () { el.hidden = true; }, 2600); }
+  function aviso(t) { var el = $("aviso"); el.textContent = t || ""; el.hidden = !t; }
+
+  function contatos() {
+    var out = [];
+    Object.keys(listas).sort(function (a, b) { return (listas[a].ordem || 0) - (listas[b].ordem || 0); })
+      .forEach(function (k) { (listas[k].contatos || []).forEach(function (c) { out.push(c); }); });
+    return out;
+  }
+  function stOf(c) { return (prog[c.n] && prog[c.n].status) || "novo"; }
+  function retomarDue(c) { var p = prog[c.n]; return !!(p && p.retomar && p.retomar <= hojeStr() && p.status !== "cliente" && p.status !== "nao_contatar" && p.status !== "sem_interesse"); }
+
+  function primeiroNome(nome) {
+    if (!nome) return "";
+    var n = nome.split(/\s+[-–|]\s+/)[0].replace(/[^\p{L}\p{N}\s.'-]/gu, "").trim();
+    var partes = n.split(/\s+/);
+    var tit = /^(dr|dra|pr|prof|profa)\.?$/i.test(partes[0]) ? partes.shift() : "";
+    var p = partes[0] || "";
+    if (p === p.toLowerCase() || p === p.toUpperCase()) p = p.charAt(0).toUpperCase() + p.slice(1).toLowerCase();
+    if (tit) { tit = tit.replace(/\.?$/, "."); tit = tit.charAt(0).toUpperCase() + tit.slice(1).toLowerCase(); }
+    return (tit ? tit + " " : "") + p;
+  }
+  function montarMsg(c, idx) {
+    var m = (config.mensagens[idx == null ? config.escolhida : idx] || config.mensagens[0] || MSG_PADRAO[0]).texto;
+    var serv = (config.servico || "").trim() || "[seu serviço]";
+    return m.replace(/\{nome\}/g, primeiroNome(c.nome)).replace(/\{servico\}/g, serv)
+      .replace(/,\s*([!?.,])/g, "$1").replace(/ {2,}/g, " ").replace(/\s+([!?.,])/g, "$1");
+  }
+
+  /* ---------- gravação ---------- */
+  var gravando = {};
+  function salvarProg(n, patch) {
+    var atual = Object.assign({ status: "novo", nota: "", retomar: "", ultimo: "" }, prog[n] || {}, patch, { atualizado: new Date().toISOString() });
+    prog[n] = atual;
+    renderTudo();
+    if (!db) { aviso("Você está vendo o painel sem estar conectada à sua conta. As mudanças não serão guardadas."); return; }
+    var fila = gravando[n] || Promise.resolve();
+    gravando[n] = fila.then(function () { return db.collection("progresso").doc(n).set(prog[n]); })
+      .catch(function (e) { aviso("Não consegui salvar agora (" + (e && e.code || "erro") + "). Confira a internet e tente de novo."); });
+  }
+  function salvarConfig() {
+    if (!db) { toast("Sem conexão com a sua conta: não foi possível salvar."); return Promise.resolve(); }
+    return db.doc("config/geral").set(config).then(function () { toast("Mensagens salvas"); })
+      .catch(function (e) { aviso("Não consegui salvar as mensagens (" + (e && e.code || "erro") + ")."); });
+  }
+
+  /* ---------- telas ---------- */
+  function renderResumo(todos) {
+    var hoje = hojeStr(), cont = { novo: 0, enviado: 0, respondeu: 0, interessado: 0, cliente: 0, sem_interesse: 0, nao_contatar: 0 }, chamadosHoje = 0, ret = 0;
+    todos.forEach(function (c) { cont[stOf(c)]++; var p = prog[c.n]; if (p && p.ultimo && p.ultimo.slice(0, 10) === hoje) chamadosHoje++; if (retomarDue(c)) ret++; });
+    $("kTotal").textContent = todos.length.toLocaleString("pt-BR");
+    $("kHoje").textContent = chamadosHoje; $("kMeta").textContent = config.metaDiaria;
+    $("kMeter").style.width = Math.min(100, Math.round(chamadosHoje / Math.max(1, config.metaDiaria) * 100)) + "%";
+    $("kEnviado").textContent = cont.enviado; $("kResp").textContent = cont.respondeu + cont.interessado;
+    $("kCliente").textContent = cont.cliente; $("kRetomar").textContent = ret;
+    var max = Math.max.apply(null, STATUS.map(function (s) { return cont[s[0]]; }).concat([1]));
+    $("funil").innerHTML = STATUS.map(function (s) {
+      var v = cont[s[0]];
+      return '<div class="bar"><span>' + esc(s[1]) + '</span><div class="track"><div class="fill" style="width:' + (v / max * 100) + '%"></div></div><span class="n nums">' + v + "</span></div>";
+    }).join("");
+    var reg = {}; todos.forEach(function (c) { var k = c.uf === "SP" ? c.r + " (SP)" : c.r; reg[k] = (reg[k] || 0) + 1; });
+    var top = Object.keys(reg).sort(function (a, b) { return reg[b] - reg[a]; }).slice(0, 8), rmax = top.length ? reg[top[0]] : 1;
+    $("regioes").innerHTML = top.length ? top.map(function (k) {
+      return '<div class="bar"><span>' + esc(k) + '</span><div class="track"><div class="fill" style="width:' + (reg[k] / rmax * 100) + '%;background:var(--gold-bright)"></div></div><span class="n nums">' + reg[k] + "</span></div>";
+    }).join("") : '<p class="empty">Nenhum contato ainda.</p>';
+  }
+
+  function renderRegioes(todos) {
+    var sel = $("fRegiao"), atual = sel.value, regs = {};
+    todos.forEach(function (c) { var k = c.uf === "SP" ? c.r + " (SP)" : c.r; regs[k] = (regs[k] || 0) + 1; });
+    var ops = Object.keys(regs).sort(function (a, b) { return a.localeCompare(b, "pt-BR"); });
+    var html = '<option value="">Todas</option>' + ops.map(function (k) { return '<option value="' + esc(k) + '">' + esc(k) + " · " + regs[k] + "</option>"; }).join("");
+    if (sel.innerHTML !== html) { sel.innerHTML = html; sel.value = atual; }
+  }
+
+  function filtrados(todos) {
+    var q = $("busca").value.trim().toLowerCase(), qd = q.replace(/\D/g, ""), st = $("fStatus").value, rg = $("fRegiao").value;
+    var lista = todos.filter(function (c) {
+      var s = stOf(c);
+      if (rg && (c.uf === "SP" ? c.r + " (SP)" : c.r) !== rg) return false;
+      if (q && !((c.nome || "").toLowerCase().indexOf(q) >= 0 || (qd && (c.n.indexOf(qd) >= 0 || c.f.replace(/\D/g, "").indexOf(qd) >= 0)))) return false;
+      if (st === "fila") return s !== "nao_contatar" && (retomarDue(c) || s === "novo");
+      if (st === "todos") return true;
+      return s === st;
+    });
+    if (st === "fila") {
+      lista.sort(function (a, b) {
+        var da = retomarDue(a) ? 0 : 1, dbb = retomarDue(b) ? 0 : 1; if (da !== dbb) return da - dbb;
+        var na = a.nome ? 0 : 1, nb = b.nome ? 0 : 1; if (na !== nb) return na - nb;
+        var sa = a.uf === "SP" ? 0 : 1, sb = b.uf === "SP" ? 0 : 1; return sa - sb;
+      });
+    }
+    if (foco) { var i = lista.findIndex(function (c) { return c.n === foco; }); if (i > 0) lista.unshift(lista.splice(i, 1)[0]); }
+    return lista;
+  }
+
+  function linha(c) {
+    var s = stOf(c), p = prog[c.n] || {}, due = retomarDue(c);
+    var opts = STATUS.map(function (x) { return '<option value="' + x[0] + '"' + (x[0] === s ? " selected" : "") + ">" + esc(x[1]) + "</option>"; }).join("");
+    var link = "https://wa.me/" + c.n + "?text=" + encodeURIComponent(montarMsg(c));
+    var ultimo = p.ultimo ? "Último contato: " + new Date(p.ultimo).toLocaleDateString("pt-BR") : "";
+    var bloqueado = s === "nao_contatar";
+    return '<article class="row' + (due ? " due" : "") + '" data-n="' + esc(c.n) + '">' +
+      '<div class="who"><b>' + esc(c.nome || "Sem nome") + '</b><div class="meta"><span class="nums">' + esc(c.f) + "</span><span>" + esc(c.uf === "SP" ? c.r + " (SP)" : c.r) + "</span>" +
+      '<span class="pill st-' + s + '">' + esc(ST_LABEL[s]) + "</span>" + (due ? '<span class="pill st-interessado">Retomar hoje</span>' : "") + (ultimo ? "<span>" + esc(ultimo) + "</span>" : "") + "</div></div>" +
+      '<div class="acts">' +
+        (bloqueado ? '<span class="pill st-nao_contatar" data-tip="Esta pessoa pediu para não receber mensagens. O botão do WhatsApp fica escondido para proteger você e ela.">Não enviar</span>'
+          : '<a class="btn wa" href="' + esc(link) + '" target="_blank" rel="noopener" data-act="wa" data-tip="Abre o WhatsApp com a mensagem escolhida já escrita para esta pessoa. Nada é enviado sozinho: você revisa e aperta enviar. O contato passa para \'Mensagem enviada\'.">Abrir WhatsApp</a>') +
+        '<button class="btn" type="button" data-act="copiarNum" data-tip="Copia o número para você colar onde quiser, por exemplo para salvar na agenda do celular.">Copiar número</button>' +
+        '<button class="btn" type="button" data-act="copiarMsg" data-tip="Copia a mensagem já com o nome da pessoa, caso você prefira colar no WhatsApp Web ou no celular.">Copiar mensagem</button>' +
+        '<select data-act="status" aria-label="Situação do contato" data-tip="Mude aqui a etapa do contato: enviada, respondeu, interessado, cliente, sem interesse ou pediu para não contatar.">' + opts + "</select>" +
+        '<button class="btn" type="button" data-act="nota" aria-expanded="false" data-tip="Abre o espaço para anotar o que conversaram e marcar um dia para retomar.">Anotar</button>' +
+      "</div>" +
+      '<div class="extra" hidden><label class="field">Anotações<textarea data-act="txtNota" placeholder="Ex.: atende trabalhista, pediu proposta para março">' + esc(p.nota || "") + "</textarea></label>" +
+      '<label class="field" data-tip="Escolha o dia em que quer falar de novo com esta pessoa. Nesse dia ela volta para o topo da fila.">Retomar em<input type="date" data-act="retomar" value="' + esc(p.retomar || "") + '"></label></div>' +
+      "</article>";
+  }
+
+  function renderFila(todos) {
+    var lista = filtrados(todos), mostra = lista.slice(0, limite);
+    $("rows").innerHTML = mostra.length ? mostra.map(linha).join("") :
+      '<div class="empty">' + (todos.length ? "Nenhum contato com esses filtros. Troque a situação para \"Todos\" ou limpe a busca." : "Seus contatos aparecem aqui. Cole uma lista em \"Adicionar contatos\", mais abaixo.") + "</div>";
+    $("mostrando").textContent = lista.length ? "Mostrando " + mostra.length + " de " + lista.length.toLocaleString("pt-BR") : "";
+    $("btnMais").hidden = mostra.length >= lista.length;
+    var st = $("fStatus").value;
+    $("filaInfo").textContent = st === "fila" ? "Primeiro os retornos do dia, depois quem tem nome, começando por SP." : "";
+  }
+
+  function renderMsgs() {
+    $("servico").value = config.servico || "";
+    $("msgs").innerHTML = config.mensagens.map(function (m, i) {
+      return '<div class="msg' + (i === config.escolhida ? " sel" : "") + '"><label class="pick" data-tip="Marque para usar esta mensagem no botão \'Abrir WhatsApp\'."><input type="radio" name="escolhida" value="' + i + '"' + (i === config.escolhida ? " checked" : "") + "> " + esc(m.titulo) + "</label>" +
+        '<textarea data-msg="' + i + '" aria-label="Texto da mensagem ' + esc(m.titulo) + '">' + esc(m.texto) + "</textarea></div>";
+    }).join("");
+  }
+
+  function renderTudo() {
+    var todos = contatos();
+    renderResumo(todos); renderRegioes(todos); renderFila(todos);
+  }
+
+  /* ---------- eventos ---------- */
+  $("rows").addEventListener("click", function (e) {
+    var el = e.target.closest("[data-act]"); if (!el) return;
+    var row = el.closest(".row"), n = row.getAttribute("data-n"), c = contatos().find(function (x) { return x.n === n; });
+    var act = el.getAttribute("data-act");
+    if (act === "wa") {
+      var patch = { ultimo: new Date().toISOString() };
+      if (stOf(c) === "novo") patch.status = "enviado";
+      if (retomarDue(c)) patch.retomar = "";
+      foco = null; setTimeout(function () { salvarProg(n, patch); }, 50);
+    } else if (act === "copiarNum") { copiar(c.f.replace(/\D/g, "").length ? "+55 " + c.f : c.n, "Número copiado"); }
+    else if (act === "copiarMsg") { copiar(montarMsg(c), "Mensagem copiada"); }
+    else if (act === "nota") { var ex = row.querySelector(".extra"); ex.hidden = !ex.hidden; el.setAttribute("aria-expanded", String(!ex.hidden)); if (!ex.hidden) ex.querySelector("textarea").focus(); }
+  });
+  $("rows").addEventListener("change", function (e) {
+    var el = e.target, row = el.closest(".row"); if (!row) return;
+    var n = row.getAttribute("data-n"), act = el.getAttribute("data-act");
+    if (act === "status") { salvarProg(n, { status: el.value }); toast("Situação: " + ST_LABEL[el.value]); }
+    if (act === "retomar") { salvarProg(n, { retomar: el.value }); toast(el.value ? "Retorno marcado" : "Retorno removido"); }
+    if (act === "txtNota") { salvarProg(n, { nota: el.value.slice(0, 4000) }); toast("Anotação salva"); }
+  });
+  function copiar(t, ok) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(t).then(function () { toast(ok); }, function () { mostrarTexto(t); });
+    } else mostrarTexto(t);
+  }
+  function mostrarTexto(t) { $("helpText").innerHTML = "<b>Copie o texto abaixo</b>" + esc(t); $("helpbar").hidden = false; }
+
+  $("busca").addEventListener("input", function () { limite = 30; foco = null; renderFila(contatos()); });
+  $("fStatus").addEventListener("change", function () { limite = 30; foco = null; renderFila(contatos()); });
+  $("fRegiao").addEventListener("change", function () { limite = 30; foco = null; renderFila(contatos()); });
+  $("btnMais").addEventListener("click", function () { limite += 30; renderFila(contatos()); });
+  $("btnProximo").addEventListener("click", function () {
+    $("fStatus").value = "fila"; $("busca").value = ""; limite = 30; foco = null;
+    var lista = filtrados(contatos());
+    renderFila(contatos());
+    if (!lista.length) { toast("Fila vazia: todos já foram chamados"); return; }
+    $("fila").scrollIntoView({ behavior: "smooth", block: "start" });
+    var first = $("rows").querySelector(".row"); if (first) first.querySelector("[data-act]").focus({ preventScroll: true });
+  });
+
+  $("msgs").addEventListener("change", function (e) {
+    if (e.target.name === "escolhida") { config.escolhida = +e.target.value; renderMsgs(); renderFila(contatos()); salvarConfig(); }
+  });
+  $("salvarMsgs").addEventListener("click", function () {
+    config.servico = $("servico").value.trim().slice(0, 200);
+    document.querySelectorAll("[data-msg]").forEach(function (t) { config.mensagens[+t.getAttribute("data-msg")].texto = t.value.slice(0, 1500); });
+    renderFila(contatos()); salvarConfig();
+  });
+
+  /* Adicionar contatos colados */
+  var DDD_UF = {};
+  [["SP","11 12 13 14 15 16 17 18 19"],["RJ","21 22 24"],["ES","27 28"],["MG","31 32 33 34 35 37 38"],["PR","41 42 43 44 45 46"],["SC","47 48 49"],["RS","51 53 54 55"],["DF","61"],["GO","62 64"],["TO","63"],["MT","65 66"],["MS","67"],["AC","68"],["RO","69"],["BA","71 73 74 75 77"],["SE","79"],["PE","81 87"],["AL","82"],["PB","83"],["RN","84"],["CE","85 88"],["PI","86 89"],["PA","91 93 94"],["AM","92 97"],["RR","95"],["AP","96"],["MA","98 99"]]
+    .forEach(function (p) { p[1].split(" ").forEach(function (d) { DDD_UF[d] = p[0]; }); });
+  var REG_SP = { "11": "São Paulo e Grande SP", "12": "Vale do Paraíba e Litoral Norte", "13": "Baixada Santista", "14": "Bauru e Marília", "15": "Sorocaba e região", "16": "Ribeirão Preto e Franca", "17": "São José do Rio Preto", "18": "Presidente Prudente e Araçatuba", "19": "Campinas e Piracicaba" };
+  var NOME_UF = { RJ: "Rio de Janeiro", ES: "Espírito Santo", MG: "Minas Gerais", PR: "Paraná", SC: "Santa Catarina", RS: "Rio Grande do Sul", DF: "Distrito Federal", GO: "Goiás", TO: "Tocantins", MT: "Mato Grosso", MS: "Mato Grosso do Sul", AC: "Acre", RO: "Rondônia", BA: "Bahia", SE: "Sergipe", PE: "Pernambuco", AL: "Alagoas", PB: "Paraíba", RN: "Rio Grande do Norte", CE: "Ceará", PI: "Piauí", PA: "Pará", AM: "Amazonas", RR: "Roraima", AP: "Amapá", MA: "Maranhão" };
+  function lerLinha(l) {
+    var m = l.match(/(\+?\d[\d\s().-]{8,20}\d)/); if (!m) return null;
+    var dig = m[1].replace(/\D/g, "");
+    if (dig.indexOf("55") === 0 && (dig.length === 12 || dig.length === 13)) dig = dig.slice(2);
+    dig = dig.replace(/^0+/, "");
+    if ((dig.length !== 10 && dig.length !== 11) || !DDD_UF[dig.slice(0, 2)]) return null;
+    if (dig.length === 11 && dig[2] !== "9") return null;
+    var ddd = dig.slice(0, 2), local = dig.slice(2), cel = dig.length === 11 || /[6-9]/.test(local[0]);
+    if (local.length === 8 && cel) local = "9" + local;
+    var uf = DDD_UF[ddd], nome = l.replace(m[1], "").replace(/^[\s,;:|–-]+|[\s,;:|–-]+$/g, "").trim();
+    return { n: "55" + dig, nome: nome.slice(0, 80), f: "(" + ddd + ") " + local.slice(0, -4) + "-" + local.slice(-4), uf: uf, r: REG_SP[ddd] || NOME_UF[uf], t: cel ? "c" : "f" };
+  }
+  $("btnAdd").addEventListener("click", function () {
+    var existentes = {}; contatos().forEach(function (c) { existentes[c.n] = 1; existentes[c.n.length === 12 ? c.n.slice(0, 4) + "9" + c.n.slice(4) : c.n] = 1; });
+    var novos = [], invalidos = 0, repetidos = 0;
+    $("colar").value.split(/\n+/).forEach(function (l) {
+      if (!l.trim()) return;
+      var c = lerLinha(l); if (!c) { invalidos++; return; }
+      if (existentes[c.n]) { repetidos++; return; }
+      existentes[c.n] = 1; novos.push(c);
+    });
+    $("addInfo").textContent = novos.length + " novos · " + repetidos + " repetidos · " + invalidos + " sem número válido";
+    if (!novos.length) return;
+    if (!db) { aviso("Conecte-se à sua conta para adicionar contatos."); return; }
+    var ids = Object.keys(listas).sort(function (a, b) { return (listas[a].ordem || 0) - (listas[b].ordem || 0); });
+    var ultimo = ids[ids.length - 1], tarefas = [], ordem = ultimo ? listas[ultimo].ordem : 0;
+    var base = ultimo && listas[ultimo].contatos.length < 400 ? { id: ultimo, doc: { ordem: listas[ultimo].ordem, contatos: listas[ultimo].contatos.slice() } } : null;
+    while (novos.length) {
+      if (!base || base.doc.contatos.length >= 400) { ordem++; base = { id: "l" + ordem, doc: { ordem: ordem, contatos: [] } }; }
+      base.doc.contatos.push(novos.shift());
+      if (!novos.length || base.doc.contatos.length >= 400) tarefas.push(base);
+    }
+    var seen = {}; tarefas = tarefas.filter(function (t) { if (seen[t.id]) return false; seen[t.id] = 1; return true; });
+    tarefas.reduce(function (p, t) { return p.then(function () { return db.collection("listas").doc(t.id).set(t.doc); }); }, Promise.resolve())
+      .then(function () { $("colar").value = ""; toast("Contatos adicionados à fila"); })
+      .catch(function (e) { aviso("Não consegui adicionar (" + (e && e.code || "erro") + ")."); });
+  });
+
+  /* Guia e modo explicação */
+  function setGuia(aberto) { $("guia").hidden = !aberto; store("cm_guia", aberto ? "1" : "0"); }
+  $("btnGuia").addEventListener("click", function () { setGuia($("guia").hidden); if (!$("guia").hidden) $("guia").scrollIntoView({ behavior: "smooth" }); });
+  $("fecharGuia").addEventListener("click", function () { setGuia(false); });
+  if (store("cm_guia") === "0") $("guia").hidden = true;
+
+  $("btnAjuda").addEventListener("click", function (e) {
+    e.stopPropagation();
+    var on = !document.body.classList.contains("ajuda");
+    document.body.classList.toggle("ajuda", on); this.setAttribute("aria-pressed", String(on));
+    if (on) { $("helpText").innerHTML = "<b>Modo explicação ligado</b>Toque em qualquer item com contorno pontilhado para ver o que ele faz. Nada é executado enquanto este modo estiver ligado."; $("helpbar").hidden = false; }
+    else $("helpbar").hidden = true;
+  });
+  document.addEventListener("click", function (e) {
+    if (!document.body.classList.contains("ajuda")) return;
+    var el = e.target.closest("[data-tip]"); if (!el || el.id === "btnAjuda") return;
+    e.preventDefault(); e.stopPropagation();
+    var nome = (el.getAttribute("aria-label") || el.textContent || "").trim().split("\n")[0].slice(0, 60);
+    $("helpText").innerHTML = "<b>" + esc(nome) + "</b>" + esc(el.getAttribute("data-tip"));
+    $("helpbar").hidden = false;
+  }, true);
+  ["mousedown", "change"].forEach(function (ev) {
+    document.addEventListener(ev, function (e) { if (document.body.classList.contains("ajuda") && e.target.closest && e.target.closest("select[data-tip]")) { e.preventDefault(); } }, true);
+  });
+  $("helpClose").addEventListener("click", function () { $("helpbar").hidden = true; });
+
+  /* Primeira pintura sem dados, depois conecta */
+  renderMsgs(); renderTudo();
+  if (window.claude && window.claude.use) {
+    window.claude.use("db").then(function (d) {
+      if (!d) { aviso("Abra este painel conectada à sua conta do Claude para ver e salvar seus contatos."); return; }
+      db = d;
+      db.collection("listas").onSnapshot(function (snap) {
+        var novo = {}; snap.docs.forEach(function (doc) { novo[doc.id] = doc.data(); }); listas = novo; renderTudo();
+      }, function (e) { aviso("A lista de contatos parou de atualizar (" + e.code + "). Recarregue a página."); });
+      db.collection("progresso").onSnapshot(function (snap) {
+        var novo = {}; snap.docs.forEach(function (doc) { novo[doc.id] = Object.assign({}, doc.data()); }); prog = novo; renderTudo();
+      }, function (e) { aviso("O andamento parou de atualizar (" + e.code + "). Recarregue a página."); });
+      db.doc("config/geral").onSnapshot(function (doc) {
+        if (doc.exists) {
+          var d2 = doc.data();
+          config = { metaDiaria: d2.metaDiaria || 20, servico: d2.servico || "", mensagens: (d2.mensagens && d2.mensagens.length ? d2.mensagens : MSG_PADRAO).map(function (m) { return { titulo: m.titulo, texto: m.texto }; }), escolhida: d2.escolhida || 0 };
+          if (document.activeElement && (document.activeElement.id === "servico" || document.activeElement.hasAttribute("data-msg"))) return;
+          renderMsgs(); renderTudo();
+        }
+      });
+    });
+  } else {
+    aviso("Abra este painel pelo Claude, conectada à sua conta, para ver e salvar seus contatos.");
+  }
+})();
+</script>
