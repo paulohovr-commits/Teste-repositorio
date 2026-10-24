@@ -51,6 +51,32 @@ investigue antes de seguir. Nunca invente dados: campo não encontrado fica vazi
 10. **Entrega:** publique o `index.html` como página privada no Claude (Artifact), em vez de usar a Vercel,
     e entregue o link. Não faça commit dos dados de leads: o `.gitignore` já os exclui.
 
+### Opção sem custo (sem chave do Google)
+
+Se não houver `GOOGLE_PLACES_API_KEY`, troque a Fase 01 por pesquisa do próprio Claude:
+
+1. Divida as cidades do `recorte.py` em grupos de 5 a 8 e dispare um subagente `general-purpose`
+   por grupo, em paralelo. Cada um usa só busca na web (WebSearch) e leitura de páginas públicas
+   (WebFetch): sites dos escritórios, Google Meu Negócio, diretórios jurídicos e a página de
+   contato de cada escritório.
+2. Cada subagente salva `prospects/<AAAA-MM-DD>_ia_grupoN.csv` com as colunas
+   `nome,categoria,endereco,telefone,whatsapp,celular,whatsapp_status,site,score,fonte`.
+   - `endereco` no formato do Google: `Rua, número - Bairro, Cidade - SP`.
+   - `whatsapp` é preenchido só quando o próprio escritório divulga o número como WhatsApp
+     (`55` + DDD + número). Nesse caso, `celular` fica `Sim`; nos outros, `Não`.
+   - `score` vai de 0 a 100, conforme a solidez da presença pública (site próprio, avaliações, tempo de mercado).
+   - `fonte` traz a URL de onde o dado saiu. Sem fonte, o lead não entra.
+   - Use só dados profissionais divulgados pelo próprio escritório ou advogado. Nada de perfis
+     pessoais nem de números que não estejam publicados como contato profissional.
+3. Continue normalmente pela Fase 02 (`python merge.py`).
+
+### Lista própria de contatos
+
+Para uma lista de WhatsApps que a Cris Márcia já tem: `python importar_contatos.py <arquivo> --montar`.
+Isso organiza, remove repetidos, marca a região pelo DDD e gera o CRM. Não pesquise a vida dos
+donos de números pessoais. No máximo, confira se o número aparece publicamente como contato
+de um escritório.
+
 Regras:
 - NUNCA envie mensagens automaticamente. O CRM só abre o WhatsApp para a pessoa revisar e enviar.
 - Dados pessoais (nome de sócio, telefone) são só para abordagem comercial B2B, de acordo com a LGPD.

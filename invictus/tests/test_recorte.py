@@ -4,6 +4,7 @@ import unittest
 
 import recorte
 from extrator import calcular_nrl, telefone_para_whatsapp
+from importar_contatos import normalizar
 
 
 class RecorteTests(unittest.TestCase):
@@ -21,6 +22,13 @@ class RecorteTests(unittest.TestCase):
 
     def test_nrl_sem_presenca_e_zero(self):
         self.assertEqual(calcular_nrl("", 0, 0, None), 0)
+
+    def test_importador_normaliza_formatos_comuns(self):
+        for bruto in ["+55 (19) 99876-5432", "5519998765432", "019 99876-5432", "(19) 99876-5432"]:
+            self.assertEqual(normalizar(bruto), "19998765432")
+        self.assertEqual(normalizar("(11) 3333-4444"), "1133334444")
+        self.assertEqual(normalizar("123"), "")
+        self.assertEqual(normalizar("(11) 8333-44445"), "")
 
 
 if __name__ == "__main__":
