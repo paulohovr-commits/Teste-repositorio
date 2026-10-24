@@ -1,0 +1,19 @@
+{
+  "sender_name": "Ana",
+  "company_name": "Estúdio Horizonte",
+  "offer": "diagnóstico de presença digital para negócios locais",
+  "audience": "gestores de empresas locais",
+  "goal": "abrir uma conversa para entender a prioridade comercial atual",
+  "tone": "humano, específico, respeitoso e breve",
+  "call_to_action": "fazer uma pergunta simples que possa ser respondida sem compromisso",
+  "max_words": 70,
+  "banned_claims": [
+    "resultado garantido",
+    "aumentar suas vendas"
+  ],
+  "banned_terms": [
+    "método secreto",
+    "oportunidade imperdível"
+  ],
+  "draft_only": true
+}

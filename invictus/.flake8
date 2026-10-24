@@ -1,0 +1,11 @@
+[flake8]
+# Dívida de estilo anterior à v1.2. O código novo continua sem exceções por arquivo.
+per-file-ignores =
+    consolidate_v2.py:E741
+    fase_a_cnpj.py:W605,E401,F401,E302,E701,E722,F841,E305,F541
+    fase_b_brasilapi.py:E401,E741,E302,E305,F541
+    fase_d_wa_validar.py:E401,E701,F541
+    fase_e_anuncia_real.py:E401,E402,E302,E722,F541,E305
+    gerar_lotes_v2.py:E401,E226,E741
+    merge.py:E401,E302,E305,E722,E701
+    setup_supabase.py:F401
