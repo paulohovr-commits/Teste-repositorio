@@ -123,6 +123,36 @@ body.dragging, body.dragging * { cursor: grabbing !important; user-select: none;
 .empty { border: 1px dashed var(--line); border-radius: 12px; padding: 18px; color: var(--muted); max-width: 620px; }
 .empty b { color: var(--fg); }
 
+/* ---------- aba Escritórios ---------- */
+.off-page { padding: 4px 16px 40px; display: flex; flex-direction: column; gap: 12px; }
+.off-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; }
+.off-head p { margin: 0; color: var(--muted); font-size: 13px; max-width: 70ch; }
+.off-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 430px), 1fr)); gap: 12px; align-items: start; }
+.office { background: var(--surface); border-radius: 12px; box-shadow: var(--shadow); padding: 14px; display: flex; flex-direction: column; gap: 10px; min-width: 0; border-top: 4px solid var(--c, var(--line)); }
+.office h3 { margin: 0; font: 700 16px var(--display); text-wrap: balance; }
+.office .o-top { display: flex; gap: 8px; align-items: flex-start; justify-content: space-between; }
+.office .o-meta { font-size: 12px; color: var(--muted); display: flex; flex-direction: column; gap: 1px; }
+.stage-chip { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 10px; background: var(--col); color: var(--muted); white-space: nowrap; }
+.links3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+.lnk { border: 1px solid var(--line); border-radius: 9px; padding: 7px 8px; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.lnk b { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.lnk.ok { border-color: transparent; background: var(--good-soft); }
+.lnk .val { font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lnk .row2 { display: flex; gap: 4px; flex-wrap: wrap; align-items: center; }
+.lnk a.go { font-size: 12px; font-weight: 700; text-decoration: none; }
+.lnk .edit { border: 0; background: none; color: var(--muted); font-size: 12px; padding: 0 2px; }
+.lnk .input { padding: 4px 6px; font-size: 12px; }
+.rating { font-size: 12px; color: var(--warn); font-weight: 600; }
+.office details { background: var(--bg); border-radius: 9px; padding: 8px 10px; }
+.office summary { cursor: pointer; font-weight: 700; font-size: 13px; }
+.office .analysis { white-space: pre-wrap; font-size: 13px; margin-top: 6px; line-height: 1.5; }
+.pitch-box { display: flex; flex-direction: column; gap: 6px; }
+.pitch-box b { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.pitch-box textarea { font-size: 13px; line-height: 1.5; min-height: 150px; }
+.channel { font-size: 12px; color: var(--muted); }
+.ai-status { font-size: 12px; color: var(--muted); }
+@media (max-width: 760px) { .links3 { grid-template-columns: 1fr; } }
+
 .set-list { display: flex; flex-direction: column; gap: 6px; }
 .set-row { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
 .set-row .input { flex: 1 1 160px; }
@@ -179,6 +209,8 @@ body.dragging, body.dragging * { cursor: grabbing !important; user-select: none;
   .brand p { display: none; }
   .stats, .chips { flex-wrap: nowrap; overflow-x: auto; width: 100%; min-width: 0; scrollbar-width: none; }
   .stat, .chip { flex: 0 0 auto; }
+  .tabs { max-width: 100%; overflow-x: auto; scrollbar-width: none; }
+  .tabs button { flex: 0 0 auto; padding: 5px 9px; }
   .top-actions { width: 100%; }
   .top-actions .btn.primary { flex: 1; justify-content: center; }
   .notice { font-size: 12px; }
@@ -198,6 +230,7 @@ body.dragging, body.dragging * { cursor: grabbing !important; user-select: none;
   <div class="bar">
     <div class="tabs" id="tabs">
       <button data-v="board" class="on">Quadro</button>
+      <button data-v="offices">Escritórios</button>
       <button data-v="agenda">Agenda</button>
       <button data-v="archive">Arquivados</button>
       <button data-v="settings">Ajustes</button>
@@ -481,6 +514,7 @@ async function boot() {
   try { db = await window.claude?.use?.("db"); } catch { db = null; }
   try { downloads = await window.claude?.use?.("downloads"); } catch { downloads = null; }
   $("#btn-csv").hidden = !downloads;
+  window.claude?.use?.("sample").then((s) => { sampleFn = s || null; if (sampleFn && ui.view === "offices") render(); }).catch(() => {});
   if (!db) { dbState = "off"; render(); return; }
   dbState = "on";
   db.doc("config/board").onSnapshot((s) => {
@@ -550,12 +584,13 @@ function filtered(list) {
 }
 let pendingRender = false, composerStage = null;
 function render() {
-  if (drag && drag.started) { pendingRender = true; return; }
+  if ((drag && drag.started) || typingInOffice()) { pendingRender = true; return; }
   document.querySelectorAll("#tabs button").forEach((b) => b.classList.toggle("on", b.dataset.v === ui.view));
   renderStats(); renderFilters(); renderNotice();
   const v = $("#view"); v.replaceChildren();
   if (dbState === "loading" && !leads.length) { v.append(h("div", { class: "page" }, h("p", { class: "muted" }, "Carregando seus leads…"))); return; }
   if (ui.view === "agenda") v.append(renderAgenda());
+  else if (ui.view === "offices") v.append(renderOffices());
   else if (ui.view === "archive") v.append(renderArchive());
   else if (ui.view === "settings") v.append(renderSettings());
   else v.append(renderBoard());
@@ -766,6 +801,145 @@ function setNext(l, days, note) {
   Object.assign(l, { next, history }); render(); refreshModal();
   patch(l.id, { next, history });
 }
+// ---------- escritórios ----------
+let sampleFn = null;
+const cleanName = (n) => String(n || "")
+  .replace(/\b(GOOGLE|GLOOGLE)\b/gi, "")
+  .replace(/\s\d+\s*º?\s*(fallow|follow)[\s-]*u?p+.*$/i, "")
+  .replace(/\s(fallow|follow)[\s-]*u?p+.*$/i, "")
+  .replace(/^Reuni[aã]o\s+\S+\s+[àa]s?\s+\d{1,2}h\s*/i, "")
+  .replace(/\s+dia\s+\d.*$/i, "")
+  .replace(/\s{2,}/g, " ").trim();
+const officeName = (l) => l.office || cleanName(l.name) || l.name;
+const gSearch = (q) => "https://www.google.com/search?q=" + encodeURIComponent(q);
+const typingInOffice = () => {
+  const a = document.activeElement;
+  return !!(a && a.closest && a.closest(".office") && ["TEXTAREA", "INPUT"].includes(a.tagName));
+};
+document.addEventListener("focusout", () => setTimeout(() => { if (pendingRender && !typingInOffice() && !(drag && drag.started)) { pendingRender = false; render(); } }, 0));
+
+function renderOffices() {
+  const page = h("div", { class: "off-page" });
+  const list = filtered(leads.filter((l) => !l.archived && !l.example)).sort((a, b) => officeName(a).localeCompare(officeName(b), "pt-BR"));
+  const n = (k) => list.filter((l) => l[k]).length;
+  page.append(h("div", { class: "off-head" },
+    h("div", { class: "stats" },
+      h("div", { class: "stat" }, h("b", {}, list.length), h("span", {}, "escritórios")),
+      h("div", { class: "stat" }, h("b", {}, `${n("website")}/${list.length}`), h("span", {}, "com site")),
+      h("div", { class: "stat" }, h("b", {}, `${n("instagram")}/${list.length}`), h("span", {}, "com Instagram")),
+      h("div", { class: "stat" }, h("b", {}, `${n("maps")}/${list.length}`), h("span", {}, "com perfil no Google"))),
+    h("p", {}, "Onde falta um link, o botão “Procurar” abre a busca certa no Google. Achou? Cole o link no campo e ele fica salvo. A mensagem pode ser editada aqui mesmo antes de copiar.")));
+  if (!list.length) page.append(h("div", { class: "empty" }, "Nenhum escritório com esses filtros. Adicione leads pelo botão ", h("b", {}, "Colar / importar leads"), "."));
+  const grid = h("div", { class: "off-grid" });
+  for (const l of list) grid.append(officeCard(l));
+  page.append(grid);
+  return page;
+}
+
+function officeCard(l) {
+  const name = officeName(l);
+  const st = stageOf(l.stage);
+  const where = l.city ? " " + l.city.replace(/\(.*?\)/g, "").trim() : "";
+  const shortUrl = (u) => u.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "");
+  const slot = (key, label, search, show) => {
+    const box = h("div", { class: "lnk" });
+    const draw = (editing) => {
+      box.className = "lnk" + (l[key] && !editing ? " ok" : "");
+      box.replaceChildren(h("b", {}, label));
+      if (l[key] && !editing) {
+        box.append(h("span", { class: "val", title: l[key] }, show(l[key])),
+          h("span", { class: "row2" },
+            h("a", { class: "go", href: l[key], target: "_blank", rel: "noreferrer" }, "Abrir ↗"),
+            h("button", { class: "edit", title: "Trocar o link", onclick: () => draw(true) }, "✎ trocar")));
+        return;
+      }
+      const inp = h("input", { class: "input", placeholder: "cole o link aqui", value: l[key] || "", "aria-label": label });
+      inp.addEventListener("change", () => {
+        const v = normField(key, inp.value);
+        if ((l[key] ?? null) === v) { draw(false); return; }
+        l[key] = v;
+        patch(l.id, { [key]: v });
+        draw(false);
+        if (v) toast(label + " salvo");
+      });
+      inp.addEventListener("keydown", (e) => e.key === "Enter" && inp.blur());
+      box.append(h("a", { class: "go", href: search, target: "_blank", rel: "noreferrer" }, "Procurar ↗"), inp);
+    };
+    draw(false);
+    return box;
+  };
+
+  const ta = h("textarea", { class: "input", "aria-label": "Mensagem personalizada", placeholder: "Escreva a mensagem aqui, ou peça para o Claude gerar." });
+  ta.value = l.pitch || "";
+  ta.addEventListener("change", () => { l.pitch = ta.value; patch(l.id, { pitch: ta.value }); toast("Mensagem salva"); });
+  const copy = async () => {
+    if (!ta.value.trim()) { toast("Ainda não há mensagem para copiar."); return; }
+    try { await navigator.clipboard.writeText(ta.value); toast("Mensagem copiada"); }
+    catch { ta.focus(); ta.select(); toast("Selecionei a mensagem: copie com Ctrl+C"); }
+  };
+  const aiBox = h("div", { class: "quick ai" });
+  if (sampleFn) aiBox.append(h("button", { class: "btn sm", onclick: () => generate(l, aiBox) }, l.pitch ? "✨ Refazer análise e mensagem com o Claude" : "✨ Gerar análise e mensagem com o Claude"));
+
+  return h("article", { class: "office", style: "--c:" + st.color },
+    h("div", { class: "o-top" },
+      h("div", {}, h("h3", {}, name),
+        h("div", { class: "o-meta" },
+          l.contact ? h("span", {}, "👤 " + l.contact) : null,
+          (l.city || l.niche) ? h("span", {}, [l.niche, l.city].filter(Boolean).join(" · ")) : null)),
+      h("div", { style: "display:flex;flex-direction:column;gap:6px;align-items:flex-end" },
+        h("span", { class: "stage-chip" }, st.name),
+        h("button", { class: "btn sm", onclick: () => openLead(l.id) }, "Abrir lead"))),
+    h("div", { class: "links3" },
+      slot("website", "Site", gSearch(`${name}${where} advogados site oficial`), shortUrl),
+      slot("instagram", "Instagram", gSearch(`site:instagram.com ${name}`), (u) => igHandle(u)),
+      slot("maps", "Perfil no Google", "https://www.google.com/maps/search/" + encodeURIComponent(name + where), () => "perfil salvo")),
+    l.gRating ? h("div", { class: "rating" }, "★ Google: " + l.gRating) : null,
+    l.analysis ? h("details", {}, h("summary", {}, "Análise"), h("div", { class: "analysis" }, l.analysis)) : null,
+    h("div", { class: "pitch-box" },
+      h("b", {}, "Mensagem personalizada"),
+      ta,
+      h("div", { class: "quick" },
+        h("button", { class: "btn primary sm", onclick: copy }, "Copiar mensagem"),
+        l.instagram ? h("a", { class: "btn sm", href: l.instagram, target: "_blank", rel: "noreferrer" }, "Abrir Instagram") : null,
+        l.phone ? h("a", { class: "btn wa sm", href: waUrl(l.phone, l.pitch || ""), target: "_blank", rel: "noreferrer" }, "WhatsApp") : null),
+      l.channel ? h("div", { class: "channel" }, "Melhor canal: " + l.channel) : null),
+    aiBox.childNodes.length ? aiBox : null);
+}
+
+// Para os próximos leads: o Claude lê as anotações e os links e escreve a análise e a mensagem.
+async function generate(l, box) {
+  if (!sampleFn) return;
+  const status = h("span", { class: "ai-status" }, "Analisando…");
+  box.replaceChildren(status);
+  const info = {
+    escritorio: officeName(l), contato: l.contact, cidade: l.city, area: l.niche, site: l.website, instagram: l.instagram,
+    perfil_google: l.maps, nota_google: l.gRating, anuncio: l.ad, etapa: stageOf(l.stage).name,
+    anotacoes: String(l.notes || "").slice(0, 15000),
+  };
+  const prompt = `Você ajuda uma gestora de anúncios no Google que atende exclusivamente escritórios de advocacia no Brasil a prospectar clientes.
+Com base SOMENTE nos dados abaixo (não invente fatos que não estejam neles), escreva em português do Brasil:
+1. "analysis": de 3 a 4 tópicos curtos, cada um começando com "• ", com as brechas concretas que mexem com o bolso do escritório ou com o Provimento 205 da OAB (promessa de resultado, uso de "especialista" sem título, divulgação de resultados), e o que o escritório já faz bem.
+2. "pitch": uma mensagem de prospecção personalizada para Direct ou WhatsApp, de 60 a 110 palavras, em primeira pessoa, tom respeitoso de colega, começando com um elogio específico e verdadeiro, apontando UMA brecha concreta e terminando com uma pergunta fácil de responder. Sem prometer resultado e sem jargão de agência.
+3. "channel": o melhor canal para enviar, em poucas palavras.
+Responda apenas com JSON no formato {"analysis":"...","pitch":"...","channel":"..."}.
+
+Dados:
+${JSON.stringify(info, null, 1)}`;
+  try {
+    const r = await sampleFn.json(prompt, { modelTier: "default" });
+    if (!r || typeof r.pitch !== "string") throw { code: "invalid_json" };
+    const data = { analysis: String(r.analysis || ""), pitch: r.pitch, channel: String(r.channel || l.channel || "") };
+    Object.assign(l, data);
+    await patch(l.id, data);
+    toast("Análise e mensagem prontas");
+    render();
+  } catch (e) {
+    const c = e && e.code;
+    status.textContent = c === "not_granted" ? "Esta página não tem permissão para usar o Claude." : c === "rate_limited" ? "Muitos pedidos seguidos. Espere um pouco e tente de novo." : "Não consegui gerar agora. Tente de novo em instantes.";
+    box.append(h("button", { class: "btn sm", onclick: () => generate(l, box) }, "Tentar de novo"));
+  }
+}
+
 function msgFor(l) { return (cfg.message || "").replace(/\{nome\}/gi, l.name || ""); }
 
 // ---------- arquivados ----------
@@ -880,7 +1054,7 @@ function openLead(id) {
           fld("instagram", "Instagram", "@empresa", (x) => x.instagram),
           fld("website", "Site", "empresa.com.br", (x) => x.website),
           fld("ad", "Anúncio", "link do anúncio", (x) => x.ad),
-          fld("maps", "Google Maps", "link do Maps", (x) => x.maps),
+          fld("maps", "Perfil no Google (Maps)", "link do perfil no Google", (x) => x.maps),
           fld("city", "Cidade", "Campinas"),
           fld("niche", "Nicho", "Clínica, restaurante…"),
           fld("source", "Origem", "Google, Instagram, indicação…"),
@@ -1020,9 +1194,9 @@ function openImport() {
 async function exportCsv() {
   if (!downloads) return;
   const rows = leads.filter((l) => !l.archived).sort((a, b) => cfg.stages.findIndex((s) => s.id === a.stage) - cfg.stages.findIndex((s) => s.id === b.stage) || (a.order || 0) - (b.order || 0)).map((l) => ({
-    Nome: l.name, Etapa: stageOf(l.stage).name, "WhatsApp/Telefone": l.phone, Instagram: l.instagram, Site: l.website, Anúncio: l.ad, "Google Maps": l.maps,
+    Nome: l.name, Etapa: stageOf(l.stage).name, "WhatsApp/Telefone": l.phone, Instagram: l.instagram, Site: l.website, Anúncio: l.ad, "Perfil no Google": l.maps, "Nota no Google": l.gRating, Contato: l.contact, "Melhor canal": l.channel,
     Cidade: l.city, Nicho: l.niche, Origem: l.source, "Valor estimado": l.value, "Próximo contato": l.next ? new Date(l.next).toLocaleString("pt-BR") : "",
-    Etiquetas: (l.tags || []).map((id) => cfg.tags.find((t) => t.id === id)?.name).filter(Boolean).join(", "), Anotações: l.notes,
+    Etiquetas: (l.tags || []).map((id) => cfg.tags.find((t) => t.id === id)?.name).filter(Boolean).join(", "), Análise: l.analysis, "Mensagem personalizada": l.pitch, Anotações: l.notes,
     "Último contato": (l.history || []).slice(-1)[0]?.t || "", "Criado em": l.createdAt ? new Date(l.createdAt).toLocaleDateString("pt-BR") : "",
   }));
   if (!rows.length) { toast("Ainda não há leads para baixar."); return; }
