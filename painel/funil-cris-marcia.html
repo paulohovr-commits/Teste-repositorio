@@ -9,211 +9,122 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800&display=swap">
 <style>
-/* Layout: faixa vinho com a marca, abas dos dois funis, funil desenhado ao lado dos números que o alimentam, análise e planejamento abaixo. */
+/* Layout: a mesma estrutura da planilha. Título e verba no topo; funil com rótulos, valores e conversão; referências ao lado; análise dos resultados embaixo.
+   Visual claro de propósito (branco, vinho e dourado); as faixas do funil mantêm as cores originais da planilha. */
 :root {
-  --bg: #FBF8F4; --surface: #FFFFFF; --surface-2: #F7F0E8; --line: #EADBD0;
-  --ink: #2A0C14; --muted: #6B4A54; --faint: #9A7F87;
-  --wine: #5E1726; --wine-2: #7A2236; --on-wine: #FBF3E6; --band-gold: #E3CC94;
-  --gold: #8C6A24; --gold-bright: #C9A55C; --gold-soft: rgba(201,165,92,.16);
-  --f1: #EA8600; --f2: #EDC00F; --f3: #026783; --f4: #309CB9; --f5: #7BC4E5; --f-ink-light: #FFFFFF; --f-ink-dark: #1F1A10;
-  --ok: #1F7A4D; --ok-soft: rgba(31,122,77,.12); --warn: #9A5B00; --warn-soft: rgba(201,140,40,.16);
-  --bad: #A3243B; --bad-soft: rgba(163,36,59,.10);
-  --tip-bg: #2A0C14; --tip-fg: #FBF3E6; --shadow: 0 10px 30px rgba(74,15,29,.10);
+  color-scheme: light;
+  --bg: #FFFFFF; --paper: #FBF8F4; --line: #EADBD0; --ink: #2A0C14; --muted: #6B4A54; --faint: #9A7F87;
+  --wine: #5E1726; --wine-2: #7A2236; --on-wine: #FBF3E6; --gold: #8C6A24; --gold-bright: #C9A55C; --gold-light: #E3CC94; --gold-soft: #F6EEDC;
+  --f1: #EA8600; --f2: #EDC00F; --f3: #026783; --f4: #309CB9; --f5: #7BC4E5; --f-dark: #1F1A10; --f-light: #FFFFFF;
+  --ok: #1F7A4D; --ok-soft: #E3F1EA; --warn: #9A5B00; --warn-soft: #FAEED9; --bad: #A3243B; --bad-soft: #F8E4E8;
   --display: "Cormorant Garamond", Georgia, "Times New Roman", serif;
   --body: "Nunito Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --radius: 12px;
-}
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
-  --bg: #1A0A10; --surface: #241018; --surface-2: #2F1620; --line: #43202C;
-  --ink: #FBF6EF; --muted: #CDB8BF; --faint: #A08690;
-  --wine: #3E0C18; --wine-2: #8A2A40; --on-wine: #FBF3E6; --band-gold: #E3CC94;
-  --gold: #D9B96E; --gold-bright: #D9B96E; --gold-soft: rgba(217,185,110,.14);
-  --f1: #EA8600; --f2: #EDC00F; --f3: #026783; --f4: #309CB9; --f5: #7BC4E5; --f-ink-light: #FFFFFF; --f-ink-dark: #1F1A10;
-  --ok: #5CC28F; --ok-soft: rgba(92,194,143,.14); --warn: #E3AC4F; --warn-soft: rgba(227,172,79,.14);
-  --bad: #F08A9C; --bad-soft: rgba(240,138,156,.12);
-  --tip-bg: #FBF3E6; --tip-fg: #2A0C14; --shadow: 0 10px 30px rgba(0,0,0,.35); color-scheme: dark;
-} }
-:root[data-theme="dark"] {
-  --bg: #1A0A10; --surface: #241018; --surface-2: #2F1620; --line: #43202C;
-  --ink: #FBF6EF; --muted: #CDB8BF; --faint: #A08690;
-  --wine: #3E0C18; --wine-2: #8A2A40; --on-wine: #FBF3E6; --band-gold: #E3CC94;
-  --gold: #D9B96E; --gold-bright: #D9B96E; --gold-soft: rgba(217,185,110,.14);
-  --f1: #EA8600; --f2: #EDC00F; --f3: #026783; --f4: #309CB9; --f5: #7BC4E5; --f-ink-light: #FFFFFF; --f-ink-dark: #1F1A10;
-  --ok: #5CC28F; --ok-soft: rgba(92,194,143,.14); --warn: #E3AC4F; --warn-soft: rgba(227,172,79,.14);
-  --bad: #F08A9C; --bad-soft: rgba(240,138,156,.12);
-  --tip-bg: #FBF3E6; --tip-fg: #2A0C14; --shadow: 0 10px 30px rgba(0,0,0,.35); color-scheme: dark;
 }
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
-body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.5; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.45; }
 body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--wine); }
-.wrap { max-width: 1200px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
-h1, h2, h3 { font-family: var(--display); font-weight: 700; text-wrap: balance; margin: 0; letter-spacing: .01em; }
-h2 { font-size: 1.6rem; line-height: 1.15; }
-h3 { font-size: 1.25rem; }
-.eyebrow { font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); font-weight: 800; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2 { font-family: var(--display); font-weight: 700; margin: 0; text-wrap: balance; }
 .nums { font-variant-numeric: tabular-nums; }
-button, select, input { font: inherit; color: inherit; }
+button, input { font: inherit; color: inherit; }
 :focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 2px; }
 
-/* Faixa da marca */
+/* Topo com a marca */
 .band { background: var(--wine); color: var(--on-wine); border-bottom: 2px solid var(--gold-bright); }
-.band .wrap { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; padding-block: 16px; }
-.logo { width: 58px; height: 58px; flex-shrink: 0; border-radius: 50%; padding: 0; border: 0; background: none; cursor: pointer; display: grid; place-items: center; overflow: hidden; }
+.band .wrap { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; padding-block: 14px; }
+.logo { width: 54px; height: 54px; border-radius: 50%; border: 0; padding: 0; background: none; cursor: pointer; flex-shrink: 0; overflow: hidden; }
 .logo svg, .logo img { width: 100%; height: 100%; display: block; }
-.logo img { object-fit: contain; background: #FBF3E6; border-radius: 50%; border: 1.5px solid #C9A55C; }
+.logo img { object-fit: contain; background: #FBF3E6; border-radius: 50%; border: 1.5px solid var(--gold-bright); }
 .brand { display: flex; flex-direction: column; min-width: 0; }
-.brand h1 { font-size: 2rem; color: var(--band-gold); line-height: 1; }
-.brand span { font-size: .85rem; color: rgba(251,243,230,.8); }
-.band-actions { margin-left: auto; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-.btn-band { background: transparent; border: 1px solid rgba(227,204,148,.55); color: #F3E6C4; border-radius: 999px; padding: 7px 14px; font-weight: 700; font-size: .85rem; cursor: pointer; list-style: none; }
-.btn-band::-webkit-details-marker { display: none; }
-.btn-band:hover { background: rgba(227,204,148,.12); }
-.btn-band[aria-pressed="true"] { background: #E3CC94; color: #3A0F1A; border-color: #E3CC94; }
-.logo-menu { position: relative; }
-.logo-menu .pop { position: absolute; right: 0; top: calc(100% + 8px); z-index: 35; background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: 10px; padding: 12px; width: 250px; box-shadow: var(--shadow); display: grid; gap: 8px; font-size: .85rem; }
-.logo-menu .pop p { margin: 0; color: var(--muted); }
+.brand h1 { font-size: 1.9rem; color: var(--gold-light); line-height: 1; }
+.brand span { font-size: .85rem; color: rgba(251,243,230,.82); }
+.band-actions { margin-left: auto; display: flex; gap: 8px; flex-wrap: wrap; }
+.btn-band { background: transparent; border: 1px solid rgba(227,204,148,.55); color: #F3E6C4; border-radius: 999px; padding: 7px 14px; font-weight: 700; font-size: .85rem; cursor: pointer; }
+.btn-band:hover { background: rgba(227,204,148,.14); }
 
-/* Abas e barra de ações */
+/* Abas (como as abas da planilha) */
 .topbar { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; padding-top: 18px; }
 .tabs { display: flex; gap: 6px; flex-wrap: wrap; }
-.tab { border: 1px solid var(--line); background: var(--surface); color: var(--muted); border-radius: 999px; padding: 9px 18px; font-weight: 800; font-size: .92rem; cursor: pointer; }
-.tab[aria-selected="true"] { background: var(--wine-2); border-color: var(--wine-2); color: #FBF3E6; }
+.tab { border: 1px solid var(--line); background: var(--bg); color: var(--muted); border-radius: 999px; padding: 8px 18px; font-weight: 800; font-size: .9rem; cursor: pointer; }
+.tab[aria-selected="true"] { background: var(--wine-2); border-color: var(--wine-2); color: var(--on-wine); }
 .tools { margin-left: auto; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-.confirm { display: inline-flex; gap: 6px; align-items: center; font-size: .85rem; font-weight: 700; color: var(--bad); }
-
-main { display: grid; gap: 22px; padding-block: 18px 120px; }
-.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; min-width: 0; }
-.sec-head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
-.sec-head p { margin: 0; color: var(--muted); font-size: .9rem; flex-basis: 100%; }
-
-.btn { border: 1px solid var(--line); background: var(--surface); border-radius: 8px; padding: 8px 12px; font-weight: 700; font-size: .85rem; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; color: var(--ink); }
+.btn { border: 1px solid var(--line); background: var(--bg); border-radius: 8px; padding: 8px 12px; font-weight: 700; font-size: .85rem; cursor: pointer; color: var(--ink); }
 .btn:hover { border-color: var(--gold-bright); }
-.btn.primary { background: var(--wine-2); border-color: var(--wine-2); color: #FBF3E6; }
-.btn.primary:hover { filter: brightness(1.08); }
-.btn.gold { background: var(--gold-bright); border-color: var(--gold-bright); color: #2A0C14; }
-.btn.sm { padding: 5px 10px; font-size: .8rem; }
+.btn.primary { background: var(--wine-2); border-color: var(--wine-2); color: var(--on-wine); }
+.confirm { display: inline-flex; gap: 6px; align-items: center; flex-wrap: wrap; font-size: .85rem; font-weight: 700; color: var(--bad); }
 
-/* Bolinha de ajuda */
-.q { width: 20px; height: 20px; border-radius: 50%; border: 1px solid var(--gold-bright); background: var(--gold-soft); color: var(--gold); font: 800 .72rem/1 var(--body); display: inline-grid; place-items: center; cursor: help; padding: 0; vertical-align: middle; flex-shrink: 0; }
-.q:hover { background: var(--gold-bright); color: #2A0C14; }
+main { display: grid; gap: 22px; padding-block: 18px 60px; }
+.sheet { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--bg); }
+.title { background: var(--wine); color: var(--gold-light); padding: 12px 18px; font-family: var(--display); font-size: 1.6rem; font-weight: 700; border-bottom: 2px solid var(--gold-bright); }
+.sheet-body { padding: 18px; display: grid; gap: 18px; }
 
-/* Guia */
-.guide { border-color: var(--gold-bright); background: linear-gradient(0deg, var(--gold-soft), var(--gold-soft)), var(--surface); }
-.guide ol { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; counter-reset: passo; }
-.guide li { counter-increment: passo; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 12px 12px 12px 46px; position: relative; font-size: .88rem; color: var(--muted); }
-.guide li::before { content: counter(passo); position: absolute; left: 12px; top: 12px; width: 24px; height: 24px; border-radius: 50%; background: var(--wine-2); color: #FBF3E6; display: grid; place-items: center; font-weight: 800; font-size: .8rem; }
-.guide li b { color: var(--ink); display: block; }
-.guide-foot { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 12px; }
+/* Verba */
+.verba { display: flex; align-items: stretch; flex-wrap: wrap; width: max-content; max-width: 100%; border-radius: 8px; overflow: hidden; border: 1px solid var(--line); }
+.verba label { background: #434343; color: #fff; font-weight: 800; padding: 9px 16px; display: grid; place-items: center; }
+.verba .cell { background: var(--paper); display: flex; align-items: center; gap: 6px; padding: 0 12px; }
+.verba input { border: 0; background: transparent; width: 150px; padding: 9px 0; font-weight: 800; font-size: 1.05rem; }
+.verba input.err { color: var(--bad); }
 
-/* Funil + números (as faixas do funil mantêm as cores originais da planilha) */
-.top { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); gap: 22px; align-items: start; }
-@media (max-width: 900px) { .top { grid-template-columns: 1fr; } }
-.funnel { display: grid; grid-template-columns: minmax(0, 1fr) minmax(128px, 200px); grid-auto-rows: 38px; column-gap: 14px; }
-.layer { grid-column: 1; border: 0; padding: 0 6%; cursor: pointer; display: grid; place-content: center; text-align: center; line-height: 1.1; color: var(--f-ink-light); transition: filter .15s; font: inherit; }
-.layer:hover { filter: brightness(1.1) saturate(1.05); }
-.layer .ll { font-size: .74rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; opacity: .9; }
-.layer .lv { font-family: var(--display); font-size: 1.7rem; font-weight: 700; }
-.layer.dark-ink { color: var(--f-ink-dark); }
-.conv { grid-column: 2; align-self: center; position: relative; border: 1px solid var(--line); background: var(--surface); border-radius: 10px; padding: 6px 10px; display: grid; gap: 1px; cursor: help; text-align: left; font: inherit; color: inherit; }
-.conv::before { content: ""; position: absolute; right: 100%; top: 50%; width: 14px; border-top: 1px dashed var(--gold-bright); }
-.conv .cn { font-size: .72rem; font-weight: 800; color: var(--muted); }
-.conv .cv { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
-.conv .cv b { font-size: 1.05rem; }
-.funnel-foot { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; font-size: .82rem; color: var(--muted); align-items: center; }
-@media (max-width: 520px) { .layer .lv { font-size: 1.3rem; } .layer .ll { font-size: .62rem; letter-spacing: .06em; } .funnel { column-gap: 10px; grid-template-columns: minmax(0,1fr) 118px; } .conv .cv b { font-size: .95rem; } }
+/* Funil */
+.grid { display: grid; grid-template-columns: minmax(0, 1fr) 270px; gap: 22px; align-items: start; }
+@media (max-width: 860px) { .grid { grid-template-columns: 1fr; } }
+.funnel { display: grid; grid-template-columns: 128px minmax(0, 1fr) 118px; align-items: stretch; }
+.hd { font-size: .78rem; font-weight: 800; padding: 6px 8px; }
+.hd.conv-h { background: #666; color: #fff; border-radius: 6px; text-align: center; margin-bottom: 8px; }
+.lab { background: #666; color: #fff; font-weight: 800; font-size: .88rem; overflow-wrap: anywhere; line-height: 1.15; display: flex; align-items: center; padding: 0 12px; margin: 6px 10px 6px 0; border-radius: 6px; }
+.layer { height: 74px; display: grid; place-items: center; }
+.layer input { width: min(170px, 62%); background: transparent; border: 0; border-bottom: 2px solid rgba(255,255,255,.6); border-radius: 6px 6px 0 0; text-align: center; font-family: var(--display); font-size: 1.65rem; font-weight: 700; padding: 2px 6px; color: inherit; }
+.layer.dark input { border-bottom-color: rgba(31,26,16,.4); }
+.layer input:focus { outline: none; background: #fff; color: var(--ink); border-color: var(--gold-bright); }
+.layer input.err, .an input.err { border-color: var(--bad) !important; box-shadow: 0 0 0 2px var(--bad-soft); }
+.conv { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 3px; padding-left: 10px; border-left: 1px dashed var(--line); }
+.conv b { font-size: 1.1rem; }
+.pill { display: inline-flex; border-radius: 99px; padding: 1px 9px; font-size: .72rem; font-weight: 800; white-space: nowrap; }
+.t0 { background: var(--bad-soft); color: var(--bad); } .t1 { background: var(--warn-soft); color: var(--warn); }
+.t2 { background: var(--ok-soft); color: var(--ok); } .t3 { background: var(--ok); color: #fff; } .t4 { background: var(--gold-bright); color: var(--ink); }
+.hint { font-size: .82rem; color: var(--muted); margin: 12px 0 0; }
+.hint code { background: var(--gold-soft); color: var(--ink); padding: 1px 6px; border-radius: 4px; font-weight: 700; }
+@media (max-width: 560px) {
+  .funnel { grid-template-columns: 96px minmax(0, 1fr) 84px; }
+  .lab { font-size: .68rem; padding: 0 6px; margin-right: 6px; }
+  .layer input { font-size: 1.25rem; width: 64%; }
+  .conv { padding-left: 6px; } .conv b { font-size: .95rem; } .pill { font-size: .64rem; padding: 1px 6px; }
+}
 
-.pill { display: inline-flex; align-items: center; border-radius: 99px; padding: 1px 8px; font-size: .7rem; font-weight: 800; white-space: nowrap; }
-.t0 { background: var(--bad-soft); color: var(--bad); }
-.t1 { background: var(--warn-soft); color: var(--warn); }
-.t2 { background: var(--ok-soft); color: var(--ok); }
-.t3 { background: var(--ok); color: var(--surface); }
-.t4 { background: var(--gold-bright); color: #2A0C14; }
+/* Referências (coluna J da planilha) */
+.refs { display: grid; gap: 12px; }
+.ref { border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; background: var(--paper); }
+.ref h3 { margin: 0 0 4px; font-size: .88rem; font-weight: 800; display: flex; justify-content: space-between; gap: 8px; }
+.ref h3 span { font-variant-numeric: tabular-nums; color: var(--wine-2); }
+.ref ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 2px; font-size: .84rem; color: var(--muted); }
+.ref li { padding: 1px 8px; border-radius: 6px; }
+.ref li.on { background: var(--wine-2); color: var(--on-wine); font-weight: 800; }
 
-.fields { display: grid; gap: 12px; }
-.fgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 12px; }
-@media (max-width: 420px) { .fgrid { grid-template-columns: 1fr; } }
-.field { display: grid; gap: 4px; min-width: 0; }
-.field .lab { display: flex; align-items: center; gap: 6px; font-size: .8rem; font-weight: 800; color: var(--muted); }
-.inp { position: relative; }
-.inp input { width: 100%; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 9px 10px; font-weight: 700; font-variant-numeric: tabular-nums; }
-.inp input:focus { border-color: var(--gold-bright); outline: none; box-shadow: 0 0 0 3px var(--gold-soft); }
-.inp.money input { padding-left: 34px; }
-.inp.money::before { content: "R$"; position: absolute; left: 10px; top: 50%; transform: translateY(-50%); font-size: .8rem; font-weight: 800; color: var(--faint); }
-.inp input.err { border-color: var(--bad); }
-.group-t { font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); font-weight: 800; padding-top: 4px; border-top: 1px solid var(--line); padding-block: 10px 0; }
-.ticket-out { font-size: .82rem; color: var(--muted); }
-.ticket-out b { color: var(--ink); }
-.flash { animation: flash 1.2s ease-out; }
-@keyframes flash { 0% { box-shadow: 0 0 0 4px var(--gold-bright); } 100% { box-shadow: 0 0 0 0 transparent; } }
+/* Análise dos resultados */
+.an-head { background: #000; color: #fff; font-weight: 800; padding: 10px 14px; border-radius: 8px 8px 0 0; font-size: .95rem; max-width: 640px; }
+.an { border: 1px solid var(--line); border-top: 0; border-radius: 0 0 8px 8px; overflow: hidden; max-width: 640px; }
+.an-row { display: grid; grid-template-columns: 150px minmax(0, 1fr); align-items: center; border-top: 1px solid var(--line); }
+.an-row:first-child { border-top: 0; }
+.an-row > span:first-child { padding: 10px 14px; font-weight: 800; background: var(--paper); align-self: stretch; display: flex; align-items: center; }
+.an-val { padding: 8px 14px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; min-width: 0; }
+.an-val b { font-size: 1.05rem; }
+.an-val input { width: 180px; max-width: 100%; border: 1px solid var(--line); border-radius: 6px; padding: 6px 9px; font-weight: 800; background: var(--bg); }
+.an-val input:focus { outline: none; border-color: var(--gold-bright); box-shadow: 0 0 0 3px var(--gold-soft); }
+.an-val .res { color: var(--muted); font-size: .85rem; }
+.an-row.total, .an-row.total > span:first-child { background: var(--gold-soft); }
+.an-row.total b { font-family: var(--display); font-size: 1.5rem; }
+@media (max-width: 480px) { .an-row { grid-template-columns: 112px minmax(0, 1fr); } }
 
-/* Análise */
-.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 12px; }
-.kpi { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; display: grid; gap: 4px; align-content: start; text-align: left; font: inherit; color: inherit; cursor: help; }
-.kpi .l { font-size: .78rem; color: var(--muted); font-weight: 800; display: flex; align-items: center; gap: 6px; }
-.kpi .v { font-family: var(--display); font-size: clamp(1.55rem, 2.1vw, 1.9rem); line-height: 1.05; font-weight: 700; white-space: nowrap; }
-.kpi .s { font-size: .78rem; color: var(--muted); display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
-.kpi.hero { background: var(--wine); border-color: var(--wine); color: var(--on-wine); }
-.kpi.hero .l, .kpi.hero .s { color: rgba(251,243,230,.82); }
-.kpi.hero .v { color: var(--band-gold); }
-.meter { height: 6px; border-radius: 99px; background: var(--surface-2); overflow: hidden; margin-top: 4px; }
-.meter i { display: block; height: 100%; border-radius: 99px; background: var(--ok); }
-.meter i.over { background: var(--bad); }
-
-.duo { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap: 22px; align-items: start; }
-/* Régua */
-.ruler { display: grid; gap: 18px; }
-.rl-head { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; flex-wrap: wrap; font-size: .88rem; }
-.rl-head b { font-size: .92rem; }
-.rl-bar { position: relative; display: flex; height: 14px; border-radius: 99px; overflow: hidden; margin: 8px 0 4px; }
-.rl-bar span { height: 100%; }
-.rl-bar .b0 { background: var(--bad-soft); } .rl-bar .b1 { background: var(--warn-soft); } .rl-bar .b2 { background: var(--ok-soft); }
-.rl-bar .b3 { background: color-mix(in srgb, var(--ok) 40%, transparent); } .rl-bar .b4 { background: color-mix(in srgb, var(--gold-bright) 70%, transparent); }
-.rl-wrap { position: relative; }
-.rl-mark { position: absolute; top: 2px; width: 4px; height: 24px; margin-left: -2px; background: var(--ink); border-radius: 2px; box-shadow: 0 0 0 2px var(--surface); }
-.rl-ticks { position: relative; height: 16px; font-size: .68rem; color: var(--faint); font-variant-numeric: tabular-nums; }
-.rl-ticks span { position: absolute; transform: translateX(-50%); white-space: nowrap; }
-.rl-ref { font-size: .78rem; color: var(--muted); margin: 2px 0 0; }
-
-/* Planejar */
-.plan-in { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
-@media (max-width: 420px) { .plan-in { grid-template-columns: 1fr; } }
-input[type=range] { width: 100%; accent-color: var(--wine-2); }
-.plan-list { display: grid; gap: 0; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
-.plan-row { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 12px; padding: 9px 12px; align-items: center; font-size: .9rem; }
-.plan-row + .plan-row { border-top: 1px solid var(--line); }
-.plan-row .now { color: var(--faint); font-size: .78rem; text-align: right; }
-.plan-row b { text-align: right; min-width: 90px; }
-.plan-row.total { background: var(--gold-soft); }
-.plan-row.total b { font-family: var(--display); font-size: 1.25rem; }
-.plan-note { font-size: .8rem; color: var(--muted); margin: 10px 0 0; }
-
-.foot { color: var(--faint); font-size: .8rem; display: flex; gap: 6px 14px; flex-wrap: wrap; }
-
-/* Balão */
-#tip { position: fixed; z-index: 60; max-width: min(300px, calc(100vw - 24px)); background: var(--tip-bg); color: var(--tip-fg); padding: 9px 12px; border-radius: 10px; font: 600 .82rem/1.45 var(--body); box-shadow: 0 8px 24px rgba(0,0,0,.28); pointer-events: none; }
-#tip::after { content: ""; position: absolute; left: var(--ax, 50%); border: 7px solid transparent; transform: translateX(-50%); }
-#tip[data-side="top"]::after { top: 100%; border-top-color: var(--tip-bg); }
-#tip[data-side="bottom"]::after { bottom: 100%; border-bottom-color: var(--tip-bg); }
-@media (prefers-reduced-motion: no-preference) { #tip:not([hidden]) { animation: tipin .12s ease-out; } @keyframes tipin { from { opacity: 0; } } }
-body.ajuda [data-tip] { outline: 2px dashed var(--gold-bright); outline-offset: 2px; cursor: help !important; }
-.helpbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; background: var(--tip-bg); color: var(--tip-fg);
-  padding: 14px max(16px, env(safe-area-inset-right, 0px)) calc(14px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
-  box-shadow: 0 -8px 24px rgba(0,0,0,.25); }
-.helpbar .in { max-width: 1200px; margin: 0 auto; display: flex; gap: 12px; align-items: center; }
-.helpbar p { margin: 0; font-size: .92rem; flex: 1; min-width: 0; }
-.helpbar b { font-family: var(--display); font-size: 1.2rem; display: block; }
-.helpbar button { background: transparent; border: 1px solid currentColor; color: inherit; border-radius: 99px; padding: 6px 14px; font-weight: 800; cursor: pointer; }
-.toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(18px + env(safe-area-inset-bottom, 0px)); background: var(--wine-2); color: #FBF3E6; padding: 10px 16px; border-radius: 99px; font-weight: 700; font-size: .88rem; z-index: 55; box-shadow: 0 6px 20px rgba(0,0,0,.25); max-width: calc(100vw - 32px); }
-@media (prefers-reduced-motion: no-preference) { .toast { animation: up .18s ease-out; } @keyframes up { from { opacity: 0; transform: translate(-50%, 8px); } } }
-@media (prefers-reduced-motion: reduce) { .flash { animation: none; } .layer { transition: none; } }
+.foot { color: var(--faint); font-size: .8rem; margin: 0; }
+.toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(18px + env(safe-area-inset-bottom, 0px)); background: var(--wine-2); color: var(--on-wine); padding: 10px 16px; border-radius: 99px; font-weight: 700; font-size: .88rem; z-index: 50; max-width: calc(100vw - 32px); }
 </style>
 </head>
 <body>
 
 <header class="band">
   <div class="wrap">
-    <button class="logo" id="logoBtn" type="button" aria-label="Logo Cris Márcia" data-tip="Sua marca. Clique para trocar pela imagem da sua logo (PNG ou JPG).">
+    <button class="logo" id="logoBtn" type="button" aria-label="Trocar a logo">
       <svg id="logoSvg" viewBox="0 0 64 64" aria-hidden="true">
         <circle cx="32" cy="32" r="31" fill="#3E0C18"/>
         <circle cx="32" cy="32" r="28.5" fill="none" stroke="#C9A55C" stroke-width="1.4"/>
@@ -226,490 +137,280 @@ body.ajuda [data-tip] { outline: 2px dashed var(--gold-bright); outline-offset: 
     </button>
     <div class="brand"><h1>Cris Márcia</h1><span>Visão da Operação de Marketing e Vendas · Máquina 3.0</span></div>
     <div class="band-actions">
-      <button class="btn-band" id="btnGuia" type="button" data-tip="Abre ou fecha o passo a passo de como usar este painel.">Como usar</button>
-      <button class="btn-band" id="btnAjuda" type="button" aria-pressed="false" data-tip="Liga o modo explicação: com ele ligado, tocar em qualquer item com contorno pontilhado mostra o que ele faz, sem executar nada.">Modo explicação</button>
-      <button class="btn-band" id="btnTema" type="button" data-tip="Alterna entre o fundo claro (branco) e o fundo escuro (vinho).">Tema escuro</button>
-      <details class="logo-menu" id="logoMenu">
-        <summary class="btn-band" data-tip="Coloque aqui a sua logo. Ela fica salva neste navegador.">Minha logo</summary>
-        <div class="pop">
-          <p>Envie a imagem da sua logo. Ela aparece no topo e fica salva neste navegador.</p>
-          <button class="btn primary" id="logoUp" type="button" data-tip="Escolha um arquivo de imagem do seu computador ou celular.">Enviar imagem</button>
-          <button class="btn" id="logoReset" type="button" data-tip="Volta para o monograma CM dourado.">Usar o monograma CM</button>
-        </div>
-      </details>
-      <input type="file" id="logoFile" accept="image/*" hidden>
+      <button class="btn-band" id="logoUp" type="button">Trocar logo</button>
+      <button class="btn-band" id="logoReset" type="button" hidden>Voltar ao monograma</button>
     </div>
+    <input type="file" id="logoFile" accept="image/*" hidden>
   </div>
 </header>
 
 <div class="wrap">
   <div class="topbar">
     <nav class="tabs" role="tablist" aria-label="Funis">
-      <button class="tab" type="button" role="tab" id="tab-servicos" data-funil="servicos" aria-selected="true" data-tip="Funil completo: impressões, cliques, leads, oportunidades e vendas. Use para serviços com atendimento e proposta.">Funil de Serviços</button>
-      <button class="tab" type="button" role="tab" id="tab-direta" data-funil="direta" aria-selected="false" data-tip="Funil curto: impressões, cliques e vendas. Use quando a pessoa compra direto, sem proposta.">Funil Venda Direta</button>
+      <button class="tab" type="button" role="tab" id="tab-servicos" data-funil="servicos" aria-selected="true">Funil de Serviços</button>
+      <button class="tab" type="button" role="tab" id="tab-direta" data-funil="direta" aria-selected="false">Funil Venda Direta</button>
     </nav>
     <div class="tools">
-      <button class="btn" type="button" id="btnCopiar" data-tip="Copia um resumo do funil (números, conversões e resultado) para colar no WhatsApp, e-mail ou relatório.">Copiar resumo</button>
-      <button class="btn" type="button" id="btnRestaurar" data-tip="Volta todos os números deste funil para os valores da planilha original.">Restaurar planilha</button>
-      <span class="confirm" id="confirmBox" hidden>Apagar suas mudanças neste funil?
-        <button class="btn sm primary" type="button" id="confirmSim">Sim, restaurar</button>
-        <button class="btn sm" type="button" id="confirmNao">Cancelar</button>
+      <button class="btn" type="button" id="btnZerar">Zerar números</button>
+      <button class="btn" type="button" id="btnRestaurar">Restaurar planilha</button>
+      <span class="confirm" id="confirmBox" hidden><span id="confirmTxt"></span>
+        <button class="btn primary" type="button" id="confirmSim">Sim</button>
+        <button class="btn" type="button" id="confirmNao">Cancelar</button>
       </span>
     </div>
   </div>
 
   <main>
-    <section class="card guide" id="guia" aria-labelledby="guiaT">
-      <div class="sec-head"><span class="eyebrow">Passo a passo</span><h2 id="guiaT">Como usar o seu funil</h2></div>
-      <ol>
-        <li><b>Escolha o funil</b>Serviços (com leads e proposta) ou Venda Direta (compra na hora).</li>
-        <li><b>Atualize os números</b>Copie do Google Ads e do seu controle de vendas para os campos ao lado do funil. Tudo recalcula na hora.</li>
-        <li><b>Leia as cores</b>Cada etapa ganha uma etiqueta: abaixo, bom, muito bom ou excelente, conforme a régua da planilha.</li>
-        <li><b>Planeje a meta</b>Diga quanto quer faturar e veja quantos leads, cliques e quanto de verba precisa.</li>
-      </ol>
-      <div class="guide-foot">
-        <button class="btn" type="button" id="fecharGuia" data-tip="Esconde este passo a passo. Ele volta pelo botão Como usar, no topo.">Entendi, esconder</button>
-        <span class="ticket-out">Passe o mouse ou toque no <button class="q" type="button" aria-label="Exemplo de ajuda" data-tip="Assim mesmo: cada ? abre um balão curto explicando o item ao lado.">?</button> para ver a explicação rápida de cada item.</span>
-      </div>
-    </section>
-
-    <section class="top">
-      <div class="card" aria-labelledby="funilT">
-        <div class="sec-head">
-          <span class="eyebrow" id="funilEyebrow">Google Ads</span>
-          <h2 id="funilT">Funil de Serviços</h2>
-          <p id="funilSub"></p>
+    <section class="sheet" aria-labelledby="titulo">
+      <h2 class="title" id="titulo">Funil de Métricas do Google Ads</h2>
+      <div class="sheet-body">
+        <div class="verba">
+          <label for="in-verba">Verba</label>
+          <span class="cell"><span>R$</span><input type="text" inputmode="decimal" id="in-verba" data-k="verba" class="nums"></span>
         </div>
-        <div class="funnel" id="funnel"></div>
-        <div class="funnel-foot">
-          <span>Toque numa faixa do funil para editar o número dela.</span>
-          <span class="pill t0">Abaixo</span><span class="pill t1">Razoável</span><span class="pill t2">Bom</span><span class="pill t3">Muito bom</span><span class="pill t4">Excelente</span>
-        </div>
-      </div>
 
-      <form class="card" id="form" autocomplete="off" aria-labelledby="formT">
-        <div class="sec-head">
-          <span class="eyebrow">Seus números</span>
-          <h2 id="formT">Dados da campanha</h2>
-          <p>Digite como quiser: 6290,76 ou 6.290,76. Fica salvo neste navegador.</p>
-        </div>
-        <div class="fields" id="fields"></div>
-      </form>
-    </section>
-
-    <section class="card" aria-labelledby="anaT">
-      <div class="sec-head">
-        <span class="eyebrow">Análise dos resultados da operação</span>
-        <h2 id="anaT">Quanto o anúncio trouxe de volta</h2>
-      </div>
-      <div class="kpis" id="kpis"></div>
-    </section>
-
-    <section class="duo">
-      <div class="card" aria-labelledby="regT">
-        <div class="sec-head">
-          <span class="eyebrow">Régua de referência</span>
-          <h2 id="regT">Onde você está em cada etapa</h2>
-          <p>A marca escura mostra a sua taxa. As faixas seguem os números de referência da planilha.</p>
-        </div>
-        <div class="ruler" id="ruler"></div>
-      </div>
-
-      <div class="card" aria-labelledby="planT">
-        <div class="sec-head">
-          <span class="eyebrow">Planejar meta</span>
-          <h2 id="planT">Quanto preciso para faturar</h2>
-          <p>Calculado a partir das suas taxas atuais e do custo por clique de agora.</p>
-        </div>
-        <div class="plan-in">
-          <div class="field">
-            <span class="lab">Meta de faturamento <button class="q" type="button" aria-label="Ajuda" data-tip="Quanto você quer faturar no período (mês, campanha). O painel calcula o caminho de trás para frente.">?</button></span>
-            <span class="inp money"><input type="text" inputmode="decimal" id="meta"></span>
+        <div class="grid">
+          <div>
+            <div class="funnel" id="funnel"></div>
+            <p class="hint">Para somar, digite a conta direto no campo, por exemplo <code>90+12</code>, e aperte Enter.</p>
           </div>
-          <div class="field">
-            <span class="lab">Melhorar conversões em <b class="nums" id="melhoraV">0%</b> <button class="q" type="button" aria-label="Ajuda" data-tip="Simula o que acontece se cada etapa do funil converter um pouco melhor (melhor atendimento, melhor oferta, melhor página).">?</button></span>
-            <input type="range" id="melhora" min="0" max="50" step="5" value="0" aria-label="Melhorar conversões em porcentagem">
-          </div>
+          <aside class="refs" id="refs" aria-label="Referências"></aside>
         </div>
-        <div class="plan-list" id="plan"></div>
-        <p class="plan-note" id="planNote"></p>
+
+        <div>
+          <div class="an-head">Análise dos Resultados da Operação</div>
+          <div class="an" id="analise"></div>
+        </div>
       </div>
     </section>
-
-    <footer class="foot">
-      <span>Fonte: planilha “Visão da Operação de Marketing e Vendas – Máquina 3.0”.</span>
-      <span>Funciona no Google Chrome, no computador e no celular.</span>
-    </footer>
+    <p class="foot">Fonte: planilha “Visão da Operação de Marketing e Vendas – Máquina 3.0”. Os números que você digitar ficam salvos neste navegador.</p>
   </main>
-</div>
-
-<div id="tip" role="tooltip" hidden></div>
-<div class="helpbar" id="helpbar" hidden>
-  <div class="in">
-    <p><b>Modo explicação ligado</b>Toque em qualquer item com contorno pontilhado para ver o que ele faz. Nada é executado.</p>
-    <button type="button" id="helpOff">Desligar</button>
-  </div>
 </div>
 <div class="toast" id="toast" role="status" hidden></div>
 
 <script>
 (() => {
   "use strict";
-  const $ = (s, r = document) => r.querySelector(s);
+  const $ = s => document.querySelector(s);
   const BRL = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
-  const BRL0 = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 });
   const INT = new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 0 });
   const DEC = new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 2 });
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-
-  function pct(r) {
+  const pct = r => {
     if (!isFinite(r)) return "–";
-    const p = r * 100;
-    if (p === 0) return "0%";
-    const d = p < 0.1 ? 3 : p < 1 ? 2 : 1;
+    const p = r * 100, d = p === 0 ? 0 : p < 0.1 ? 3 : p < 1 ? 2 : 1;
     return p.toLocaleString("pt-BR", { minimumFractionDigits: d, maximumFractionDigits: d }) + "%";
-  }
-  function parseNum(str) {
-    let s = String(str ?? "").replace(/R\$|\s|%/g, "");
-    if (!s) return NaN;
+  };
+
+  // Número no jeito brasileiro: 6.290,76 · 6290,76 · 6290.76 · 3.454.564
+  function num(tok) {
+    let s = tok;
     if (s.includes(",")) s = s.replace(/\./g, "").replace(",", ".");
     else if ((s.match(/\./g) || []).length > 1 || /^\d{1,3}\.\d{3}$/.test(s)) s = s.replace(/\./g, "");
     const n = Number(s);
-    return isFinite(n) && n >= 0 ? n : NaN;
+    if (!isFinite(n)) throw new Error("número");
+    return n;
   }
+  // Conta simples como na planilha: + - * / x e parênteses
+  function calcExpr(str) {
+    const src = String(str ?? "").replace(/R\$|\s/g, "").replace(/^=/, "").replace(/[x×]/gi, "*").replace(/÷/g, "/");
+    if (!src) return 0;
+    const toks = src.match(/\d[\d.,]*|[-+*/()]/g);
+    if (!toks || toks.join("") !== src) return NaN;
+    let i = 0;
+    const peek = () => toks[i];
+    function factor() {
+      const t = toks[i++];
+      if (t === "-") return -factor();
+      if (t === "+") return factor();
+      if (t === "(") { const v = expr(); if (toks[i++] !== ")") throw new Error(")"); return v; }
+      if (t && /^\d/.test(t)) return num(t);
+      throw new Error("conta");
+    }
+    function term() { let v = factor(); while (peek() === "*" || peek() === "/") { const op = toks[i++], b = factor(); v = op === "*" ? v * b : v / b; } return v; }
+    function expr() { let v = term(); while (peek() === "+" || peek() === "-") { const op = toks[i++], b = term(); v = op === "+" ? v + b : v - b; } return v; }
+    try { const v = expr(); return i === toks.length && isFinite(v) ? v : NaN; } catch (e) { return NaN; }
+  }
+  const isFormula = s => /[()*/x×÷+]/i.test(String(s)) || /\d\s*-/.test(String(s));
 
-  // Configuração dos dois funis, tirada da planilha.
+  // Os dois funis da planilha
   const FUNIS = {
     servicos: {
-      nome: "Funil de Serviços",
-      sub: "Do anúncio no Google até o contrato fechado, passando por lead e oportunidade.",
-      stages: [
-        { k: "impressoes", l: "Impressões", tip: "Quantas vezes o seu anúncio apareceu no Google." },
-        { k: "cliques", l: "Cliques", tip: "Quantas pessoas clicaram no anúncio e foram para o site ou WhatsApp." },
-        { k: "leads", l: "Leads", tip: "Pessoas que deixaram contato: WhatsApp, formulário ou ligação." },
-        { k: "oport", l: "Oportunidades", tip: "Leads qualificados, que receberam proposta ou marcaram conversa." },
-        { k: "vendas", l: "Vendas", tip: "Contratos fechados." }
+      stages: [["impressoes", "Impressões"], ["cliques", "Cliques"], ["leads", "Leads"], ["oport", "Oportunidades"], ["vendas", "Vendas"]],
+      colors: ["f1", "f2", "f3", "f4", "f5"],
+      refs: [
+        { t: "CTR", at: 1, bands: [[0, "abaixo de 10%"], [10, "10% bom"], [15, "15 a 20% muito bom"], [20, "> 20% excelente", 1]] },
+        { t: "Conversão de Clique para Leads", at: 2, bands: [[0, "abaixo de 10%"], [10, "10% bom"], [15, "15 a 20% muito bom"], [20, "> 20% excelente", 1]] },
+        { t: "Conversão de Leads para OP", at: 3, bands: [[0, "abaixo de 25%"], [25, "30% bom"], [30, "30% a 50% muito bom"], [50, "> 50% excelente", 1]] },
+        { t: "Conversão de OP para Venda", at: 4, bands: [[0, "abaixo de 10%"], [10, "10% razoável"], [20, "20% bom"], [30, "30% ótimo"], [40, "40% excelente"]] }
       ],
-      conv: [
-        { n: "CTR", nome: "Taxa de clique (CTR)", tip: "De cada 100 pessoas que viram o anúncio, quantas clicaram. Conta: cliques ÷ impressões.", bands: [[10, "Bom", 2], [15, "Muito bom", 3], [20, "Excelente", 4, true]], ref: "Planilha: 10% bom · 15 a 20% muito bom · acima de 20% excelente." },
-        { n: "Clique → Lead", nome: "Conversão de clique para lead", tip: "De cada 100 cliques, quantos viraram contato. Mostra se a página ou o WhatsApp convencem. Conta: leads ÷ cliques.", bands: [[10, "Bom", 2], [15, "Muito bom", 3], [20, "Excelente", 4, true]], ref: "Planilha: 10% bom · 15 a 20% muito bom · acima de 20% excelente." },
-        { n: "Lead → Oport.", nome: "Conversão de lead para oportunidade", tip: "De cada 100 leads, quantos viraram proposta ou reunião. Mostra a qualidade do atendimento. Conta: oportunidades ÷ leads.", bands: [[25, "Bom", 2], [30, "Muito bom", 3], [50, "Excelente", 4, true]], ref: "Planilha: 30% bom · 30 a 50% muito bom · acima de 50% excelente." },
-        { n: "Oport. → Venda", nome: "Conversão de oportunidade para venda", tip: "De cada 100 propostas, quantas fecharam. Mostra a força da sua negociação. Conta: vendas ÷ oportunidades.", bands: [[10, "Razoável", 1], [20, "Bom", 2], [30, "Ótimo", 3], [40, "Excelente", 4]], ref: "Planilha: 10% razoável · 20% bom · 30% ótimo · 40% excelente." }
-      ],
-      ticket: "parcelas",
-      defaults: { verba: 6290.76, impressoes: 3454564, cliques: 557, leads: 90, oport: 45, vendas: 14, entrada: 515, parcela: 412, nparc: 6, cacTeto: 1000, meta: 60000 }
+      analise: ["ticket", "cac", "cacTeto", "fat"],
+      raw: { verba: "6.290,76", impressoes: "3.454.564", cliques: "557", leads: "90", oport: "45", vendas: "14", ticket: "515+(412*6)", cacTeto: "1.000,00" }
     },
     direta: {
-      nome: "Funil Venda Direta",
-      sub: "Do anúncio no Google direto para a compra, sem etapa de proposta.",
-      stages: [
-        { k: "impressoes", l: "Impressões", tip: "Quantas vezes o seu anúncio apareceu no Google." },
-        { k: "cliques", l: "Cliques", tip: "Quantas pessoas clicaram no anúncio." },
-        { k: "vendas", l: "Vendas", tip: "Compras feitas." }
+      stages: [["impressoes", "Impressões"], ["cliques", "Cliques"], ["vendas", "Vendas"]],
+      colors: ["f1", "f2", "f3"],
+      refs: [
+        { t: "CTR", at: 1, bands: [[0, "abaixo de 4%"], [4, "5% bom"], [5, "5 a 10% muito bom"], [10, "> 10% excelente", 1]] },
+        { t: "Conversão de Vendas", at: 2, bands: [[0, "abaixo de 1%"], [1, "1% normal"], [2, "2 a 3% bom"], [3, "3 a 5% muito bom"], [5, "> 5% excelente", 1]] }
       ],
-      conv: [
-        { n: "CTR", nome: "Taxa de clique (CTR)", tip: "De cada 100 pessoas que viram o anúncio, quantas clicaram. Conta: cliques ÷ impressões.", bands: [[4, "Bom", 2], [5, "Muito bom", 3], [10, "Excelente", 4, true]], ref: "Planilha: 5% bom · 5 a 10% muito bom · acima de 10% excelente." },
-        { n: "Clique → Venda", nome: "Conversão de vendas", tip: "De cada 100 cliques, quantos compraram. Conta: vendas ÷ cliques.", bands: [[1, "Normal", 1], [2, "Bom", 2], [3, "Muito bom", 3], [5, "Excelente", 4, true]], ref: "Planilha: 1% normal · 2 a 3% bom · 3 a 5% muito bom · acima de 5% excelente." }
-      ],
-      ticket: "simples",
-      defaults: { verba: 26700, impressoes: 5000, cliques: 521, vendas: 150, ticket: 1250, cacTeto: 301, roasRef: 7.85, meta: 250000 }
+      analise: ["ticket", "cac", "cacTeto", "roas", "roasTeto", "fat"],
+      raw: { verba: "26.700,00", impressoes: "5.000", cliques: "521", vendas: "150", ticket: "1.250,00", cacTeto: "301,00", roasTeto: "7,85" }
     }
   };
-  const LAYER_COLORS = { 5: ["f1", "f2", "f3", "f4", "f5"], 3: ["f1", "f2", "f3"] };  // cores originais da planilha
+  const LABEL = { 4: ["Abaixo", "Bom", "Muito bom", "Excelente"], 5: ["Abaixo", "Razoável", "Bom", "Muito bom", "Excelente"] };
+  const TONE = { 4: [0, 2, 3, 4], 5: [0, 1, 2, 3, 4] };
 
-  // Estado salvo no navegador (se o navegador deixar).
-  const KEY = "cm-funil-v1";
+  // Estado salvo neste navegador
+  const KEY = "cm-funil-simples-v1";
   let saved = {};
   try { saved = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { saved = {}; }
   const state = {
     funil: FUNIS[saved.funil] ? saved.funil : "servicos",
-    data: { servicos: { ...FUNIS.servicos.defaults, ...(saved.data?.servicos || {}) }, direta: { ...FUNIS.direta.defaults, ...(saved.data?.direta || {}) } },
-    melhora: Number(saved.melhora) || 0,
-    guia: saved.guia !== false,
-    theme: saved.theme || null,
+    raw: { servicos: { ...FUNIS.servicos.raw, ...(saved.raw?.servicos || {}) }, direta: { ...FUNIS.direta.raw, ...(saved.raw?.direta || {}) } },
     logo: saved.logo || null
   };
-  function save() {
-    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* sem armazenamento: segue funcionando */ }
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* segue sem salvar */ } };
+  let tt;
+  const toast = m => { const t = $("#toast"); t.textContent = m; t.hidden = false; clearTimeout(tt); tt = setTimeout(() => { t.hidden = true; }, 2400); };
+
+  const val = k => { const v = calcExpr(state.raw[state.funil][k]); return isFinite(v) ? v : 0; };
+
+  function nivel(ref, rate) {
+    if (!isFinite(rate)) return -1;
+    const p = rate * 100; let idx = 0;
+    ref.bands.forEach(([min, , acima], j) => { if (acima ? p > min + 1e-9 : p >= min - 1e-9) idx = j; });
+    return idx;
+  }
+  function pill(ref, idx) {
+    if (idx < 0) return "";
+    const n = ref.bands.length;
+    return `<span class="pill t${TONE[n][idx]}">${LABEL[n][idx]}</span>`;
   }
 
-  let toastT;
-  function toast(msg) {
-    const t = $("#toast"); t.textContent = msg; t.hidden = false;
-    clearTimeout(toastT); toastT = setTimeout(() => { t.hidden = true; }, 2600);
+  // ---------- Montagem ----------
+  function fmtField(k, v) {
+    if (["verba", "ticket", "cacTeto"].includes(k)) return v.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    return k === "roasTeto" ? DEC.format(v) : INT.format(v);
   }
-
-  // ---------- Cálculos ----------
-  function ticketOf(f, d) {
-    return f.ticket === "parcelas" ? (d.entrada || 0) + (d.parcela || 0) * (d.nparc || 0) : (d.ticket || 0);
-  }
-  function calc(key) {
-    const f = FUNIS[key], d = state.data[key];
-    const counts = f.stages.map(s => d[s.k] || 0);
-    const rates = f.conv.map((c, i) => counts[i] > 0 ? counts[i + 1] / counts[i] : NaN);
-    const vendas = d.vendas || 0, verba = d.verba || 0, ticket = ticketOf(f, d);
-    const fat = vendas * ticket;
-    return {
-      counts, rates, ticket, fat, verba, vendas,
-      cac: vendas > 0 ? verba / vendas : NaN,
-      roas: verba > 0 ? fat / verba : NaN,
-      cpc: d.cliques > 0 ? verba / d.cliques : NaN,
-      cpl: d.leads > 0 ? verba / d.leads : NaN,
-      cpo: d.oport > 0 ? verba / d.oport : NaN,
-      lucro: fat - verba
-    };
-  }
-  function status(conv, rate) {
-    if (!isFinite(rate)) return { l: "Sem dados", t: 0 };
-    const p = rate * 100;
-    let res = { l: "Abaixo", t: 0 };
-    // "acima de X%" na planilha: precisa passar de X, não basta empatar
-    for (const [min, l, t, acima] of conv.bands) if (acima ? p > min + 1e-9 : p >= min - 1e-9) res = { l, t };
-    return res;
-  }
-
-  // ---------- Desenho do funil ----------
-  function renderFunnel() {
-    const f = FUNIS[state.funil], c = calc(state.funil);
-    const n = f.stages.length, step = n === 5 ? 6.5 : 11, colors = LAYER_COLORS[n];
-    let html = "";
-    f.stages.forEach((s, i) => {
+  function build() {
+    const f = FUNIS[state.funil], n = f.stages.length, step = n === 5 ? 6.5 : 11;
+    let h = `<span></span><span></span><span class="hd conv-h">Conversão</span>`;
+    f.stages.forEach(([k, l], i) => {
       const a = i * step, b = (i + 1) * step;
       const clip = `polygon(${a}% 0, ${100 - a}% 0, ${100 - b}% 100%, ${b}% 100%)`;
-      const darkInk = colors[i] !== "f3";
-      html += `<button type="button" class="layer${darkInk ? " dark-ink" : ""}" data-edit="${s.k}" style="grid-row:${i * 2 + 1} / span 2;background:var(--${colors[i]});clip-path:${clip};-webkit-clip-path:${clip}" data-tip="${esc(s.l + ": " + s.tip + " Clique para editar.")}">
-        <span class="ll">${esc(s.l)}</span><span class="lv nums">${INT.format(c.counts[i])}</span></button>`;
+      const dark = f.colors[i] !== "f3";
+      h += `<label class="lab" for="in-${k}">${esc(l)}</label>
+        <div class="layer${dark ? " dark" : ""}" style="background:var(--${f.colors[i]});color:var(--${dark ? "f-dark" : "f-light"});clip-path:${clip};-webkit-clip-path:${clip}">
+          <input type="text" inputmode="decimal" id="in-${k}" data-k="${k}" class="nums"></div>
+        <div class="conv" id="cv-${i}"></div>`;
     });
-    f.conv.forEach((cv, i) => {
-      const st = status(cv, c.rates[i]);
-      html += `<button type="button" class="conv" style="grid-row:${i * 2 + 2} / span 2" data-tip="${esc(cv.tip + " " + cv.ref)}">
-        <span class="cn">${esc(cv.n)}</span><span class="cv"><b class="nums">${pct(c.rates[i])}</b><span class="pill t${st.t}">${esc(st.l)}</span></span></button>`;
-    });
-    $("#funnel").innerHTML = html;
-    $("#funnel").style.gridTemplateRows = `repeat(${n * 2}, 38px)`;
-  }
+    $("#funnel").innerHTML = h;
 
-  // ---------- Campos ----------
-  function fieldHTML(id, label, tip, money) {
-    return `<label class="field" for="in-${id}"><span class="lab">${esc(label)} <button class="q" type="button" aria-label="Ajuda" data-tip="${esc(tip)}">?</button></span>
-      <span class="inp${money ? " money" : ""}"><input type="text" inputmode="decimal" id="in-${id}" data-k="${id}" data-money="${money ? 1 : 0}"></span></label>`;
-  }
-  function renderFields() {
-    const f = FUNIS[state.funil];
-    let h = `<div class="fgrid">${fieldHTML("verba", "Verba investida", "Quanto você gastou no Google Ads no período. Está em Campanhas → coluna Custo.", true)}</div>`;
-    h += `<div class="group-t">Etapas do funil</div><div class="fgrid">`;
-    f.stages.forEach(s => { h += fieldHTML(s.k, s.l, s.tip, false); });
-    h += `</div><div class="group-t">Preço e limites</div><div class="fgrid">`;
-    if (f.ticket === "parcelas") {
-      h += fieldHTML("entrada", "Entrada", "Valor pago na entrada. Na planilha: R$ 515.", true);
-      h += fieldHTML("parcela", "Valor da parcela", "Valor de cada parcela. Na planilha: R$ 412.", true);
-      h += fieldHTML("nparc", "Nº de parcelas", "Quantas parcelas o cliente paga além da entrada. Na planilha: 6.", false);
-    } else {
-      h += fieldHTML("ticket", "Ticket médio", "Valor médio de cada venda.", true);
-    }
-    h += fieldHTML("cacTeto", "CAC teto", "O máximo que você aceita pagar em anúncio para conquistar 1 cliente. Acima disso a venda deixa de compensar.", true);
-    if (f.ticket !== "parcelas") h += fieldHTML("roasRef", "ROAS de referência", "O retorno sobre o anúncio que você usa como meta. Na planilha: 7,85 (cada R$ 1 em anúncio volta R$ 7,85).", false);
-    h += `</div>`;
-    if (f.ticket === "parcelas") h += `<div class="ticket-out" id="ticketOut"></div>`;
-    $("#fields").innerHTML = h;
-    fillInputs();
-  }
-  function fmtInput(k, v) {
-    if (!isFinite(v)) return "";
-    if (["verba", "entrada", "parcela", "ticket", "cacTeto"].includes(k)) return v.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    return k === "roasRef" ? DEC.format(v) : INT.format(v);
-  }
-  function fillInputs() {
-    const d = state.data[state.funil];
-    document.querySelectorAll("#fields input").forEach(inp => { inp.value = fmtInput(inp.dataset.k, d[inp.dataset.k]); inp.classList.remove("err"); });
-    $("#meta").value = fmtInput("verba", d.meta);
-    $("#melhora").value = state.melhora;
-  }
-
-  // ---------- Indicadores ----------
-  function kpi(label, value, sub, tip, extra = "", hero = false) {
-    return `<button type="button" class="kpi${hero ? " hero" : ""}" data-tip="${esc(tip)}"><span class="l">${esc(label)}</span><span class="v nums">${value}</span><span class="s">${sub}</span>${extra}</button>`;
-  }
-  function renderKpis() {
-    const key = state.funil, f = FUNIS[key], d = state.data[key], c = calc(key);
-    const out = [];
-    const ticketTxt = f.ticket === "parcelas" ? `Ticket ${BRL.format(c.ticket)} (${BRL0.format(d.entrada || 0)} + ${INT.format(d.nparc || 0)}× ${BRL0.format(d.parcela || 0)})` : `Ticket ${BRL.format(c.ticket)}`;
-    out.push(kpi("Faturamento", BRL.format(c.fat), `${INT.format(c.vendas)} vendas · ${esc(ticketTxt)}`, "Quanto as vendas do funil trouxeram. Conta: vendas × ticket médio.", "", true));
-    const teto = d.cacTeto || 0, cacOk = isFinite(c.cac) && c.cac <= teto;
-    const ratio = teto > 0 && isFinite(c.cac) ? Math.min(c.cac / teto, 1) : 0;
-    out.push(kpi("CAC", isFinite(c.cac) ? BRL.format(c.cac) : "–",
-      isFinite(c.cac) ? `<span class="pill ${cacOk ? "t2" : "t0"}">${cacOk ? "Dentro do teto" : "Acima do teto"}</span> teto ${BRL0.format(teto)}` : "Preencha verba e vendas",
-      "Custo de aquisição de cliente: quanto de anúncio você gastou para fechar cada venda. Conta: verba ÷ vendas. Precisa ficar abaixo do CAC teto.",
-      `<span class="meter" aria-hidden="true"><i class="${cacOk ? "" : "over"}" style="width:${(ratio * 100).toFixed(1)}%"></i></span>`));
-    let roasSub = "Cada R$ 1 em anúncio";
-    if (isFinite(c.roas)) roasSub = `R$ 1 vira ${BRL.format(c.roas)}`;
-    if (d.roasRef) roasSub += ` · <span class="pill ${c.roas >= d.roasRef ? "t2" : "t1"}">${c.roas >= d.roasRef ? "Acima da referência" : "Abaixo da referência"}</span> ${DEC.format(d.roasRef)}×`;
-    out.push(kpi("ROAS", isFinite(c.roas) ? DEC.format(c.roas) + "×" : "–", roasSub, "Retorno sobre o investimento em anúncio. Conta: faturamento ÷ verba. 5× quer dizer que cada R$ 1 investido voltou R$ 5."));
-    out.push(kpi("Resultado após anúncio", BRL.format(c.lucro), `<span class="pill ${c.lucro >= 0 ? "t2" : "t0"}">${c.lucro >= 0 ? "Positivo" : "Negativo"}</span> faturamento − verba`, "O que sobra do faturamento depois de pagar o anúncio. Ainda não desconta outros custos, como impostos e equipe."));
-    out.push(kpi("Custo por clique", isFinite(c.cpc) ? BRL.format(c.cpc) : "–", `${INT.format(d.cliques || 0)} cliques`, "Quanto custou, em média, cada clique no anúncio. Conta: verba ÷ cliques."));
-    if (key === "servicos") {
-      out.push(kpi("Custo por lead", isFinite(c.cpl) ? BRL.format(c.cpl) : "–", `${INT.format(d.leads || 0)} leads`, "Quanto custou cada contato recebido. Conta: verba ÷ leads."));
-      out.push(kpi("Custo por oportunidade", isFinite(c.cpo) ? BRL.format(c.cpo) : "–", `${INT.format(d.oport || 0)} oportunidades`, "Quanto custou cada proposta ou reunião. Conta: verba ÷ oportunidades."));
-    }
-    const conversao = d.impressoes > 0 ? (d.vendas || 0) / d.impressoes : NaN;
-    out.push(kpi("Do anúncio à venda", pct(conversao), "vendas ÷ impressões", "De todas as pessoas que viram o anúncio, quantas compraram no fim. Serve para comparar meses."));
-    $("#kpis").innerHTML = out.join("");
-    const to = $("#ticketOut");
-    if (to) to.innerHTML = `Ticket médio calculado: <b class="nums">${BRL.format(c.ticket)}</b> (entrada + parcelas, como na planilha: 515 + 412 × 6).`;
-  }
-
-  // ---------- Régua ----------
-  function renderRuler() {
-    const f = FUNIS[state.funil], c = calc(state.funil);
-    $("#ruler").innerHTML = f.conv.map((cv, i) => {
-      const r = c.rates[i], st = status(cv, r), p = isFinite(r) ? r * 100 : 0;
-      const last = cv.bands[cv.bands.length - 1][0];
-      const max = last * 1.5;
-      const edges = [0, ...cv.bands.map(b => b[0]), max];
-      const segs = edges.slice(0, -1).map((e, j) => {
-        const w = (edges[j + 1] - e) / max * 100;
-        const t = j === 0 ? 0 : cv.bands[j - 1][2];
-        return `<span class="b${t}" style="width:${w}%"></span>`;
-      }).join("");
-      const ticks = cv.bands.map(b => `<span style="left:${b[0] / max * 100}%">${b[0]}%</span>`).join("");
-      const pos = Math.min(p, max) / max * 100;
-      return `<div data-tip="${esc(cv.tip)}" tabindex="0">
-        <div class="rl-head"><b>${esc(cv.nome)}</b><span><b class="nums">${pct(r)}</b> <span class="pill t${st.t}">${esc(st.l)}</span></span></div>
-        <div class="rl-wrap"><div class="rl-bar">${segs}</div>${isFinite(r) ? `<span class="rl-mark" style="left:${pos}%" aria-hidden="true"></span>` : ""}</div>
-        <div class="rl-ticks">${ticks}</div>
-        <p class="rl-ref">${esc(cv.ref)}</p></div>`;
-    }).join("");
-  }
-
-  // ---------- Planejar meta ----------
-  function renderPlan() {
-    const key = state.funil, f = FUNIS[key], d = state.data[key], c = calc(key);
-    const m = state.melhora / 100;
-    $("#melhoraV").textContent = state.melhora + "%";
-    const meta = d.meta || 0;
-    const bad = !(c.ticket > 0) || c.rates.some(r => !(r > 0)) || !(c.cpc > 0);
-    if (bad || meta <= 0) {
-      $("#plan").innerHTML = `<div class="plan-row"><span>${meta <= 0 ? "Digite uma meta de faturamento acima de zero." : "Preencha todas as etapas do funil, a verba e o ticket para planejar."}</span></div>`;
-      $("#planNote").textContent = "";
-      return;
-    }
-    const rates = c.rates.map(r => Math.min(r * (1 + m), 1));
-    const need = new Array(f.stages.length);
-    need[need.length - 1] = Math.ceil(meta / c.ticket);
-    for (let i = need.length - 2; i >= 0; i--) need[i] = Math.ceil(need[i + 1] / rates[i]);
-    const iCliques = f.stages.findIndex(s => s.k === "cliques");
-    const verba = need[iCliques] * c.cpc;
-    const fatReal = need[need.length - 1] * c.ticket;
-    const rows = f.stages.map((s, i) => `<div class="plan-row"><span>${esc(s.l)}</span><span class="now nums">hoje ${INT.format(c.counts[i])}</span><b class="nums">${INT.format(need[i])}</b></div>`).reverse();
-    rows.push(`<div class="plan-row total"><span>Verba estimada</span><span class="now nums">hoje ${BRL0.format(c.verba)}</span><b class="nums">${BRL0.format(verba)}</b></div>`);
-    rows.push(`<div class="plan-row"><span>CAC estimado</span><span class="now nums">teto ${BRL0.format(d.cacTeto || 0)}</span><b class="nums">${BRL.format(verba / need[need.length - 1])}</b></div>`);
-    rows.push(`<div class="plan-row"><span>ROAS estimado</span><span class="now nums">hoje ${isFinite(c.roas) ? DEC.format(c.roas) + "×" : "–"}</span><b class="nums">${DEC.format(fatReal / verba)}×</b></div>`);
-    $("#plan").innerHTML = rows.join("");
-    $("#planNote").textContent = `Para chegar a ${BRL0.format(meta)} você precisa de ${INT.format(need[need.length - 1])} vendas de ${BRL.format(c.ticket)}. Custo por clique mantido em ${BRL.format(c.cpc)}${m > 0 ? `, com cada etapa convertendo ${state.melhora}% melhor que hoje` : ""}.`;
-  }
-
-  function renderAll() {
-    const f = FUNIS[state.funil];
-    $("#funilT").textContent = f.nome;
-    $("#funilSub").textContent = f.sub;
+    const rows = {
+      ticket: `<div class="an-row"><span><label for="in-ticket">Ticket Médio</label></span><div class="an-val"><input type="text" id="in-ticket" data-k="ticket" class="nums"><span class="res nums" id="res-ticket"></span></div></div>`,
+      cac: `<div class="an-row"><span>CAC</span><div class="an-val"><b class="nums" id="o-cac"></b><span id="o-cacSt"></span><span class="res">verba ÷ vendas</span></div></div>`,
+      cacTeto: `<div class="an-row"><span><label for="in-cacTeto">CAC Teto</label></span><div class="an-val"><input type="text" inputmode="decimal" id="in-cacTeto" data-k="cacTeto" class="nums"></div></div>`,
+      roas: `<div class="an-row"><span>ROAS</span><div class="an-val"><b class="nums" id="o-roas"></b><span id="o-roasSt"></span><span class="res">faturamento ÷ verba</span></div></div>`,
+      roasTeto: `<div class="an-row"><span><label for="in-roasTeto">ROAS Teto</label></span><div class="an-val"><input type="text" inputmode="decimal" id="in-roasTeto" data-k="roasTeto" class="nums"></div></div>`,
+      fat: `<div class="an-row total"><span>Faturamento</span><div class="an-val"><b class="nums" id="o-fat"></b><span class="res nums" id="o-fatC"></span></div></div>`
+    };
+    $("#analise").innerHTML = f.analise.map(k => rows[k]).join("");
     document.querySelectorAll(".tab").forEach(t => t.setAttribute("aria-selected", String(t.dataset.funil === state.funil)));
-    renderFunnel(); renderKpis(); renderRuler(); renderPlan();
+    fill();
+    update();
+  }
+  function fill() {
+    document.querySelectorAll("input[data-k]").forEach(inp => { inp.value = state.raw[state.funil][inp.dataset.k] ?? ""; inp.classList.remove("err"); });
   }
 
-  // ---------- Eventos ----------
-  $("#fields").addEventListener("input", e => {
-    const inp = e.target.closest("input"); if (!inp) return;
-    const v = parseNum(inp.value);
-    inp.classList.toggle("err", inp.value.trim() !== "" && !isFinite(v));
-    if (inp.value.trim() === "") state.data[state.funil][inp.dataset.k] = 0;
-    else if (isFinite(v)) state.data[state.funil][inp.dataset.k] = v; else return;
-    renderFunnel(); renderKpis(); renderRuler(); renderPlan(); save();
-  });
-  $("#fields").addEventListener("focusout", e => {
-    const inp = e.target.closest("input"); if (!inp || inp.classList.contains("err")) return;
-    inp.value = fmtInput(inp.dataset.k, state.data[state.funil][inp.dataset.k]);
-  });
-  $("#form").addEventListener("submit", e => e.preventDefault());
-  $("#meta").addEventListener("input", e => {
-    const v = parseNum(e.target.value);
-    e.target.classList.toggle("err", e.target.value.trim() !== "" && !isFinite(v));
-    state.data[state.funil].meta = isFinite(v) ? v : 0; renderPlan(); save();
-  });
-  $("#meta").addEventListener("focusout", e => { if (!e.target.classList.contains("err")) e.target.value = fmtInput("verba", state.data[state.funil].meta); });
-  $("#melhora").addEventListener("input", e => { state.melhora = Number(e.target.value); renderPlan(); save(); });
+  function update() {
+    const f = FUNIS[state.funil];
+    const counts = f.stages.map(([k]) => val(k));
+    // Conversão: cada etapa ÷ a anterior (coluna D da planilha)
+    f.stages.forEach((s, i) => {
+      const el = $("#cv-" + i);
+      if (i === 0) { el.innerHTML = ""; return; }
+      const rate = counts[i - 1] > 0 ? counts[i] / counts[i - 1] : NaN;
+      const ref = f.refs.find(r => r.at === i);
+      el.innerHTML = `<b class="nums">${pct(rate)}</b>${ref ? pill(ref, nivel(ref, rate)) : ""}`;
+    });
+    // Referências (coluna J), com a faixa atual destacada
+    $("#refs").innerHTML = f.refs.map(ref => {
+      const a = counts[ref.at - 1], b = counts[ref.at];
+      const rate = a > 0 ? b / a : NaN, idx = nivel(ref, rate);
+      return `<div class="ref"><h3>${esc(ref.t)} <span>${pct(rate)}</span></h3><ul>${ref.bands.map((bd, j) => `<li class="${j === idx ? "on" : ""}">${esc(bd[1])}</li>`).join("")}</ul></div>`;
+    }).join("");
+    // Análise dos resultados
+    const verba = val("verba"), vendas = val("vendas"), ticket = val("ticket"), fat = vendas * ticket;
+    const cac = vendas > 0 ? verba / vendas : NaN, teto = val("cacTeto");
+    $("#res-ticket").textContent = isFormula(state.raw[state.funil].ticket) ? "= " + BRL.format(ticket) : "";
+    $("#o-cac").textContent = isFinite(cac) ? BRL.format(cac) : "–";
+    $("#o-cacSt").innerHTML = isFinite(cac) && teto > 0 ? (cac <= teto ? `<span class="pill t2">Dentro do teto</span>` : `<span class="pill t0">Acima do teto</span>`) : "";
+    $("#o-fat").textContent = BRL.format(fat);
+    $("#o-fatC").textContent = `${INT.format(vendas)} vendas × ${BRL.format(ticket)}`;
+    if ($("#o-roas")) {
+      const roas = verba > 0 ? fat / verba : NaN, rteto = val("roasTeto");
+      $("#o-roas").textContent = isFinite(roas) ? DEC.format(roas) : "–";
+      $("#o-roasSt").innerHTML = isFinite(roas) && rteto > 0 ? (roas >= rteto ? `<span class="pill t2">Acima do teto</span>` : `<span class="pill t1">Abaixo do teto</span>`) : "";
+    }
+  }
 
-  $("#funnel").addEventListener("click", e => {
-    const l = e.target.closest("[data-edit]"); if (!l) return;
-    const inp = $("#in-" + l.dataset.edit); if (!inp) return;
-    inp.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "center" });
-    inp.focus({ preventScroll: true }); inp.select();
-    const box = inp.parentElement; box.classList.remove("flash"); void box.offsetWidth; box.classList.add("flash");
+  // ---------- Digitação e contas ----------
+  document.addEventListener("input", e => {
+    const inp = e.target.closest("input[data-k]"); if (!inp) return;
+    const ok = isFinite(calcExpr(inp.value));
+    inp.classList.toggle("err", !ok);
+    if (!ok) return;
+    state.raw[state.funil][inp.dataset.k] = inp.value.trim();
+    update(); save();
+  });
+  function finish(inp) {
+    const k = inp.dataset.k, raw = inp.value.trim(), v = calcExpr(raw);
+    if (!isFinite(v)) return;
+    // O ticket guarda a conta, igual à planilha; os outros campos mostram o resultado da soma
+    const out = raw === "" ? "" : (k === "ticket" && isFormula(raw)) ? raw : fmtField(k, v);
+    inp.value = out; state.raw[state.funil][k] = out; update(); save();
+  }
+  document.addEventListener("focusout", e => { const inp = e.target.closest("input[data-k]"); if (inp) finish(inp); });
+  document.addEventListener("keydown", e => {
+    const inp = e.target.closest("input[data-k]");
+    if (inp && e.key === "Enter") { e.preventDefault(); finish(inp); }
   });
 
+  // ---------- Abas e botões ----------
   document.querySelectorAll(".tab").forEach(t => t.addEventListener("click", () => {
     if (state.funil === t.dataset.funil) return;
-    state.funil = t.dataset.funil; hideConfirm(); renderFields(); renderAll(); save();
+    state.funil = t.dataset.funil; hideConfirm(); build(); save();
+  }));
+  let pend = null;
+  function ask(msg, fn) {
+    pend = fn; $("#confirmTxt").textContent = msg; $("#confirmBox").hidden = false;
+    $("#btnZerar").hidden = true; $("#btnRestaurar").hidden = true; $("#confirmNao").focus();
+  }
+  function hideConfirm() { pend = null; $("#confirmBox").hidden = true; $("#btnZerar").hidden = false; $("#btnRestaurar").hidden = false; }
+  $("#confirmNao").addEventListener("click", hideConfirm);
+  $("#confirmSim").addEventListener("click", () => { const fn = pend; hideConfirm(); if (fn) fn(); });
+  $("#btnRestaurar").addEventListener("click", () => ask("Voltar este funil para os números da planilha?", () => {
+    state.raw[state.funil] = { ...FUNIS[state.funil].raw }; fill(); update(); save(); toast("Números da planilha restaurados.");
+  }));
+  $("#btnZerar").addEventListener("click", () => ask("Zerar verba e etapas para começar um novo período?", () => {
+    const r = state.raw[state.funil], keep = ["ticket", "cacTeto", "roasTeto"];
+    Object.keys(r).forEach(k => { if (!keep.includes(k)) r[k] = "0"; });
+    fill(); update(); save(); toast("Funil zerado. Ticket e tetos foram mantidos.");
   }));
 
-  const guia = $("#guia");
-  function setGuia(v) { state.guia = v; guia.hidden = !v; save(); }
-  $("#btnGuia").addEventListener("click", () => { setGuia(guia.hidden); if (!guia.hidden) guia.scrollIntoView({ block: "nearest" }); });
-  $("#fecharGuia").addEventListener("click", () => { setGuia(false); toast("Passo a passo escondido. Ele volta pelo botão Como usar."); });
-
-  // Restaurar com confirmação dentro da página
-  function hideConfirm() { $("#confirmBox").hidden = true; $("#btnRestaurar").hidden = false; }
-  $("#btnRestaurar").addEventListener("click", () => { $("#btnRestaurar").hidden = true; $("#confirmBox").hidden = false; $("#confirmNao").focus(); });
-  $("#confirmNao").addEventListener("click", hideConfirm);
-  $("#confirmSim").addEventListener("click", () => {
-    state.data[state.funil] = { ...FUNIS[state.funil].defaults };
-    hideConfirm(); fillInputs(); renderAll(); save(); toast("Números da planilha restaurados.");
-  });
-
-  // Copiar resumo
-  function resumo() {
-    const key = state.funil, f = FUNIS[key], d = state.data[key], c = calc(key);
-    const L = [`*${f.nome} · Cris Márcia*`, `Verba: ${BRL.format(c.verba)}`];
-    f.stages.forEach((s, i) => L.push(`${s.l}: ${INT.format(c.counts[i])}`));
-    L.push("", "*Conversões*");
-    f.conv.forEach((cv, i) => L.push(`${cv.nome}: ${pct(c.rates[i])} (${status(cv, c.rates[i]).l})`));
-    L.push("", "*Resultado*", `Faturamento: ${BRL.format(c.fat)}`, `Ticket médio: ${BRL.format(c.ticket)}`,
-      `CAC: ${isFinite(c.cac) ? BRL.format(c.cac) : "–"} (teto ${BRL.format(d.cacTeto || 0)})`,
-      `ROAS: ${isFinite(c.roas) ? DEC.format(c.roas) + "×" : "–"}`, `Resultado após anúncio: ${BRL.format(c.lucro)}`);
-    return L.join("\n");
-  }
-  $("#btnCopiar").addEventListener("click", () => {
-    const txt = resumo();
-    const fallback = () => {
-      const ta = document.createElement("textarea"); ta.value = txt; ta.setAttribute("readonly", "");
-      ta.style.cssText = "position:fixed;left:-9999px;top:0"; document.body.appendChild(ta); ta.select();
-      let ok = false; try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
-      ta.remove(); toast(ok ? "Resumo copiado. É só colar." : "Não deu para copiar automaticamente neste navegador.");
-    };
-    try {
-      if (navigator.clipboard?.writeText) navigator.clipboard.writeText(txt).then(() => toast("Resumo copiado. É só colar."), fallback);
-      else fallback();
-    } catch (e) { fallback(); }
-  });
-
-  // Tema
-  function effectiveDark() { return state.theme ? state.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches; }
-  function applyTheme() {
-    if (state.theme) document.documentElement.setAttribute("data-theme", state.theme);
-    $("#btnTema").textContent = effectiveDark() ? "Tema claro" : "Tema escuro";
-  }
-  $("#btnTema").addEventListener("click", () => { state.theme = effectiveDark() ? "light" : "dark"; applyTheme(); save(); });
-  matchMedia("(prefers-color-scheme: dark)").addEventListener?.("change", applyTheme);
-
-  // Logo
+  // ---------- Logo ----------
   function applyLogo() {
     const img = $("#logoImg"), svg = $("#logoSvg");
     if (state.logo) { img.src = state.logo; img.hidden = false; svg.style.display = "none"; }
     else { img.hidden = true; img.removeAttribute("src"); svg.style.display = ""; }
+    $("#logoReset").hidden = !state.logo;
   }
-  const pickLogo = () => { $("#logoFile").value = ""; $("#logoFile").click(); };
-  $("#logoBtn").addEventListener("click", pickLogo);
-  $("#logoUp").addEventListener("click", () => { $("#logoMenu").open = false; pickLogo(); });
-  $("#logoReset").addEventListener("click", () => { state.logo = null; applyLogo(); save(); $("#logoMenu").open = false; toast("Monograma CM de volta."); });
+  const pick = () => { $("#logoFile").value = ""; $("#logoFile").click(); };
+  $("#logoBtn").addEventListener("click", pick);
+  $("#logoUp").addEventListener("click", pick);
+  $("#logoReset").addEventListener("click", () => { state.logo = null; applyLogo(); save(); toast("Monograma CM de volta."); });
   $("#logoFile").addEventListener("change", e => {
     const file = e.target.files && e.target.files[0]; if (!file) return;
     if (!file.type.startsWith("image/")) { toast("Escolha um arquivo de imagem (PNG ou JPG)."); return; }
@@ -717,7 +418,7 @@ body.ajuda [data-tip] { outline: 2px dashed var(--gold-bright); outline-offset: 
     rd.onload = () => {
       const im = new Image();
       im.onload = () => {
-        const s = 240, k = Math.min(1, s / Math.max(im.width, im.height));
+        const k = Math.min(1, 240 / Math.max(im.width, im.height));
         const cv = document.createElement("canvas"); cv.width = Math.round(im.width * k); cv.height = Math.round(im.height * k);
         cv.getContext("2d").drawImage(im, 0, 0, cv.width, cv.height);
         try { state.logo = cv.toDataURL("image/png"); } catch (err) { state.logo = rd.result; }
@@ -728,66 +429,9 @@ body.ajuda [data-tip] { outline: 2px dashed var(--gold-bright); outline-offset: 
     };
     rd.readAsDataURL(file);
   });
-  document.addEventListener("click", e => { const m = $("#logoMenu"); if (m.open && !m.contains(e.target)) m.open = false; });
 
-  // ---------- Balões de explicação ----------
-  const tip = $("#tip");
-  let tipFor = null, tipTimer;
-  function showTip(el) {
-    const txt = el.getAttribute("data-tip"); if (!txt) return;
-    tip.textContent = txt; tip.hidden = false; tipFor = el;
-    const r = el.getBoundingClientRect(), tw = tip.offsetWidth, th = tip.offsetHeight, vw = innerWidth;
-    const anchorX = el.classList.contains("q") || r.width < 60 ? r.left + r.width / 2 : Math.min(Math.max(r.left + 30, r.left + r.width / 2 - tw / 2 + tw / 2), r.right - 30);
-    let left = Math.min(Math.max(12, anchorX - tw / 2), vw - tw - 12);
-    let side = "top", top = r.top - th - 10;
-    if (top < 8) { side = "bottom"; top = r.bottom + 10; }
-    tip.dataset.side = side;
-    tip.style.left = left + "px"; tip.style.top = top + "px";
-    tip.style.setProperty("--ax", Math.min(Math.max(14, anchorX - left), tw - 14) + "px");
-  }
-  function hideTip() { tip.hidden = true; tipFor = null; }
-  const canHover = matchMedia("(hover: hover)").matches;
-  document.addEventListener("mouseover", e => {
-    if (!canHover) return;
-    const el = e.target.closest("[data-tip]");
-    if (el === tipFor) return;
-    clearTimeout(tipTimer);
-    if (!el) { if (!document.body.classList.contains("ajuda")) hideTip(); return; }
-    tipTimer = setTimeout(() => showTip(el), 220);
-  });
-  document.addEventListener("focusin", e => {
-    const el = e.target.closest("[data-tip]");
-    if (el && el.matches(":focus-visible")) showTip(el); else if (!el) hideTip();
-  });
-  document.addEventListener("focusout", () => { if (!document.body.classList.contains("ajuda")) hideTip(); });
-  addEventListener("scroll", () => { if (tipFor) hideTip(); }, { passive: true });
-  addEventListener("resize", hideTip);
-  document.addEventListener("keydown", e => {
-    if (e.key === "Escape") { hideTip(); if (document.body.classList.contains("ajuda")) setAjuda(false); $("#logoMenu").open = false; }
-  });
-
-  // Toque no "?" e modo explicação: mostra o balão em vez de executar
-  function setAjuda(on) {
-    document.body.classList.toggle("ajuda", on);
-    $("#btnAjuda").setAttribute("aria-pressed", String(on));
-    $("#helpbar").hidden = !on; hideTip();
-  }
-  document.addEventListener("click", e => {
-    const q = e.target.closest(".q");
-    const ajuda = document.body.classList.contains("ajuda");
-    if (e.target.closest("#btnAjuda, #helpOff")) return;
-    const el = ajuda ? e.target.closest("[data-tip]") : q;
-    if (!el) { if (ajuda || !canHover) hideTip(); return; }
-    e.preventDefault(); e.stopPropagation();
-    if (tipFor === el && !tip.hidden) hideTip(); else showTip(el);
-  }, true);
-  $("#btnAjuda").addEventListener("click", () => setAjuda(!document.body.classList.contains("ajuda")));
-  $("#helpOff").addEventListener("click", () => setAjuda(false));
-
-  // ---------- Início ----------
-  applyTheme(); applyLogo();
-  guia.hidden = !state.guia;
-  renderFields(); renderAll();
+  applyLogo();
+  build();
 })();
 </script>
 </body>
