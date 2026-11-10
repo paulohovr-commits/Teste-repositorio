@@ -381,7 +381,17 @@ def pagina_home():
   <div class="pop-body"><span class="pop-tag">{e(tipo)}</span><h3>{e(nome)}</h3>
   <a class="btn btn-primary btn-sm" href="{wa(f'Olá, vim do site e gostaria de informações sobre: {nome}.')}" target="_blank" rel="noopener">{I['whats']}<span>{'Alugar' if tipo == 'Locação' else 'Comprar'}</span></a></div>
 </article>""" for tipo, nome, src in HOME["popular"])
-    marcas = "".join(f'<span class="brand-logo"><img src="{b}" alt="Marca parceira" loading="lazy"></span>' for b in HOME["brands"])
+    nomes_marcas = HOME.get("brand_names") or ["Marca parceira"] * len(HOME["brands"])
+    marcas = "".join(f'<span class="brand-logo"><img src="{b}" alt="{e(n)}" width="600" height="240" loading="lazy"></span>'
+                     for b, n in zip(HOME["brands"], nomes_marcas))
+    fotos = HOME["hero"]
+    slides_sobre = "".join(
+        f'<figure class="gal-slide{" is-active" if i == 0 else ""}" aria-hidden="{"false" if i == 0 else "true"}">'
+        f'<img src="{src}" alt="Foto {i + 1} da loja Caçapava Locações e Vendas" loading="lazy" decoding="async"></figure>'
+        for i, src in enumerate(fotos))
+    thumbs_sobre = "".join(
+        f'<button class="gal-thumb{" is-active" if i == 0 else ""}" aria-label="Ver foto {i + 1}"><img src="{src}" alt="" loading="lazy"></button>'
+        for i, src in enumerate(fotos))
     deps = "".join(
         f"""<figure class="review" data-tilt><div class="stars" aria-label="5 de 5 estrelas">{I['star'] * 5}</div>
 <blockquote>“{e(t)}”</blockquote><figcaption><span class="avatar">{e(n[0])}</span>{e(n)}</figcaption></figure>""" for n, t in DEPOIMENTOS)
@@ -422,7 +432,20 @@ def pagina_home():
 <section class="section about">
   <div class="wrap about-grid">
     <div class="about-media">
-      <div class="about-img" data-parallax="-10"><img src="{HOME['hero'][1]}" alt="Interior da loja com máquinas Husqvarna" loading="lazy"></div>
+      <div class="gallery" data-gallery aria-roledescription="carrossel" aria-label="Fotos da loja">
+        <div class="gal-stage">
+          {slides_sobre}
+          <div class="gal-ui">
+            <span class="gal-count"><b data-gal-cur>01</b> / {len(fotos):02d}</span>
+            <span class="gal-nav">
+              <button class="gal-btn" data-gal-prev aria-label="Foto anterior"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+              <button class="gal-btn" data-gal-next aria-label="Próxima foto">{I['arrow']}</button>
+            </span>
+          </div>
+          <span class="gal-progress"><i data-gal-bar></i></span>
+        </div>
+        <div class="gal-thumbs">{thumbs_sobre}</div>
+      </div>
       <div class="about-badge" data-reveal><strong data-count="5" data-suffix="+">5+</strong><span>anos no mercado</span></div>
     </div>
     <div class="about-txt">

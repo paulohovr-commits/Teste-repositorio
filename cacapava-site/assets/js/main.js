@@ -82,15 +82,76 @@
     if (!reduce) play();
   }
 
-  /* ---------- vídeos do YouTube (carregam só ao clicar) */
+  /* ---------- carrossel de fotos do "Quem somos" */
+  $$('[data-gallery]').forEach(function (g) {
+    var gs = $$('.gal-slide', g), th = $$('.gal-thumb', g);
+    var curEl = $('[data-gal-cur]', g), bar = $('[data-gal-bar]', g);
+    var n = 0, DUR = 5000, paused = false, start = 0, raf, prog = 0;
+    var pad = function (x) { return (x < 10 ? '0' : '') + x; };
+    var show = function (k, dir) {
+      k = (k + gs.length) % gs.length;
+      if (k === n) return;
+      var old = gs[n];
+      gs.forEach(function (s) { s.classList.remove('is-leaving', 'from-left'); });
+      old.classList.remove('is-active'); old.classList.add('is-leaving'); old.setAttribute('aria-hidden', 'true');
+      if (dir < 0) gs[k].classList.add('from-left');
+      void gs[k].offsetWidth;
+      gs[k].classList.add('is-active'); gs[k].setAttribute('aria-hidden', 'false');
+      var im = $('img', gs[k]); if (im) im.loading = 'eager';
+      th.forEach(function (b, i) { b.classList.toggle('is-active', i === k); });
+      n = k; if (curEl) curEl.textContent = pad(k + 1);
+      setTimeout(function () { old.classList.remove('is-leaving'); }, 1000);
+      restart();
+    };
+    var tick = function (now) {
+      if (paused || reduce) { start = now - prog * DUR; }
+      else {
+        prog = Math.min(1, (now - start) / DUR);
+        if (bar) bar.style.width = (prog * 100) + '%';
+        if (prog >= 1) { show(n + 1, 1); return; }
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    var restart = function () { cancelAnimationFrame(raf); prog = 0; start = performance.now(); if (bar) bar.style.width = '0'; raf = requestAnimationFrame(tick); };
+    $('[data-gal-next]', g).addEventListener('click', function () { show(n + 1, 1); });
+    $('[data-gal-prev]', g).addEventListener('click', function () { show(n - 1, -1); });
+    th.forEach(function (b, i) { b.addEventListener('click', function () { show(i, i < n ? -1 : 1); }); });
+    g.addEventListener('pointerenter', function (ev) { if (ev.pointerType === 'mouse') paused = true; });
+    g.addEventListener('pointerleave', function () { paused = false; });
+    var x0 = null;
+    var stage = $('.gal-stage', g);
+    stage.addEventListener('touchstart', function (ev) { x0 = ev.touches[0].clientX; }, { passive: true });
+    stage.addEventListener('touchend', function (ev) {
+      if (x0 === null) return;
+      var dx = ev.changedTouches[0].clientX - x0; x0 = null;
+      if (Math.abs(dx) > 40) show(n + (dx < 0 ? 1 : -1), dx < 0 ? 1 : -1);
+    });
+    g.addEventListener('keydown', function (ev) {
+      if (ev.key === 'ArrowRight') show(n + 1, 1);
+      if (ev.key === 'ArrowLeft') show(n - 1, -1);
+    });
+    restart();
+  });
+
+  /* ---------- vídeos do YouTube: tocam dentro da página ao clicar */
   $$('[data-yt]').forEach(function (b) {
     b.addEventListener('click', function () {
+      var id = b.dataset.yt;
+      // Aberto direto do computador (file://) o YouTube bloqueia o vídeo embutido: abre no YouTube.
+      if (location.protocol === 'file:') {
+        window.open('https://www.youtube.com/watch?v=' + id, '_blank', 'noopener');
+        return;
+      }
+      var box = document.createElement('div');
+      box.className = 'yt is-playing';
       var f = document.createElement('iframe');
-      f.src = 'https://www.youtube-nocookie.com/embed/' + b.dataset.yt + '?autoplay=1&rel=0';
-      f.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen';
+      f.src = 'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0&playsinline=1';
+      f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen';
       f.allowFullscreen = true;
-      f.title = 'Vídeo';
-      b.innerHTML = ''; b.appendChild(f); b.style.cursor = 'default';
+      f.referrerPolicy = 'strict-origin-when-cross-origin';
+      f.title = 'Vídeo do YouTube';
+      box.appendChild(f);
+      b.replaceWith(box); // o player fica num bloco próprio (dentro de um botão o YouTube não toca)
     }, { once: true });
   });
 

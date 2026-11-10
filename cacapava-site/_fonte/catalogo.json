@@ -808,12 +808,12 @@
    "assets/img/WhatsApp-Image-2025-01-09-at-18.49.52-1_11zon.webp"
   ],
   "brands": [
-   "assets/img/WhatsApp-Image-2024-11-11-at-13.25.36_11zon.webp",
-   "assets/img/WhatsApp-Image-2024-11-12-at-16.38.13.jpeg",
-   "assets/img/WhatsApp-Image-2024-11-11-at-13.21.44_11zon.webp",
-   "assets/img/WhatsApp-Image-2024-11-11-at-13.20.34_11zon.webp",
-   "assets/img/WhatsApp-Image-2024-11-11-at-13.18.41_11zon.webp",
-   "assets/img/WhatsApp-Image-2024-11-26-at-15.11.04.jpeg"
+   "assets/img/marcas/wolkan.png",
+   "assets/img/marcas/husqvarna.png",
+   "assets/img/marcas/branco.png",
+   "assets/img/marcas/fortequip.png",
+   "assets/img/marcas/csm.png",
+   "assets/img/marcas/dewalt.png"
   ],
   "popular": [
    [
@@ -850,6 +850,22 @@
    "outros": "assets/img/Outros_11zon-1.png"
   },
   "logo": "assets/img/logo.png",
-  "banner": "assets/img/Design-sem-nome_11zon.png"
+  "banner": "assets/img/Design-sem-nome_11zon.png",
+  "brands_orig": [
+   "assets/img/WhatsApp-Image-2024-11-11-at-13.25.36_11zon.webp",
+   "assets/img/WhatsApp-Image-2024-11-12-at-16.38.13.jpeg",
+   "assets/img/WhatsApp-Image-2024-11-11-at-13.21.44_11zon.webp",
+   "assets/img/WhatsApp-Image-2024-11-11-at-13.20.34_11zon.webp",
+   "assets/img/WhatsApp-Image-2024-11-11-at-13.18.41_11zon.webp",
+   "assets/img/WhatsApp-Image-2024-11-26-at-15.11.04.jpeg"
+  ],
+  "brand_names": [
+   "Wolkan",
+   "Husqvarna",
+   "Branco",
+   "Fortequip",
+   "CSM",
+   "DeWalt"
+  ]
  }
 }
