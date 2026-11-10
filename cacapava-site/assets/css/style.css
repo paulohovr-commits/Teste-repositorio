@@ -440,6 +440,7 @@ body.menu-open { overflow: hidden; }
 
 /* --------------------------------------------------------------- animação (estado inicial) */
 .anim [data-reveal], .anim [data-stagger] > * { opacity: 0; }
+.anim [data-stagger] > .yt.is-playing, .yt.is-playing { opacity: 1 !important; transform: none !important; }
 .anim [data-split] { opacity: 0; }
 .split-ready[data-split] { opacity: 1 !important; }
 .word { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: .08em; margin-bottom: -.08em; }

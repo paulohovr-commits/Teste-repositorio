@@ -37,6 +37,7 @@ ENDERECO = "Rua São Francisco, nº 1020 – Vila Antônio Augusto – Caçapava
 MAPA = ("https://maps.google.com/maps?q=" + quote("Rua São Francisco nº 1020 - Vila Antônio Augusto - Caçapava - SP")
         + "&t=m&z=15&output=embed&iwloc=near")
 MAPA_LINK = "https://www.google.com/maps/search/?api=1&query=" + quote("Rua São Francisco 1020 Vila Antônio Augusto Caçapava SP")
+VERSAO = "4"  # aumente sempre que mudar style.css ou main.js (força o navegador a baixar de novo)
 MSG_PADRAO = "Olá, vim do site gostaria de mais informações."
 
 LOCACAO = ["concretagem", "compactacao", "furacao-e-demolicao", "acesso-a-elevacao", "andaimes",
@@ -127,7 +128,7 @@ def head(root, titulo, descricao, caminho, extra_ld=""):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{root}assets/css/style.css">
+<link rel="stylesheet" href="{root}assets/css/style.css?v={VERSAO}">
 <script>document.documentElement.classList.add('js');if(!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('anim');setTimeout(function(){{if(!window.gsap)document.documentElement.classList.remove('anim')}},3500)</script>
 <script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>
 {extra_ld}
@@ -233,7 +234,7 @@ def footer(root):
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
-<script src="{root}assets/js/main.js" defer></script>
+<script src="{root}assets/js/main.js?v={VERSAO}" defer></script>
 </body>
 </html>
 """

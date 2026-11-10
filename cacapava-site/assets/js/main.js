@@ -144,6 +144,7 @@
       }
       var box = document.createElement('div');
       box.className = 'yt is-playing';
+      box.style.opacity = '1'; // a capa tinha sido animada; o player novo precisa nascer visível
       var f = document.createElement('iframe');
       f.src = 'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0&playsinline=1';
       f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen';
