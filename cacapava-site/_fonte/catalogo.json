@@ -1,0 +1,855 @@
+{
+ "cats": [
+  {
+   "slug": "concretagem",
+   "name": "Concretagem",
+   "items": [
+    {
+     "img": "assets/img/betoneira-400-litros.jpg",
+     "title": "Betoneira 400 Litros",
+     "desc": "A betoneira, ou misturador de concreto, é essencial em obras, agilizando a mistura de materiais e a flexibilidade do esforço manual.",
+     "cta": "Alugar",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/cortadora-de-piso.jpg",
+     "title": "Cortadora de Piso",
+     "desc": "Uma cortadora de piso é usada para cortes precisos, como juntas de dilatação, em pisos de concreto e asfalto.",
+     "cta": "Alugar",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/vibrador-para-concreto-ar-25-mm.jpg",
+     "title": "Vibrador de Concreto AR 25mm",
+     "desc": "O vibrador AR 25 mm transmite vibrações ao concreto fresco, eliminando vazios e garantindo uma massa mais elétrica e compacta.",
+     "cta": "Alugar",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/vibrador-para-concreto-ar-25-mm-1.jpg",
+     "title": "Vibrador de Concreto AR 36mm",
+     "desc": "O vibrador AR 36 mm transmite vibrações ao concreto fresco, eliminando vazios e garantindo uma massa mais elétrica e compacta.",
+     "cta": "Alugar",
+     "pdf": null
+    }
+   ],
+   "videos": [
+    "https://youtu.be/du6TCXPybVk"
+   ],
+   "url": "concretagem"
+  },
+  {
+   "slug": "compactacao",
+   "name": "Compactação",
+   "items": [
+    {
+     "img": "assets/img/WhatsApp-Image-2024-12-02-at-11.01.42-1.jpeg",
+     "title": "Compactadores de Solo Elétrico",
+     "desc": "Compactadores de solo elétricos compactam solos granulares e argilosos, sendo amplamente usados ​​em fundações e bases de piso.",
+     "cta": "Alugar",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/compactador-de-solo.jpg",
+     "title": "Compactadores de Solo à gasolina",
+     "desc": "O compactador de solo possui motor a gasolina, embreagem, tanque de combustível, sistema de compactação por mola, sapata e punho.",
+     "cta": "Alugar",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/placa-vibratoria.jpg",
+     "title": "Placa Vibratória",
+     "desc": "Placas vibratórias compactam solos granulares como areia, brita e asfalto. Recomenda-se 3-4 passadas para compactação ideal.",
+     "cta": "Alugar",
+     "pdf": null
+    }
+   ],
+   "videos": [
+    "https://youtu.be/kmWLKTAvyRE",
+    "https://youtu.be/NtLqBua_fkQ"
+   ],
+   "url": "compactacao"
+  },
+  {
+   "slug": "furacao-e-demolicao",
+   "name": "Furação e Demolição",
+   "items": [
+    {
+     "img": "assets/img/martelete-rompedor-5-kg.jpg",
+     "title": "Martelete Rompedor 5kg",
+     "desc": "O martelo rompedor 5 kg é um equipamento indispensável para o bom andamento de obras. O martelete rompedor 5 kg é indicado para retirada de reboco e revestimentos em paredes. Com ele é possível trabalhar de maneira rápida e segura, fazendo com que a obra tenha uma ótima eficiência. O martelete rompedor 5 kg é capaz de realizar diversas tarefas.",
+     "cta": "Alugar",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/martelete-demolidor-leve-10-kg.jpg",
+     "title": "Martelete Rompedor 10kg",
+     "desc": "O martelo demolidor rompedor de 10 kg, também conhecido popularmente como martelete, é essencial em obras civis. O martelo demolidor é indicado para demolição de alvenaria, pequenas vigas e pilares de concreto, revestimento de pisos e concreto magro. Com o martelo de demolição leve é possível fazer pequenos reparos e obras com materiais que não tenham alta resistência.",
+     "cta": "Alugar",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/martelo-demolidor-16-kg.jpg",
+     "title": "Martelete Rompedor 16kg",
+     "desc": "O martelo demolidor de 16 kg é indicado para demolir alvenaria, pequenas vigas, pisos e concreto magro, facilitando pequenos reparos.\nIdeal para demolições leves, como alvenaria e concreto magro, o martelo demolidor permite reparos em materiais de baixa resistência.",
+     "cta": "Alugar",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/furadeira-de-impacto-1-2-1.jpg",
+     "title": "Furadeira de Impacto 1/2\"",
+     "desc": "Uma furadeira de impacto em madeira, metal e alvenaria com precisão, rapidez e mínimo esforço físico para o operador.\nA furadeira de impacto realiza furos precisos em materiais variados com eficiência",
+     "cta": "Alugar",
+     "pdf": null
+    }
+   ],
+   "videos": [],
+   "url": "furacao-e-demolicao"
+  },
+  {
+   "slug": "acesso-a-elevacao",
+   "name": "Acesso e Elevação",
+   "items": [
+    {
+     "img": "assets/img/guincho-de-coluna-200-kg.jpg",
+     "title": "Guincho de Coluna 200kg",
+     "desc": "Para melhorar e facilitar o transporte de materiais em seu projeto, reduzindo custos e o tempo de elevação, desenvolvido para a elevação de materiais em obras, com segurança e praticidade.",
+     "cta": "Alugar",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/WhatsApp-Image-2024-11-19-at-13.47.14_11zon.webp",
+     "title": "Talha Manual",
+     "desc": "De fácil utilização, é extremamente versátil, ideal para içamento de cargas em obras, sitios, oficinas, etc.",
+     "cta": "Alugar",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/WhatsApp-Image-2024-11-19-at-13.57.23_11zon.webp",
+     "title": "ESCADAS 5M E 6M",
+     "desc": "Ideal para servicos domesticos ou profissionais.",
+     "cta": "Alugar",
+     "pdf": null
+    }
+   ],
+   "videos": [
+    "https://youtu.be/6pbISJf-izs"
+   ],
+   "url": "acesso-a-elevacao"
+  },
+  {
+   "slug": "andaimes",
+   "name": "Andaimes",
+   "items": [
+    {
+     "img": "assets/img/WhatsApp-Image-2024-11-07-at-09.32.13.jpeg",
+     "title": "Painel Metálico Andaime 1m",
+     "desc": "Andaimes são bases essenciais para executar tarefas em locais elevados, onde o trabalho não pode ser feito a partir do piso. Os painéis metálicos de 1 metro para andaimes oferecem segurança e características, além de serem rápidos e simples de montar e desmontar.",
+     "cta": "Alugar",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/WhatsApp-Image-2024-11-07-at-09.32.13.jpeg",
+     "title": "Painel Metálico Andaime 1,5ms",
+     "desc": "Andaimes são bases essenciais para executar tarefas em locais elevados, onde o trabalho não pode ser feito a partir do piso. Os painéis metálicos de 1,5 metros para andaimes oferecem segurança e características, além de serem rápidos e simples de montar e desmontar.",
+     "cta": "Alugar",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/piso-metalico.jpg",
+     "title": "Piso Metálico para Andaime 1m",
+     "desc": "O piso metálico de 1 metro para andaimes oferece maior estabilidade aos trabalhadores que executam atividades em altura. Com furos e umidades que evitam o acúmulo de água, a superfície do piso metálico é renovada, garantindo mais segurança.",
+     "cta": "Alugar",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/piso-metalico.jpg",
+     "title": "Piso Metálico para Andaime 1,5m",
+     "desc": "O piso metálico de 1,5 metros para andaimes oferece maior estabilidade aos trabalhadores que executam atividades em altura. Com furos e umidades que evitam o acúmulo de água, a superfície do piso metálico é renovada, garantindo mais segurança.",
+     "cta": "Alugar",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/sapata-ajustavel.jpg",
+     "title": "Sapata Ajustável para Andaime",
+     "desc": "Os rodízios para andaime são utilizados para facilitar o movimento das torres de andaime.",
+     "cta": "Alugar",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/rodizio.jpg",
+     "title": "Rodízio para Andaime",
+     "desc": "Os rodízios para andaime são utilizados para facilitar o movimento das torres de andaime.",
+     "cta": "Alugar",
+     "pdf": null
+    }
+   ],
+   "videos": [],
+   "url": "andaimes-2"
+  },
+  {
+   "slug": "ferramentas-eletricas",
+   "name": "Ferramentas Elétricas",
+   "items": [
+    {
+     "img": "assets/img/esmerilhadeira-7.jpg",
+     "title": "Esmerilhadeira 7\"",
+     "desc": "É indicada para esmerilhar e também realizar corte em alvenaria e metal. Excelente equipamento, a esmerilhadeira 7 é capaz de realizar tarefas com precisão, rapidez, economia e com muito pouco esforço físico para o operador.",
+     "cta": "Alugar",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/serra-marmore-7.jpg",
+     "title": "Serra Mármore 7\"",
+     "desc": "Indicado para corte em cerâmicas e pedras, a serra mármore 7 é um excelente equipamento capaz de realizar tarefas com precisão, rapidez, economia. Além disso, a serra mármore 7 exige muito pouco esforço físico para o operador.",
+     "cta": "Alugar",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/parafusadeira-bateria.jpg",
+     "title": "Parafusadeira à bateria",
+     "desc": "A parafusadeira a bateria é uma ferramenta versátil destinada a apertar e soltar parafusos.",
+     "cta": "Alugar",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/soprador-termico.jpg",
+     "title": "Soprador térmico",
+     "desc": "Permite o controle da temperatura e do fluxo de ar, garantindo o secamento ou remoção de tintas e vernizes de portas e janelas, remoção de películas protetoras dos vidros de carros, soldamento e dobramento de plásticos e muito mais.",
+     "cta": "Alugar",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/martelete-rompedor-5-kg.jpg",
+     "title": "Martelete Rompedor 5kg",
+     "desc": "O martelo rompedor 5 kg é um equipamento indispensável para o bom andamento de obras. O martelete rompedor 5 kg é indicado para retirada de reboco e revestimentos em paredes. Com ele é possível trabalhar de maneira rápida e segura, fazendo com que a obra tenha uma ótima eficiência. O martelete rompedor 5 kg é capaz de realizar diversas tarefas.",
+     "cta": "Alugar",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/martelete-demolidor-leve-10-kg.jpg",
+     "title": "Martelete Rompedor 10kg",
+     "desc": "O martelo demolidor rompedor de 10 kg, também conhecido popularmente como martelete, é essencial em obras civis. O martelo demolidor é indicado para demolição de alvenaria, pequenas vigas e pilares de concreto, revestimento de pisos e concreto magro. Com o martelo de demolição leve é possível fazer pequenos reparos e obras com materiais que não tenham alta resistência.",
+     "cta": "Alugar",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/martelo-demolidor-16-kg.jpg",
+     "title": "Martelete Rompedor 16kg",
+     "desc": "O martelo demolidor de 16 kg é indicado para demolir alvenaria, pequenas vigas, pisos e concreto magro, facilitando pequenos reparos.\nIdeal para demolições leves, como alvenaria e concreto magro, o martelo demolidor permite reparos em materiais de baixa resistência.",
+     "cta": "Alugar",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/furadeira-de-impacto-1-2-1.jpg",
+     "title": "Furadeira de Impacto 1/2\"",
+     "desc": "Uma furadeira de impacto em madeira, metal e alvenaria com precisão, rapidez e mínimo esforço físico para o operador.\nA furadeira de impacto realiza furos precisos em materiais variados com eficiência",
+     "cta": "Alugar",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/WhatsApp-Image-2024-11-25-at-15.42.32_11zon.webp",
+     "title": "INVERSORA DE SOLDA",
+     "desc": "A inversora de solda vonder foi fabricada com o intuito de facilitar o trabalho dos soldadores e proporcionar maior segurança aos operadores.",
+     "cta": "Alugar",
+     "pdf": null
+    }
+   ],
+   "videos": [],
+   "url": "ferramentas-eletricas"
+  },
+  {
+   "slug": "motores",
+   "name": "Motores",
+   "items": [
+    {
+     "img": "assets/img/compressor-ar-direto.jpg",
+     "title": "Compressor de Ar Direto Tufão",
+     "desc": "O compressor de ar direto pode ser utilizado em pinturas domésticas, de manutenção, em fachadas, painéis, em atelies e artesanatos, com tintas de base ou acabamento com a pistola de série, ou de ar direto com consumo de ar até 65 l/min.",
+     "cta": "Alugar",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/6837bbad-0c54-4d51-b09f-121d2f175e95.jpg",
+     "title": "Compressor com Reservatório",
+     "desc": "Compressores de ar para pintura de baixa pressão destinam-se a realização de pequenos serviços de pintura e reparo, é utilizado por profissionais em serviços de marcenaria, serralheria, entre outros, ou aplicações em prestação de serviços, fazendas e chácaras.",
+     "cta": "Alugar",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/WhatsApp-Image-2024-12-03-at-09.42.26.jpeg",
+     "title": "Bomba Airless",
+     "desc": "Equipamento de pequeno porte indicada para pinturas em látex, selador, esmaltes, vernizes e stains, apresenta ótima produtividade, transferindo 1 litro / minuto.",
+     "cta": "Alugar",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/WhatsApp-Image-2024-11-14-at-09.38.34_11zon.webp",
+     "title": "Gerador 6500 Kva",
+     "desc": "Com o gerador B4T-6500 você fica no controle da sua energia. Mais leves e eficientes, os Geradores Branco garantem menor ruído e baixo consumo de combustível, atendendo pequenas e médias demandas de energia. Além disso conta com alto rendimento, autonomia de 9 horas (com 50% de carga) .",
+     "cta": "Alugar",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/gerador-3500.jpg",
+     "title": "Gerador B4T 2500S",
+     "desc": "Indicado para pequenas e médias necessidades de energia o Gerador B4T-2500 é equipado com motor de 6,5cv e potência máxima de 2,2 kva, contendo controle de tensão é por AVR. Possui tanque de 15 litros e autonomia de 15 horas, o B4T-2500 é portátil e ideal para diversas aplicações.",
+     "cta": "Alugar",
+     "pdf": null
+    }
+   ],
+   "videos": [
+    "https://youtu.be/FxI5cqWthss",
+    "https://youtu.be/CJrPSeJS9RM"
+   ],
+   "url": "motores"
+  },
+  {
+   "slug": "jardinagem",
+   "name": "Jardinagem",
+   "items": [
+    {
+     "img": "assets/img/cortador-de-grama-gasolina.jpg",
+     "title": "Cortadora de Grama Gasolina",
+     "desc": "A cortadora de grama é indicada para o corte de grama e capim com baixa altura.",
+     "cta": "Alugar",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/cortador-de-grama.jpg",
+     "title": "Cortadora de Grama Elétrica",
+     "desc": "A cortadora de grama é indicada para o corte de grama e capim com baixa altura.",
+     "cta": "Alugar",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/aparador-de-cerca-viva-eletrico.jpg",
+     "title": "Aparador de Cerca Viva",
+     "desc": "O aparador de cerca viva é utilizado para aparar cercas vivas, “eras”, sebes e arbustos, que tenham galhos com diâmetro menor que 1 (um) cm.",
+     "cta": "Alugar",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/perfurador-de-solo.jpg",
+     "title": "Perfurador de Solo",
+     "desc": "É utilizado para realizar perfurações para plantio, cultivo de hortaliças, plantas (mudas) e instalações de mourões, permite o uso de brocas de diversos tamanhos para variadas aplicações.",
+     "cta": "Alugar",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/WhatsApp-Image-2024-11-25-at-15.56.43_11zon.webp",
+     "title": "Motosserra Elétrica",
+     "desc": "Leve e de fácil manuseio é ideal para atividades de carpintaria, podas e corte de lenha.",
+     "cta": "Alugar",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/WhatsApp-Image-2024-11-25-at-15.59.14_11zon.webp",
+     "title": "Motosserra a Bateria",
+     "desc": "Fácil de manusear, foi desenvolvida para manutenções residenciais, corte de lenha e carpintaria ocasional.",
+     "cta": "Alugar",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/WhatsApp-Image-2024-11-25-at-16.00.45_11zon.webp",
+     "title": "Soprador a Bateria",
+     "desc": "Ideal para a limpeza de folhas e gramas cortadas de jardins pequenos. Possui boa performance de sopro e agilidade ao limpar as áreas verdes, além de sua carga ser facilmente realizada através de um carregador.",
+     "cta": "Alugar",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/WhatsApp-Image-2024-11-25-at-16.02.32_11zon.webp",
+     "title": "Soprador Costal",
+     "desc": "O soprador Costal é ideal para serviços como limpeza de jardins, terrenos, máquinas agrícolas, áreas industriais, grandes áreas públicas e manutenção de estádios e rodovias.",
+     "cta": "Alugar",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/WhatsApp-Image-2024-11-12-at-18.06.47_11zon.webp",
+     "title": "MOTOPODA HT 75",
+     "desc": "A motopoda é indicada para podas em alturas. Possui rápida aceleração e uma haste que possibilita cortes de galhos no alto de árvores e manutenção de pomares. Possui alcance de aproximadamente 5m de altura.",
+     "cta": "Alugar",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/11zon_143RII-1.jpg",
+     "title": "ROÇADEIRA 143R-II",
+     "desc": "A Roçadeira Husqvarna 143-II é um equipamento potente, desenvolvido para trabalhos pesados. Com guidão em design assimétrico que proporciona a melhor posição de trabalho.",
+     "cta": "Alugar",
+     "pdf": null
+    }
+   ],
+   "videos": [],
+   "url": "jardinagem"
+  },
+  {
+   "slug": "limpeza",
+   "name": "Limpeza",
+   "items": [
+    {
+     "img": "assets/img/WhatsApp-Image-2024-11-12-at-18.10.22_11zon.webp",
+     "title": "LAVADORA DE ALTA PRESSÃO",
+     "desc": "As lavadoras de alta pressão são indicadas tanto para limpeza domésticas quanto profissionais, facilitando e agilizando o trabalho e atingindo uma melhor limpeza das áreas em que são utilizadas, seja limpando um quintal ou a sua obra.",
+     "cta": "Alugar",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/WhatsApp-Image-2024-11-12-at-18.12.38_11zon.webp",
+     "title": "SOPRADOR ELÉTRICO BGE 71",
+     "desc": "O soprador elétrico é ideal para limpar folhas secas, papel e outros resíduos semelhantes em médias e grandes áreas.",
+     "cta": "Alugar",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/WhatsApp-Image-2024-11-12-at-18.14.47_11zon.webp",
+     "title": "SOPRADOR à BATERIA",
+     "desc": "O soprador a bateria é leve e fácil de usar, ideal para a limpeza de folhas e gramas cortadas de jardins pequenos. Possui boa performance de sopro e agilidade ao limpar as áreas verdes.",
+     "cta": "Alugar",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/WhatsApp-Image-2024-11-12-at-18.16.55_11zon.webp",
+     "title": "SOPRADOR COSTAL",
+     "desc": "Potente , este tipo de soprador é ótimo para serviços como limpeza de jardins, terrenos, máquinas agrícolas, áreas industriais, grandes áreas públicas e manutenção de estádios e rodovias.",
+     "cta": "Alugar",
+     "pdf": null
+    }
+   ],
+   "videos": [],
+   "url": "limpeza"
+  },
+  {
+   "slug": "outros",
+   "name": "Outros",
+   "items": [
+    {
+     "img": "assets/img/container.jpg",
+     "title": "Conteiner Desmontavel",
+     "desc": "O Container desmontável e modular organiza e soluciona o problema com o armazenamento de materiais e ferramentas.",
+     "cta": "Alugar",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/inversora.jpg",
+     "title": "Inversora de Solda",
+     "desc": "A máquina de solda inversora é ideal para uso em serralherias, oficinas, montagem de estruturas leves e manutenção, permite a utilização em ambientes abertos de forma segura e com economia de energia elétrica.",
+     "cta": "Alugar",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/escora-metalica-4-50-m.jpg",
+     "title": "Escora Metálica 4,50m",
+     "desc": "Escoras metálicas reguláveis que chegam até 450 cm são equipamentos que servem para escorar provisoriamente elementos estruturais, como lajes e vigas. Para utilizar as vigas metálicas é preciso conferir as cargas conforme a capacidade da escora metálica.",
+     "cta": "Alugar",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/escora-metalica-4-50-m.jpg",
+     "title": "Escora Metálica 3,10m",
+     "desc": "Escoras metálicas reguláveis que chegam até 310 cm são equipamentos que servem para escorar provisoriamente elementos estruturais, como lajes e vigas. Para utilizar as vigas metálicas é preciso conferir as cargas conforme a capacidade da escora metálica.",
+     "cta": "Alugar",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/WhatsApp_Image_2024-11-25_at_16.22.51-removebg-preview_11zon.webp",
+     "title": "cortadoras de piso e azulejos 0,90/ 1,10 e 1,20 cm",
+     "desc": "Indicado para construções e reformas, possui sistema exclusivo de posicionamento e trava do separador, e bandejas para apoio do piso em chapa de aço niquelada. O corte e separação são feitos na própria base, de forma prática, tornando desnecessário retirar a peça para fazer a separação.",
+     "cta": "Alugar",
+     "pdf": null
+    }
+   ],
+   "videos": [],
+   "url": "outros"
+  },
+  {
+   "slug": "vendas",
+   "name": "Vendas",
+   "items": [
+    {
+     "img": "assets/img/61_11zon.webp",
+     "title": "MOTOSSERRA 61",
+     "desc": "",
+     "cta": "Comprar",
+     "pdf": "assets/docs/Motosserra-Motosserra-Husqvarna-61-Husqvarna-_-Husqvarna-Portal-BR.pdf"
+    },
+    {
+     "img": "assets/img/MS-120-1.jpg",
+     "title": "MOTOSSERRA 120",
+     "desc": "",
+     "cta": "Comprar",
+     "pdf": "assets/docs/Motosserra-Motosserra-Husqvarna-120-Husqvarna-_-Husqvarna-Portal-BR.pdf"
+    },
+    {
+     "img": "assets/img/61_11zon.webp",
+     "title": "MOTOSSERRA 125",
+     "desc": "",
+     "cta": "Comprar",
+     "pdf": "assets/docs/Motosserra-Motosserra-Husqvarna-125-Husqvarna-_-Husqvarna-Portal-BR.pdf"
+    },
+    {
+     "img": "assets/img/WhatsApp-Image-2024-11-26-at-20.01.24_11zon.webp",
+     "title": "Motosserra 353",
+     "desc": "",
+     "cta": "Comprar",
+     "pdf": "assets/docs/Motosserra-Motosserra-Husqvarna-353-Husqvarna-_-Husqvarna-Portal-BR.pdf"
+    },
+    {
+     "img": "assets/img/WhatsApp-Image-2024-11-26-at-20.08.10_11zon.webp",
+     "title": "Roçadeira 131 R",
+     "desc": "",
+     "cta": "Comprar",
+     "pdf": "assets/docs/Rocadeira-Rocadeira-Husqvarna-131R-Husqvarna-_-Husqvarna-Portal-BR.pdf"
+    },
+    {
+     "img": "assets/img/WhatsApp-Image-2024-11-26-at-20.12.38_11zon.webp",
+     "title": "ROÇADEIRA 531 RB",
+     "desc": "",
+     "cta": "Comprar",
+     "pdf": "assets/docs/Rocadeira-Rocadeira-costal-Husqvarna-531RB-Husqvarna-_-Husqvarna-Portal-BR.pdf"
+    },
+    {
+     "img": "assets/img/WhatsApp-Image-2024-11-26-at-20.09.27_11zon.webp",
+     "title": "Roçadeira 321 R",
+     "desc": "",
+     "cta": "Comprar",
+     "pdf": "assets/docs/Rocadeira-Rocadeira-Husqvarna-321R-Husqvarna-_-Husqvarna-Portal-BR.pdf"
+    },
+    {
+     "img": "assets/img/WhatsApp-Image-2024-11-26-at-20.13.59_11zon.webp",
+     "title": "Roçadeira 331 R",
+     "desc": "",
+     "cta": "Comprar",
+     "pdf": "assets/docs/Rocadeira-Rocadeira-Husqvarna-331R-Husqvarna-_-Husqvarna-Portal-BR.pdf"
+    },
+    {
+     "img": "assets/img/11zon_226R-1.jpeg",
+     "title": "ROÇADEIRA 226 R",
+     "desc": "",
+     "cta": "Comprar",
+     "pdf": "assets/docs/Rocadeira-Rocadeira-Husqvarna-226R-Husqvarna-_-Husqvarna-Portal-BR.pdf"
+    },
+    {
+     "img": "assets/img/11zon_143RII-1.jpg",
+     "title": "ROÇADEIRA 143R-II",
+     "desc": "",
+     "cta": "Comprar",
+     "pdf": "assets/docs/Rocadeira-Rocadeira-Husqvarna-143R-II-Husqvarna-_-Husqvarna-Portal-BR.pdf"
+    },
+    {
+     "img": "assets/img/WhatsApp-Image-2024-12-05-at-09.37.27_11zon.webp",
+     "title": "ROÇADEIRA ELÉTRICA BR 1300C",
+     "desc": "",
+     "cta": "Comprar",
+     "pdf": "assets/docs/354713929522557.pdf"
+    },
+    {
+     "img": "assets/img/WhatsApp-Image-2024-11-26-at-20.20.53_11zon.webp",
+     "title": "Aparador de cerca viva 122HD60",
+     "desc": "",
+     "cta": "Comprar",
+     "pdf": "assets/docs/Aparador-de-cerca-viva-Aparador-de-Cerca-Viva-Husqvarna-122-HD60-Husqvarna-_-Husqvarna-Portal-BR.pdf"
+    },
+    {
+     "img": "assets/img/125BVx-com-coletor_11zon.webp",
+     "title": "SOPRADOR 125B",
+     "desc": "",
+     "cta": "Comprar",
+     "pdf": "assets/docs/Soprador-de-folhas-Soprador-Husqvarna-125B-Husqvarna-_-Husqvarna-Portal-BR-1.pdf"
+    },
+    {
+     "img": "assets/img/125BVx-com-coletor_11zon.webp",
+     "title": "SOPRADOR 125BVX",
+     "desc": "",
+     "cta": "Comprar",
+     "pdf": "assets/docs/Soprador-de-folhas-Soprador-Husqvarna-125BVx-Husqvarna-_-Husqvarna-Portal-BR.pdf"
+    },
+    {
+     "img": "assets/img/WhatsApp-Image-2024-12-05-at-09.38.25_11zon.webp",
+     "title": "SOPRADOR ELÉTRICO BS 600C",
+     "desc": "",
+     "cta": "Comprar",
+     "pdf": "assets/docs/354898477156809.pdf"
+    },
+    {
+     "img": "assets/img/WhatsApp-Image-2024-11-26-at-20.24.57_11zon.webp",
+     "title": "perfurador de solo 541 EA",
+     "desc": "",
+     "cta": "Comprar",
+     "pdf": "assets/docs/Perfurador-de-solo-541EA-Material.pdf"
+    },
+    {
+     "img": "assets/img/WhatsApp-Image-2024-11-26-at-20.04.47_11zon.webp",
+     "title": "CORTADOR DE GRAMA LC 151S",
+     "desc": "",
+     "cta": "Comprar",
+     "pdf": "assets/docs/Cortador-de-grama-Cortador-de-Grama-Husqvarna-LC-151S-Husqvarna-_-Husqvarna-Portal-BR.pdf"
+    },
+    {
+     "img": "assets/img/WhatsApp-Image-2024-11-26-at-20.06.46_11zon.webp",
+     "title": "Cortador de grama Lc356Vp",
+     "desc": "",
+     "cta": "Comprar",
+     "pdf": "assets/docs/Cortador-de-grama-Cortador-de-Grama-Husqvarna-LC-356VP-Husqvarna-_-Husqvarna-Portal-BR-1.pdf"
+    },
+    {
+     "img": "assets/img/11zon_LC140P_3.jpg",
+     "title": "CORTADOR DE GRAMA LC 140",
+     "desc": "",
+     "cta": "Comprar",
+     "pdf": "assets/docs/LC140-FICHA-TECNICA-1.pdf"
+    },
+    {
+     "img": "assets/img/WhatsApp-Image-2024-11-26-at-20.18.32_11zon.webp",
+     "title": "Motocultivador TF 230",
+     "desc": "",
+     "cta": "Comprar",
+     "pdf": "assets/docs/Motocultivador-Motocultivador-Husqvarna-TF-230-Husqvarna-_-Husqvarna-Portal-BR.pdf"
+    },
+    {
+     "img": "assets/img/WhatsApp-Image-2024-12-05-at-09.41.28_11zon.webp",
+     "title": "LAVADORA DE ALTA PRESSÃO BL 1800 C",
+     "desc": "",
+     "cta": "Comprar",
+     "pdf": "assets/docs/355017271911417.pdf"
+    },
+    {
+     "img": "assets/img/WhatsApp-Image-2024-12-16-at-11.19.04.jpeg",
+     "title": "Pulverizador manual 320SM 20L",
+     "desc": "",
+     "cta": "Comprar",
+     "pdf": "assets/docs/Pulverizador-Pulverizador-Husqvarna-320SM-20L-Husqvarna-_-Husqvarna-Portal-BR.pdf"
+    },
+    {
+     "img": "assets/img/WhatsApp-Image-2024-12-05-at-09.52.09_11zon.webp",
+     "title": "PULVERIZADOR COSTAL BATERIA/MANUAL BPC 20 BM",
+     "desc": "",
+     "cta": "Comprar",
+     "pdf": "assets/docs/355729137164177.pdf"
+    },
+    {
+     "img": "assets/img/WhatsApp-Image-2024-11-26-at-20.16.45_11zon.webp",
+     "title": "Pulverizador a gasolina 321S25",
+     "desc": "",
+     "cta": "Comprar",
+     "pdf": "assets/docs/Pulverizador-Pulverizador-Husqvarna-321S25-Husqvarna-_-Husqvarna-Portal-BR.pdf"
+    },
+    {
+     "img": "assets/img/WhatsApp-Image-2024-12-05-at-09.46.50_11zon.webp",
+     "title": "MOTOCULTIVADOR TRATORITO A GASOLINA BTTG-6.5 - 800",
+     "desc": "",
+     "cta": "Comprar",
+     "pdf": "assets/docs/355388483735382.pdf"
+    },
+    {
+     "img": "assets/img/WhatsApp-Image-2024-12-05-at-09.48.53_11zon.webp",
+     "title": "MOTOR A GASOLINA B4T-7.0H",
+     "desc": "",
+     "cta": "Comprar",
+     "pdf": "assets/docs/355510678833679.pdf"
+    },
+    {
+     "img": "assets/img/WhatsApp-Image-2024-12-05-at-09.43.50_11zon.webp",
+     "title": "GERADOR A GASOLINA B4T-3500",
+     "desc": "",
+     "cta": "Comprar",
+     "pdf": "assets/docs/355205390867898.pdf"
+    },
+    {
+     "img": "assets/img/WhatsApp-Image-2024-12-05-at-09.45.26_11zon.webp",
+     "title": "MOTOBOMBA A GASOLINA B4T-703",
+     "desc": "",
+     "cta": "Comprar",
+     "pdf": "assets/docs/355307310599094.pdf"
+    },
+    {
+     "img": "assets/img/WhatsApp-Image-2024-12-16-at-11.25.35.jpeg",
+     "title": "Gerador G8500P",
+     "desc": "",
+     "cta": "Comprar",
+     "pdf": "assets/docs/Gerador-G8500P-Husqvarna-_-Husqvarna-Portal-BR.pdf"
+    },
+    {
+     "img": "assets/img/WhatsApp-Image-2024-11-29-at-16.13.56_11zon.webp",
+     "title": "Fio de corte",
+     "desc": "Diversos formatos e espessuras de Fios de corte para aumentar o desempenho de sua Roçadeira. Podem ser utilizados em qualquer cabeçote.",
+     "cta": "Contato",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/WhatsApp-Image-2024-11-29-at-15.55.58_11zon.webp",
+     "title": "TRIMMY T35 M12 236 43 235 41O",
+     "desc": "Cabeçote de fio de náilon T35 possui um sistema de alimentação do náilon semiautomático. O operador controla a alimentação do fio de náilon ao trabalhar com o equipamento. A máquina não precisa ser desligada.",
+     "cta": "Contato",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/68e6162c-a772-4b68-8daa-c648ce36ab9a.jpg",
+     "title": "Corrente X-CUT",
+     "desc": "Corrente rápida e resistente para cortes eficientes.",
+     "cta": "Contato",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/WhatsApp-Image-2024-11-29-at-16.03.34_11zon.webp",
+     "title": "Óleo 2 Tempos Husqvarna",
+     "desc": "Disponível nas opções de 200 ml, 500 ml e 1 L, o lubrificante Husqvarna PRO foi formulado para trabalhar com o máximo desempenho, atendendo os consumidores mais exigentes e as severas demandas profissionais, além disso, minimiza a formação de carvão sobre pistão, cilindro, virabrequim e janela de escape dos gases, permitindo maiores intervalos entre as manutenções do motor.",
+     "cta": "Contato",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/WhatsApp-Image-2024-11-29-at-16.07.25_11zon.webp",
+     "title": "Óleo de corrente Husqvarna Premium",
+     "desc": "Óleo de Corrente para Motosserra de base mineral com antiespumante e agentes de adesividade . Protege o sabre e a corrente contra oxidação, corrosão e desgaste prematuro.",
+     "cta": "Contato",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/db597be5-7795-4d88-8a9a-6df924147d2f.jpg",
+     "title": "Misturador de Combustível",
+     "desc": "Ideal para realizar e dosar a mistura de óleo e combustível para motores 2 tempos.",
+     "cta": "Contato",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/WhatsApp-Image-2024-11-29-at-16.10.01_11zon.webp",
+     "title": "Lâmina de corte 1 POL",
+     "desc": "Oferece alta produtividade, suporta trabalhos em vegetação densa com ótimo desempenho. Deve ser usada para roçadas em locais limpos",
+     "cta": "Alugar",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/18f5216e-9d33-48eb-bf2d-54a214d3e087.jpg",
+     "title": "Sabres HUSQVARNA",
+     "desc": "Mais durabilidade, menos peso e desempenho superior.",
+     "cta": "Contato",
+     "pdf": null
+    }
+   ],
+   "videos": [
+    "https://youtu.be/QPDirJYVoLM?si=yGktJjaEiaEAXvHn"
+   ],
+   "url": "vendas"
+  },
+  {
+   "slug": "manutencao",
+   "name": "Manutenção",
+   "intro": "Somos assistência técnica autorizada das marcas HUSQVARNA e BRANCO MOTORES . Nossa oficina é equipada com aparelhos e mão de obra qualificada para atender nossos clientes com maestria . Nossos mecânicos são certificados em diversas marcas, realizando assim , não só o conserto das que representamos, mas de todas as marcas do mercado com eficiência e rapidez. Nosso orçamento é sem compromisso! Possuímos diversos tipos de peças, acessórios e EPIs. Traga já sua máquina de jardinagem para conserto. Entre em contato com um de nossos colaboradores.",
+   "items": [
+    {
+     "img": "assets/img/WhatsApp-Image-2024-11-29-at-15.55.58_11zon.webp",
+     "title": "TRIMMY T35 M12 236 43 235 41O",
+     "desc": "Cabeçote de fio de náilon T35 possui um sistema de alimentação do náilon semiautomático. O operador controla a alimentação do fio de náilon ao trabalhar com o equipamento. A máquina não precisa ser desligada.",
+     "cta": "Contato",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/WhatsApp-Image-2024-11-29-at-16.03.34_11zon.webp",
+     "title": "Óleo 2 Tempos Husqvarna",
+     "desc": "Disponível nas opções de 200 ml, 500 ml e 1 L, o lubrificante Husqvarna PRO foi formulado para trabalhar com o máximo desempenho, atendendo os consumidores mais exigentes e as severas demandas profissionais, além disso, minimiza a formação de carvão sobre pistão, cilindro, virabrequim e janela de escape dos gases, permitindo maiores intervalos entre as manutenções do motor.",
+     "cta": "Contato",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/WhatsApp-Image-2024-11-29-at-16.07.25_11zon.webp",
+     "title": "Óleo de corrente Husqvarna Premium",
+     "desc": "Óleo de Corrente para Motosserra de base mineral com antiespumante e agentes de adesividade . Protege o sabre e a corrente contra oxidação, corrosão e desgaste prematuro.",
+     "cta": "Contato",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/WhatsApp-Image-2024-11-29-at-16.10.01_11zon.webp",
+     "title": "Lâmina de corte 1 POL",
+     "desc": "Oferece alta produtividade, suporta trabalhos em vegetação densa com ótimo desempenho. Deve ser usada para roçadas em locais limpos",
+     "cta": "Alugar",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/WhatsApp-Image-2024-11-29-at-16.13.56_11zon.webp",
+     "title": "Fio de corte",
+     "desc": "Diversos formatos e espessuras de Fios de corte para aumentar o desempenho de sua Roçadeira. Podem ser utilizados em qualquer cabeçote.",
+     "cta": "Contato",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/68e6162c-a772-4b68-8daa-c648ce36ab9a.jpg",
+     "title": "Corrente X-CUT",
+     "desc": "Corrente rápida e resistente para cortes eficientes.",
+     "cta": "Contato",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/18f5216e-9d33-48eb-bf2d-54a214d3e087.jpg",
+     "title": "Sabres HUSQVARNA",
+     "desc": "Mais durabilidade, menos peso e desempenho superior.",
+     "cta": "Contato",
+     "pdf": null
+    },
+    {
+     "img": "assets/img/db597be5-7795-4d88-8a9a-6df924147d2f.jpg",
+     "title": "Misturador de Combustível",
+     "desc": "Ideal para realizar e dosar a mistura de óleo e combustível para motores 2 tempos.",
+     "cta": "Contato",
+     "pdf": null
+    }
+   ],
+   "videos": [],
+   "intro_img": "assets/img/FOTO-OFICINA_11zon.webp",
+   "url": "manutencao"
+  }
+ ],
+ "home": {
+  "hero": [
+   "assets/img/WhatsApp-Image-2025-01-09-at-18.50.12_11zon.webp",
+   "assets/img/WhatsApp-Image-2025-01-09-at-18.49.53_11zon.webp",
+   "assets/img/WhatsApp-Image-2025-01-09-at-18.49.53-2_11zon.webp",
+   "assets/img/WhatsApp-Image-2025-01-09-at-18.49.53-1_11zon.webp",
+   "assets/img/WhatsApp-Image-2025-01-09-at-18.49.52_11zon.webp",
+   "assets/img/WhatsApp-Image-2025-01-09-at-18.49.52-2_11zon.webp",
+   "assets/img/WhatsApp-Image-2025-01-09-at-18.49.52-1_11zon.webp"
+  ],
+  "brands": [
+   "assets/img/WhatsApp-Image-2024-11-11-at-13.25.36_11zon.webp",
+   "assets/img/WhatsApp-Image-2024-11-12-at-16.38.13.jpeg",
+   "assets/img/WhatsApp-Image-2024-11-11-at-13.21.44_11zon.webp",
+   "assets/img/WhatsApp-Image-2024-11-11-at-13.20.34_11zon.webp",
+   "assets/img/WhatsApp-Image-2024-11-11-at-13.18.41_11zon.webp",
+   "assets/img/WhatsApp-Image-2024-11-26-at-15.11.04.jpeg"
+  ],
+  "popular": [
+   [
+    "Locação",
+    "BETONEIRA CSM 400L",
+    "assets/img/WhatsApp-Image-2024-11-12-at-16.51.39_11zon.webp"
+   ],
+   [
+    "Locação",
+    "COMPACTADOR DE SOLO A GASOLINA",
+    "assets/img/WhatsApp-Image-2024-11-12-at-16.53.58_11zon.webp"
+   ],
+   [
+    "Vendas",
+    "MOTOSSERRA HUSQVARNA 125",
+    "assets/img/WhatsApp-Image-2024-11-12-at-16.49.40_11zon.webp"
+   ],
+   [
+    "Vendas",
+    "ROÇADEIRA HUSQVARNA 131R",
+    "assets/img/WhatsApp-Image-2024-11-12-at-16.48.10_11zon.webp"
+   ]
+  ],
+  "icons": {
+   "concretagem": "assets/img/Concretagem_11zon-1.png",
+   "compactacao": "assets/img/Compactacao_11zon-1.png",
+   "furacao-e-demolicao": "assets/img/Furacao_e_Demolicao_11zon-1.png",
+   "acesso-a-elevacao": "assets/img/Acesso_e_Elevacao_11zon-1.png",
+   "andaimes": "assets/img/Andaimes_11zon-1.png",
+   "ferramentas-eletricas": "assets/img/Ferramentas_Eletricas_11zon-1.png",
+   "motores": "assets/img/Motores_11zon-1.png",
+   "jardinagem": "assets/img/Jardinagem_1_11zon-2.png",
+   "limpeza": "assets/img/Limpeza_1-1_11zon.png",
+   "outros": "assets/img/Outros_11zon-1.png"
+  },
+  "logo": "assets/img/logo.png",
+  "banner": "assets/img/Design-sem-nome_11zon.png"
+ }
+}
