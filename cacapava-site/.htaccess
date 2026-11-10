@@ -13,6 +13,13 @@ RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 Header set Referrer-Policy "strict-origin-when-cross-origin"
 </IfModule>
 
+# Páginas sempre atualizadas (o navegador confere se mudou antes de usar a cópia guardada)
+<IfModule mod_headers.c>
+<FilesMatch "\.html$">
+Header set Cache-Control "no-cache, must-revalidate"
+</FilesMatch>
+</IfModule>
+
 # Página não encontrada volta para o início
 ErrorDocument 404 /
 
