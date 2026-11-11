@@ -18,7 +18,7 @@
       <label for="senha">Senha</label>
       <input id="senha" type="password" autocomplete="current-password" required>
 
-      <button id="botao" class="largo" type="submit">Entrar</button>
+      <button id="botao" class="largo" type="submit" disabled>Carregando...</button>
       <p id="mensagem" class="mensagem" hidden></p>
     </form>
   </main>
@@ -29,14 +29,6 @@
     const form = document.getElementById("form-login");
     const botao = document.getElementById("botao");
     const msg = document.getElementById("mensagem");
-
-    // Se já estiver logado, vai direto para a tela certa.
-    try {
-      const info = await meuPerfil();
-      if (info?.perfil) location.replace(telaDoPapel(info.perfil.papel));
-    } catch (e) {
-      mostrarMensagem(msg, e.message);
-    }
 
     form.addEventListener("submit", async (ev) => {
       ev.preventDefault();
@@ -64,6 +56,17 @@
         botao.textContent = "Entrar";
       }
     });
+
+    // Se já estiver logado, vai direto para a tela certa.
+    try {
+      const info = await meuPerfil();
+      if (info?.perfil) location.replace(telaDoPapel(info.perfil.papel));
+    } catch (e) {
+      mostrarMensagem(msg, e.message);
+    }
+    // Só libera o botão depois que tudo carregou.
+    botao.disabled = false;
+    botao.textContent = "Entrar";
   </script>
 </body>
 </html>
