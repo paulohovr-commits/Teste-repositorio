@@ -1,6 +1,6 @@
 # Google Ads: como recuperar uma campanha que parou de vender ou caiu a performance do nada
 
-Transcrição do vídeo (duração: 10:44). Gerada automaticamente com reconhecimento de fala (Whisper) e revisada para corrigir erros evidentes de reconhecimento. Trechos marcados com `[?]` ficaram inaudíveis ou incertos.
+Transcrição do vídeo (duração: 10:44). Gerada automaticamente com reconhecimento de fala (Whisper) e revisada para corrigir erros evidentes de reconhecimento. Trechos marcados com `[?]` ficaram inaudíveis ou incertos. Autor: Adriano Gianini.
 
 ---
 
@@ -8,7 +8,7 @@ Transcrição do vídeo (duração: 10:44). Gerada automaticamente com reconheci
 
 **[00:17]** Nesse vídeo eu vou te explicar, de maneira estratégica e profissional, o que a gente deve fazer quando uma campanha perde performance ou quando ela simplesmente para do nada, o que você tem que olhar e em qual sequência você tem que olhar. Chega de papo, bora direto para o vídeo.
 
-**[00:32]** Olá, me chamo Adriano [sobrenome incerto], sou especialista em tráfego pago e sou o criador do treinamento mais completo de Google Ads do Brasil. Seja você um gestor de tráfego ou um empresário que toma conta das suas próprias campanhas, o treinamento mais completo e mais atualizado do Brasil está à sua disposição no link aqui abaixo.
+**[00:32]** Olá, me chamo Adriano Gianini, sou especialista em tráfego pago e sou o criador do treinamento mais completo de Google Ads do Brasil. Seja você um gestor de tráfego ou um empresário que toma conta das suas próprias campanhas, o treinamento mais completo e mais atualizado do Brasil está à sua disposição no link aqui abaixo.
 
 **[00:50]** Então se prepara para assistir essa aula pelo menos umas duas ou três vezes, porque definitivamente vou trazer para você aqui um material muito completo, muito mão na massa, e eu vou fazer junto com você aqui na minha conta do Google Ads. Então já aproveita, já dá um like, já se inscreve, porque essa aula vai ser super avançada para vocês.
 
