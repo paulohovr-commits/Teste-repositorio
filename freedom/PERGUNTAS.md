@@ -9,3 +9,7 @@ a resposta para o recurso e marco a pergunta como ✅.
 | P-002 | Qual é o primeiro tipo de cliente? Pelos painéis deste repositório, parece que escritórios e negócios locais. | Define quais redes e canais entram primeiro. | aberta |
 | P-003 | O organizador de prospecção que já existe aqui deve virar parte do Freedom? | Dá para reaproveitar o banco (Supabase), o login e o funil de leads. | aberta |
 | P-004 | Quanto a IA pode fazer sozinha no começo: só sugerir, publicar com aprovação, ou agir sozinha? | Define o nível de risco (S-002 e S-003). | aberta |
+| P-005 | O Freedom vai usar as mesmas ferramentas do Jarvis (Hotmart, Data Crazy, ActiveCampaign, Curseduca, Circle, Resend, WhatsApp, Search Console)? Quais entram primeiro? | Define as primeiras fichas de integração e a ordem de construção. | aberta |
+| P-006 | O Jarvis é um sistema seu? O Freedom vai conversar com ele ou substituí-lo? | Se ele já tiver um cofre e conexões funcionando, dá para reaproveitar. | aberta |
+| P-007 | Cada cliente do Freedom conecta as próprias contas, ou só você conecta tudo? | Se cada cliente conectar, cada um precisa do seu cofre separado (S-006). | aberta |
+| P-008 | Quando uma integração cair ou uma chave vencer, como você quer ser avisado: no sistema, por e-mail ou por WhatsApp? | Define o alerta de conexão com problema no card. | aberta |
