@@ -1,31 +1,17 @@
 # Freedom · instruções para o Claude
 
-O dono desta pasta está desenhando o **Freedom**, uma IA que vai ser uma agência de marketing 100%
-automatizada. Durante 1 a 2 semanas ele vai "desabafar" recursos soltos. Tudo fica num arquivo só:
-`Freedom/CADERNO-DE-DESABAFOS.md`.
+Esta pasta é o caderno de desabafos do Freedom, uma IA que vai ser uma agência de marketing
+automatizada. O dono não é técnico: escreva curto, simples e sem palavras técnicas.
 
-O dono não é técnico. Escreva em português simples, sem jargão, e explique qualquer termo técnico.
+Quando chegar um desabafo novo:
 
-## Quando chegar um desabafo novo
+1. Acrescente no fim do `CADERNO-DE-DESABAFOS.md` uma anotação no mesmo formato das anteriores:
+   número, data, tema, o que ele disse (sem mudar as palavras), o que você entendeu, ideias para deixar
+   mais inteligente (ligando com os desabafos anteriores), integrações, cuidado de segurança e perguntas.
+2. Cada parte com poucas linhas. Simples primeiro.
+3. Salve no Git e envie para o branch da sessão.
+4. Atualize a página https://claude.ai/artifact/XC8zKiFRmBBsgZhuDuHFUp: rode
+   `python3 Freedom/.pagina/gerar.py` e publique `Freedom/.pagina/caderno.html` nesse endereço.
+5. Responda em 2 ou 3 linhas dizendo o que foi anotado.
 
-(Desabafo é qualquer mensagem descrevendo algo que o Freedom deve fazer.)
-
-1. **Seção 1 (Desabafos):** cole o texto **como ele disse**, sem reescrever, no topo da seção, com
-   número seguido, data e tema. Embaixo, "O que o Claude entendeu".
-2. **Seção 2 (Recursos):** crie ou atualize a ficha do recurso (próximo número R0x) e a tabela.
-3. **Seção 3 (Cruzamentos):** cruze o recurso novo com **todos** os anteriores. Atualize a matriz,
-   escreva cada cruzamento com a inteligência que ele gera, e confira a tabela "Cruzamentos esperando
-   recurso".
-4. **Seções 4 e 5:** anote integrações e alertas de segurança.
-5. **Seção 6:** o que ficou em aberto vira pergunta. Se o desabafo responder uma pergunta antiga, tire
-   ela de lá e leve a resposta para a ficha do recurso.
-6. Atualize a tabela "Resumo" do topo.
-7. Salve no Git e envie (commit + push) para o branch da sessão.
-8. Atualize a página de leitura no Claude: publique de novo, no mesmo endereço, a página
-   https://claude.ai/artifact/XC8zKiFRmBBsgZhuDuHFUp com o conteúdo novo. Rode
-   `python3 Freedom/.pagina/gerar.py` e publique `Freedom/.pagina/caderno.html` passando esse endereço em `url`
-   (leia a página antes com a ferramenta Artifact, ação "read").
-9. Responda ao dono em poucas linhas: o que entrou, os cruzamentos novos mais interessantes e as
-   perguntas novas.
-
-Nada é descartado nesta fase. Não comece a construir o Freedom até o dono pedir.
+Não comece a construir o Freedom até o dono pedir.
