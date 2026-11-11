@@ -1,0 +1,187 @@
+<title>Freedom</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: caderno de uma coluna; faixa do topo com nome e contadores, abas fixas, texto em largura de leitura. */
+:root {
+  --bg: #f6f8fa;
+  --paper: #ffffff;
+  --ink: #14202b;
+  --muted: #5b6b78;
+  --line: #dde4ea;
+  --accent: #1f5fd1;
+  --accent-soft: #e6eefc;
+  --code-bg: #eef2f6;
+  --font-display: "Bricolage Grotesque", "Inter", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e141a; --paper: #151d25; --ink: #e5ecf2; --muted: #93a3b1;
+    --line: #26323d; --accent: #7aa8ff; --accent-soft: #1a2a44; --code-bg: #1d2731;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e141a; --paper: #151d25; --ink: #e5ecf2; --muted: #93a3b1;
+  --line: #26323d; --accent: #7aa8ff; --accent-soft: #1a2a44; --code-bg: #1d2731;
+  color-scheme: dark;
+}
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 15px; line-height: 1.6; }
+.wrap { max-width: 860px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+header { padding-block: 28px 18px; }
+.brand { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.brand h1 { font-family: var(--font-display); font-weight: 800; font-size: 2.4rem; letter-spacing: -0.02em; margin: 0; }
+.brand span { color: var(--muted); font-size: 0.95rem; }
+.stats { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.stat { display: flex; align-items: baseline; gap: 6px; background: var(--paper); border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; font-size: 0.85rem; color: var(--muted); }
+.stat b { font-family: var(--font-mono); color: var(--ink); font-variant-numeric: tabular-nums; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line); }
+.tabs { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; padding-block: 6px; }
+.tabs a { flex: none; text-decoration: none; color: var(--muted); font-weight: 500; font-size: 0.92rem; padding: 7px 12px; border-radius: 8px; }
+.tabs a:hover { color: var(--ink); background: var(--code-bg); }
+.tabs a[aria-current="page"] { color: var(--accent); background: var(--accent-soft); }
+.tabs a:focus-visible, .doc a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+main { padding-block: 24px 64px; }
+.doc { min-width: 0; }
+.doc h1 { font-family: var(--font-display); font-weight: 800; font-size: 1.75rem; letter-spacing: -0.01em; margin: 0 0 12px; text-wrap: balance; }
+.doc h2 { font-family: var(--font-display); font-weight: 600; font-size: 1.3rem; margin: 36px 0 10px; text-wrap: balance; }
+.doc h3 { font-size: 1.05rem; font-weight: 600; margin: 28px 0 6px; }
+.doc p, .doc li { max-width: 68ch; }
+.doc a { color: var(--accent); }
+.doc hr { border: 0; border-top: 1px solid var(--line); margin: 32px 0; }
+.doc blockquote { margin: 12px 0; padding: 10px 16px; background: var(--paper); border: 1px solid var(--line); border-radius: 10px; color: var(--ink); }
+.doc blockquote p { margin: 4px 0; }
+.doc code { font-family: var(--font-mono); font-size: 0.85em; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+.table-scroll { overflow-x: auto; margin: 14px 0; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); }
+.doc table { border-collapse: collapse; width: 100%; font-size: 0.9rem; }
+.doc th, .doc td { text-align: left; vertical-align: top; padding: 9px 12px; border-bottom: 1px solid var(--line); }
+.doc th { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); font-weight: 600; }
+.doc tr:last-child td { border-bottom: 0; }
+.doc td:first-child { font-family: var(--font-mono); font-size: 0.82rem; white-space: nowrap; }
+.status { color: var(--muted); padding-block: 24px; }
+footer { color: var(--muted); font-size: 0.82rem; border-top: 1px solid var(--line); padding-block: 16px 32px; }
+@media (max-width: 480px) { .brand h1 { font-size: 2rem; } }
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+</style>
+
+<header class="wrap">
+  <div class="brand">
+    <h1>Freedom</h1>
+    <span>caderno de desabafos da agência de marketing automatizada</span>
+  </div>
+  <div class="stats" id="stats" aria-label="Resumo do caderno">
+    <div class="stat"><b id="n-d">–</b> desabafos</div>
+    <div class="stat"><b id="n-r">–</b> recursos</div>
+    <div class="stat"><b id="n-s">–</b> alertas</div>
+    <div class="stat"><b id="n-p">–</b> perguntas abertas</div>
+  </div>
+</header>
+
+<nav>
+  <div class="wrap tabs" id="tabs">
+    <a href="#diario" data-view="diario">Diário</a>
+    <a href="#recursos" data-view="recursos">Recursos</a>
+    <a href="#integracoes" data-view="integracoes">Integrações</a>
+    <a href="#seguranca" data-view="seguranca">Segurança</a>
+    <a href="#perguntas" data-view="perguntas">Perguntas</a>
+    <a href="#como-funciona" data-view="como-funciona">Como funciona</a>
+  </div>
+</nav>
+
+<main class="wrap">
+  <article class="doc" id="doc"><p class="status">Abrindo o caderno…</p></article>
+</main>
+
+<footer class="wrap">Este caderno é atualizado a cada desabafo. A cópia original fica no repositório, na pasta <code>freedom/</code>.</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/lib/marked.umd.js"></script>
+<script>
+const VIEWS = {
+  "diario": "DESABAFOS.md",
+  "recursos": "RECURSOS.md",
+  "integracoes": "INTEGRACOES.md",
+  "seguranca": "SEGURANCA.md",
+  "perguntas": "PERGUNTAS.md",
+  "como-funciona": "README.md"
+};
+const FILE_TO_VIEW = Object.fromEntries(Object.entries(VIEWS).map(([v, f]) => [f, v]));
+const cache = {};
+const docEl = document.getElementById("doc");
+
+async function load(file) {
+  if (!cache[file]) {
+    const res = await fetch(file, { cache: "no-store" });
+    if (!res.ok) throw new Error(file);
+    cache[file] = await res.text();
+  }
+  return cache[file];
+}
+
+function slug(text) {
+  return text.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "")
+    .replace(/[^\w\s-]/g, "").trim().replace(/\s+/g, "-");
+}
+
+function enhance() {
+  docEl.querySelectorAll("table").forEach(t => {
+    const box = document.createElement("div");
+    box.className = "table-scroll";
+    t.parentNode.insertBefore(box, t);
+    box.appendChild(t);
+  });
+  docEl.querySelectorAll("h2, h3").forEach(h => { h.id = slug(h.textContent); });
+  docEl.querySelectorAll("a[href]").forEach(a => {
+    const href = a.getAttribute("href");
+    const m = href.match(/^([A-Z]+\.md)(#.*)?$/);
+    if (m && FILE_TO_VIEW[m[1]]) {
+      a.setAttribute("href", "#" + FILE_TO_VIEW[m[1]]);
+      if (m[2]) a.dataset.anchor = m[2].slice(1);
+    } else if (/^https?:/.test(href)) {
+      a.target = "_blank"; a.rel = "noopener";
+    }
+  });
+}
+
+let pendingAnchor = null;
+async function show() {
+  let view = location.hash.slice(1);
+  if (!VIEWS[view]) view = "diario";
+  document.querySelectorAll("#tabs a").forEach(a => {
+    if (a.dataset.view === view) a.setAttribute("aria-current", "page");
+    else a.removeAttribute("aria-current");
+  });
+  try {
+    const md = await load(VIEWS[view]);
+    docEl.innerHTML = marked.parse(md);
+    enhance();
+    const target = pendingAnchor && document.getElementById(pendingAnchor);
+    if (target) target.scrollIntoView(); else window.scrollTo(0, 0);
+  } catch (e) {
+    docEl.innerHTML = '<p class="status">Não consegui abrir esta parte do caderno. Recarregue a página.</p>';
+  }
+  pendingAnchor = null;
+}
+
+docEl.addEventListener("click", e => {
+  const a = e.target.closest("a[data-anchor]");
+  if (a) pendingAnchor = a.dataset.anchor;
+});
+
+async function stats() {
+  try {
+    const [d, r, s, p] = await Promise.all(["DESABAFOS.md", "RECURSOS.md", "SEGURANCA.md", "PERGUNTAS.md"].map(load));
+    document.getElementById("n-d").textContent = (d.match(/^## D-\d+/gm) || []).length;
+    document.getElementById("n-r").textContent = (r.match(/^## R-\d+/gm) || []).length;
+    document.getElementById("n-s").textContent = (s.match(/^### S-\d+/gm) || []).length;
+    document.getElementById("n-p").textContent = (p.match(/^\| P-\d+.*\|\s*aberta\s*\|\s*$/gm) || []).length;
+  } catch (e) { /* os contadores ficam com traço */ }
+}
+
+window.addEventListener("hashchange", show);
+show();
+stats();
+</script>
