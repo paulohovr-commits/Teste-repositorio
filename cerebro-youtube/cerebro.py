@@ -253,6 +253,10 @@ def carregar_canal(pasta):
     canal.setdefault("idioma", "pt")
     if canal.get("desde"):
         dt.date.fromisoformat(canal["desde"])  # falha cedo se a data estiver escrita errado
+    if canal.get("ultimos") is not None:
+        canal["ultimos"] = int(canal["ultimos"])
+        if canal["ultimos"] < 1:
+            raise SystemExit("'ultimos' no canal.json precisa ser 1 ou mais")
     return canal
 
 
@@ -349,8 +353,12 @@ def listar_aba(canal, aba):
     ou None se deu erro (aí o que já se sabia dessa aba é preservado)."""
     cmd = comando_ytdlp() + ["--flat-playlist", "--no-warnings",
                              "--extractor-args", f"youtube:lang={idioma_listagem(canal['idioma'])}",
-                             "--print", "%(id)s\t%(title)s\t%(timestamp)s",
-                             f"{url_canal(canal['handle'])}/{aba}"]
+                             "--print", "%(id)s\t%(title)s\t%(timestamp)s"]
+    if canal.get("ultimos"):
+        # Só os N mais recentes: a aba /videos vem do mais novo para o mais velho,
+        # e parar no N economiza pedidos ao YouTube.
+        cmd += ["--playlist-end", str(canal["ultimos"])]
+    cmd.append(f"{url_canal(canal['handle'])}/{aba}")
     r = rodar(cmd, timeout=900)
     itens = []
     for linha in r.stdout.splitlines():
@@ -434,7 +442,8 @@ def atualizar_listagem(canal, estado, cfg):
     log(f"Listando {canal['nome']} ({url_canal(canal['handle'])})")
     antigos = estado["todos_ids"]
     novos, por_aba, abas_ok = {}, {}, 0
-    for aba, tipo in ABAS:
+    abas = ABAS[:1] if canal.get("ultimos") else ABAS  # "últimos N vídeos": só a aba /videos
+    for aba, tipo in abas:
         itens = listar_aba(canal, aba)
         if itens is None:
             for vid, info in antigos.items():
@@ -839,6 +848,8 @@ def cmd_novo(args):
     canal = {"handle": args.handle, "nome": args.nome, "idioma": args.idioma}
     if args.desde:
         canal["desde"] = args.desde
+    if getattr(args, "ultimos", None):
+        canal["ultimos"] = args.ultimos
     arq.write_text(json.dumps(canal, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
     existentes = ARQ_CANAIS.read_text(encoding="utf-8").splitlines() if ARQ_CANAIS.exists() else []
     if nome not in [l.strip() for l in existentes]:
@@ -867,6 +878,8 @@ def cmd_listar(args):
         tipos[info.get("tipo")] = tipos.get(info.get("tipo"), 0) + 1
     print()
     print(f"Canal: {canal['nome']}")
+    if canal.get("ultimos"):
+        print(f"Modo: só os {canal['ultimos']} vídeos mais recentes (sem lives e shorts)")
     print("Por aba: " + ", ".join(f"{t}: {q}" for t, q in tipos.items()))
     print(f"Total listado: {n['listados']}")
     if canal.get("desde"):
@@ -963,7 +976,9 @@ def cmd_conferir(args):
     print(f"  pendentes ............................ {n['pendente']}")
     print(f"  soma ................................. {soma} {'✓ fecha com o total' if soma == n['listados'] else '✗ NÃO FECHA'}")
     if fora_da_listagem:
-        print(f"  (+{len(fora_da_listagem)} transcritos que sumiram da listagem atual: privados ou apagados depois)")
+        motivo = ("vídeos mais antigos que já saíram dos últimos "
+                  f"{canal['ultimos']}") if canal.get("ultimos") else "privados ou apagados depois"
+        print(f"  (+{len(fora_da_listagem)} transcritos que não estão na listagem atual: {motivo})")
     ok = len(arquivos) == len(estado["processados"])
     print(f"\n  entradas em processados: {len(estado['processados'])} · arquivos .md em videos/: {len(arquivos)} "
           f"{'✓' if ok else '✗ DIFERENTES'}")
@@ -1000,6 +1015,7 @@ def main():
     s.add_argument("nome", help="nome do canal (vira o nome da pasta)")
     s.add_argument("--idioma", default="pt", help="pt, en, es... (nunca pt-BR)")
     s.add_argument("--desde", help="AAAA-MM-DD: só vídeos publicados a partir desta data")
+    s.add_argument("--ultimos", type=int, help="só os N vídeos mais recentes (ex.: 10)")
     s.set_defaults(f=cmd_novo)
 
     s = sub.add_parser("listar", help="lista o canal e mostra os totais, sem transcrever")

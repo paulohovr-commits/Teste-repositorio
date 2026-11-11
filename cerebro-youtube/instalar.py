@@ -236,8 +236,18 @@ def cadastrar_canais():
         nome = perguntar(f"Que nome você quer dar para esse canal? (Enter para '{padrao}')", padrao)
         idioma = "pt" if sim("O canal fala em português?") else \
             perguntar("Qual idioma? Digite en (inglês), es (espanhol), fr (francês)...", "en").lower()[:2]
-        desde = None
+        desde, ultimos = None, None
         while True:
+            r = perguntar("Quantos vídeos você quer?\n"
+                          "  - digite um número (ex.: 10) para só os últimos vídeos publicados\n"
+                          "  - ou aperte Enter para TODOS os vídeos do canal")
+            if not r:
+                break
+            if r.isdigit() and int(r) > 0:
+                ultimos = int(r)
+                break
+            print("Digite só o número, por exemplo 10, ou aperte Enter.")
+        while not ultimos:
             r = perguntar("Quer só os vídeos a partir de uma data? Digite a data (ex.: 01/01/2026)\n"
                           "ou aperte Enter para pegar TODOS os vídeos:")
             if not r:
@@ -246,7 +256,8 @@ def cadastrar_canais():
             if desde:
                 break
             print("Não entendi a data. Use o formato dia/mês/ano, por exemplo 01/01/2026.")
-        args = ["novo", handle, nome, "--idioma", idioma] + (["--desde", desde] if desde else [])
+        args = ["novo", handle, nome, "--idioma", idioma] + (["--desde", desde] if desde else []) \
+            + (["--ultimos", str(ultimos)] if ultimos else [])
         if rodar_cerebro(*args) not in (0,):
             print("(Esse canal já existia; mantive a configuração anterior.)")
         print(f"✓ Canal '{nome}' cadastrado.")

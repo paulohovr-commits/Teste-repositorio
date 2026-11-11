@@ -68,6 +68,8 @@ sozinha (`caffeinate`).
 python3 cerebro.py novo @fulano "Nome do Canal" --idioma pt --desde 2026-01-01
 ```
 
+Para só os 10 vídeos mais recentes, troque `--desde 2026-01-01` por `--ultimos 10`.
+
 ```bash
 python3 cerebro.py listar "Nome do Canal"
 ```
