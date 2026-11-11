@@ -24,93 +24,70 @@ O desenho completo, com o porquê de cada regra, está em [INSTRUCOES.md](INSTRU
 - **Os cookies são uma credencial da sua conta Google.** Trate como senha. Se quiser ser
   conservador, use um perfil do navegador logado numa conta Google secundária.
 
-## Instalação (uma vez)
+## No Windows: quatro arquivos de clique duplo
+
+1. **`1 - INSTALAR`**: instala o Python, os componentes e o Firefox, pede para você entrar no YouTube
+   pelo Firefox uma vez, cadastra os canais, conta os vídeos e faz o teste com 1 e com 5 vídeos.
+   Rode só na primeira vez, ou quando quiser cadastrar outro canal.
+2. **`2 - RODAR O CEREBRO`**: baixa tudo, um canal por vez. Deixe a janela aberta (pode
+   minimizar): enquanto ela estiver aberta, o computador não suspende. Se fechar, é só clicar de
+   novo, ele continua de onde parou.
+3. **`3 - VER COMO ESTA`**: diz se está rodando e mostra quantos vídeos já foram, quantos
+   faltam e três amostras para você conferir.
+4. **`4 - PESQUISAR NO CEREBRO`**: procura uma palavra ou assunto em todas as transcrições.
+
+Na primeira vez, o Windows pode mostrar "O Windows protegeu o computador". Clique em
+**Mais informações** e depois em **Executar assim mesmo**.
+
+**Por que o Firefox?** No Windows, o Chrome protege os cookies de um jeito que impede este tipo de
+programa de usá-los. Você entra no YouTube pelo Firefox uma vez e continua usando o Chrome no dia a dia.
+
+## No Mac ou no Linux, pelo Terminal
 
 ```bash
-python3 -m pip install -U "youtube-transcript-api>=1.0,<2" requests yt-dlp
+python3 instalar.py
 ```
 
-Atualize o yt-dlp de tempos em tempos (versão velha é a causa mais comum de falha estranha):
+Depois, para rodar a fila e ver como está:
 
 ```bash
-python3 -m pip install -U yt-dlp
+nohup python3 fila.py >/dev/null 2>&1 &
 ```
-
-Configuração, fora da pasta do projeto:
 
 ```bash
-mkdir -p ~/.config/cerebro && cp config.exemplo.json ~/.config/cerebro/config.json
+python3 fila.py status
 ```
 
-Abra `~/.config/cerebro/config.json` e preencha:
+No Mac, na primeira vez aparece um pedido de acesso às Chaves (Keychain): clique em
+**"Permitir sempre"**, senão a fila para toda vez esperando o clique. A fila mantém o Mac acordado
+sozinha (`caffeinate`).
 
-- `navegador`: `chrome` (padrão), `firefox`, `edge`, `brave` ou `safari`, onde você está logado no
-  YouTube. No Windows, se o Chrome falhar, use o Firefox.
-- `user_agent`: o do seu navegador. No Chrome, abra `chrome://version` e copie a linha
-  "User Agent".
-- `youtube_api_key` (opcional): uma chave gratuita da YouTube Data API v3, criada no Google Cloud.
-  Só é necessária para cortar por data ("só vídeos de 2026 para cá") sem gastar pedidos ao
-  YouTube. Também pode vir da variável de ambiente `YOUTUBE_API_KEY`.
-
-Os cookies são extraídos sozinhos para `~/.config/cerebro/yt_cookies.txt` no começo de cada lote
-e a cada 10 vídeos. **No macOS**, na primeira vez aparece um pedido de acesso às Chaves (Keychain):
-clique em **"Permitir sempre"**, senão a fila para toda vez esperando o clique.
-
-## Passo a passo para um canal
-
-**1. Criar o canal** (o `--desde` é opcional):
+## Comandos avulsos (para quem quer controlar cada passo)
 
 ```bash
 python3 cerebro.py novo @fulano "Nome do Canal" --idioma pt --desde 2026-01-01
 ```
 
-Isso cria a pasta `Nome do Canal/` com o `canal.json` e põe o canal no `canais.txt`.
-Use `--idioma pt` ou `en` (nunca `pt-BR`).
-
-**2. Listar, sem transcrever nada.** Mostra os totais por aba (vídeos, lives, shorts), quantos
-ficam dentro do corte de data e o tempo previsto:
-
 ```bash
 python3 cerebro.py listar "Nome do Canal"
 ```
-
-**3. Testar com 1 vídeo** e abrir o arquivo gerado em `Nome do Canal/videos/`:
 
 ```bash
 python3 cerebro.py lote "Nome do Canal" --tamanho 1
 ```
 
-**4. Testar com 5 vídeos.** Interrompa no meio com Ctrl+C e rode de novo: ele continua de onde
-parou, sem refazer nada.
-
-```bash
-python3 cerebro.py lote "Nome do Canal" --tamanho 5
-```
-
-**5. Soltar a fila completa**, que roda todos os canais do `canais.txt`, um por vez, em lotes
-de 20, até acabar. Para continuar rodando com o terminal fechado:
-
-```bash
-nohup ./fila.sh >/dev/null 2>&1 &
-```
-
-No Mac, a fila mantém o computador acordado sozinha (`caffeinate`). No Windows e no Linux, desligue
-a suspensão automática enquanto a carga roda. Com mais de um canal, ponha o menor primeiro no
-`canais.txt`: o cérebro já fica útil nas primeiras horas.
-
-**6. Acompanhar:**
-
-```bash
-./fila.sh status
-```
-
-**7. Conferir no fim** (não acessa o YouTube). Mostra listados, transcritos, parqueados sem legenda,
-fora do corte e pendentes, confere se a soma fecha e se há um `.md` para cada vídeo, e abre três
-notas ao acaso para você ver se a transcrição é do vídeo do título:
-
 ```bash
 python3 cerebro.py conferir "Nome do Canal"
 ```
+
+```bash
+python3 buscar.py "assunto"
+```
+
+A configuração fica fora da pasta do projeto, em `~/.config/cerebro/config.json` (no Windows,
+`C:\Users\<você>\.config\cerebro\`): navegador, User-Agent e, opcional, uma chave gratuita da
+YouTube Data API v3 (`youtube_api_key`), útil para cortar por data sem gastar pedidos ao YouTube.
+Os cookies ficam ali também, em `yt_cookies.txt`. Trate esse arquivo como senha.
 
 ## O que acontece em cada caso
 
@@ -128,20 +105,17 @@ Em caso de bloqueio, **não insista, não use VPN e não troque de método**. Es
 
 ## Manter em dia (semanal)
 
-Depois da carga inicial, a mesma fila só processa o que é novo. Para rodar todo domingo às 4h17,
-abra `crontab -e` e acrescente (troque o caminho pelo da sua pasta):
-
-```
-17 4 * * 0 cd "/Users/voce/Cerebro Youtube" && ./fila.sh >/dev/null 2>&1
-```
-
-Se uma carga ainda estiver rodando, a trava faz a tarefa agendada sair sem fazer nada.
+Depois da carga inicial, a mesma fila só processa o que é novo. O jeito mais simples é clicar em
+`2 - RODAR O CEREBRO` uma vez por semana. Se uma carga ainda estiver rodando, a trava faz a
+segunda execução sair sem fazer nada.
 
 ## Estrutura
 
 ```
 cerebro.py            o único script, serve para qualquer canal
-fila.sh               roda os canais em sequência, lote após lote
+fila.py               roda os canais em sequência, lote após lote
+instalar.py           o instalador (chamado pelo 1 - INSTALAR)
+buscar.py             a pesquisa (chamada pelo 4 - PESQUISAR)
 canais.txt            os canais da fila, um por linha, na ordem
 fila.log              o registro de tudo
 Nome do Canal/
@@ -152,5 +126,3 @@ Nome do Canal/
     2026-03-14 Título do vídeo.md
 ```
 
-Não edite o `fila.sh` com a fila rodando: o bash lê o script enquanto executa. Edite uma cópia e
-troque com `mv`.

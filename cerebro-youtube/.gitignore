@@ -3,7 +3,7 @@
 */.cerebro.lock
 .cerebro-global.lock
 .fila.trava/
-fila.pid
+fila.lock
 fila.log
 BLOQUEIO.json
 .tmp-*

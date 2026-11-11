@@ -127,8 +127,15 @@ def gravar_atomico(caminho, conteudo):
 
 
 def comando_ytdlp():
-    exe = shutil.which("yt-dlp")
-    return [exe] if exe else [sys.executable, "-m", "yt_dlp"]
+    # Prefere o yt-dlp instalado neste mesmo Python (é o que o instalador mantém atualizado).
+    try:
+        import yt_dlp  # noqa: F401
+        return [sys.executable, "-m", "yt_dlp"]
+    except ImportError:
+        exe = shutil.which("yt-dlp")
+        if not exe:
+            raise RuntimeError("yt-dlp não está instalado: rode o instalador de novo")
+        return [exe]
 
 
 def tem_sinal(texto, sinais):
@@ -139,7 +146,8 @@ def tem_sinal(texto, sinais):
 def rodar(cmd, timeout=180):
     """Roda um comando (yt-dlp). Bloqueio vira exceção Bloqueado, sempre."""
     try:
-        r = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout)
+        r = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout,
+                       encoding="utf-8", errors="replace", env={**os.environ, "PYTHONUTF8": "1"})
     except subprocess.TimeoutExpired:
         raise ErroRede(f"o comando passou de {timeout}s sem responder")
     # Só o stderr: o stdout traz títulos e descrições, que podem conter qualquer frase.
@@ -836,7 +844,7 @@ def cmd_novo(args):
     if nome not in [l.strip() for l in existentes]:
         with open(ARQ_CANAIS, "a", encoding="utf-8") as f:
             f.write(nome + "\n")
-    print(f"Canal criado em '{nome}/'. Próximo passo:\n  python3 cerebro.py listar \"{nome}\"")
+    print(f"Canal criado na pasta '{nome}'.")
     return SAIDA_OK
 
 
@@ -867,8 +875,7 @@ def cmd_listar(args):
               f"{n['listados'] - n['fora_do_corte']} ficam dentro ({sem_data} sem data, que entram)")
     print(f"Já transcritos: {n['processado']} · a transcrever: {n['pendente']}")
     print(f"Tempo previsto: {estimativa(n['pendente'])}")
-    print("\nNada foi transcrito. Para testar com 1 vídeo:\n"
-          f"  python3 cerebro.py lote \"{canal['pasta'].name}\" --tamanho 1")
+    print("Nada foi transcrito ainda.")
     return SAIDA_OK
 
 
@@ -980,6 +987,11 @@ def cmd_conferir(args):
 
 
 def main():
+    for fluxo in (sys.stdout, sys.stderr):
+        try:
+            fluxo.reconfigure(errors="replace")  # console do Windows sem algum símbolo não derruba nada
+        except Exception:
+            pass
     p = argparse.ArgumentParser(description="Cérebro de YouTube")
     sub = p.add_subparsers(dest="comando", required=True)
 
