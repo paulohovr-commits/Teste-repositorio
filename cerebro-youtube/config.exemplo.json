@@ -1,0 +1,5 @@
+{
+ "navegador": "chrome",
+ "user_agent": "COLE AQUI o User-Agent do seu navegador (no Chrome: chrome://version, linha 'User Agent')",
+ "youtube_api_key": ""
+}

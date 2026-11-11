@@ -1,0 +1,19 @@
+# Estado de execução: nunca vai para o git
+*/estado.json
+*/.cerebro.lock
+.cerebro-global.lock
+.fila.trava/
+fila.pid
+fila.log
+BLOQUEIO.json
+.tmp-*
+
+# Credenciais (o normal é ficarem em ~/.config/cerebro/, fora do projeto)
+yt_cookies.txt
+*cookies*.txt
+config.json
+
+# As transcrições são conteúdo do dono de cada canal, para consulta sua.
+# Ficam fora do git para não serem publicadas por acidente.
+*/videos/
+*/_INDEX.md
