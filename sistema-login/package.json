@@ -1,0 +1,10 @@
+{
+  "name": "sistema-login",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Mini sistema com login de 2 níveis (admin e comum) usando Vercel + Supabase",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.117.3"
+  }
+}

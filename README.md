@@ -1,5 +1,8 @@
 # Prospecção: o organizador de clientes
 
+> **Também neste repositório:** [`sistema-login/`](sistema-login/README.md), um mini sistema de login
+> com dois níveis de usuário (admin e comum) para aprender a hospedar com Vercel + Supabase.
+
 É um Kanban de prospecção no estilo do Trello, mas enxuto. Ele foi construído a partir do
 [manual do Tarefas](docs/TAREFAS-MANUAL-DE-CONSTRUCAO.md), fases 0 a 5, e adaptado para encontrar,
 abordar e fechar clientes.

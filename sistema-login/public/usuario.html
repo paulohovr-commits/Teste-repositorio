@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Área do Usuário</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="topo">
+    <div>
+      <strong>Área do Usuário</strong>
+      <div class="quem" id="quem"></div>
+    </div>
+    <button id="sair" class="secundario">Sair</button>
+  </header>
+
+  <main class="conteudo">
+    <section class="cartao">
+      <h2 id="ola">Olá!</h2>
+      <p>Você entrou como <span class="selo comum">usuário comum</span>.</p>
+      <p class="subtitulo">Aqui você pode colocar o conteúdo que os usuários comuns veem.</p>
+    </section>
+  </main>
+
+  <script type="module">
+    import { protegerPagina, sair } from "/app.js";
+
+    document.body.hidden = true; // esconde até confirmar o login
+    const info = await protegerPagina("comum");
+    if (info) {
+      const { perfil } = info;
+      document.getElementById("ola").textContent = `Olá, ${perfil.nome || perfil.email}!`;
+      document.getElementById("quem").textContent = perfil.email;
+      document.body.hidden = false;
+    }
+
+    document.getElementById("sair").addEventListener("click", sair);
+  </script>
+</body>
+</html>

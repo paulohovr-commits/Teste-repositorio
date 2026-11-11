@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Painel do Administrador</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="topo">
+    <div>
+      <strong>Painel do Administrador</strong>
+      <div class="quem" id="quem"></div>
+    </div>
+    <button id="sair" class="secundario">Sair</button>
+  </header>
+
+  <main class="conteudo">
+    <!-- Cadastrar usuário -->
+    <section class="cartao">
+      <h2>Cadastrar usuário</h2>
+      <form id="form-novo">
+        <div class="grade-form">
+          <div>
+            <label for="nome">Nome</label>
+            <input id="nome" required>
+          </div>
+          <div>
+            <label for="email">E-mail</label>
+            <input id="email" type="email" required>
+          </div>
+          <div>
+            <label for="senha">Senha (mín. 6)</label>
+            <input id="senha" type="password" minlength="6" autocomplete="new-password" required>
+          </div>
+          <div>
+            <label for="papel">Nível</label>
+            <select id="papel">
+              <option value="comum">Comum</option>
+              <option value="admin">Administrador</option>
+            </select>
+          </div>
+        </div>
+        <button id="botao-cadastrar" type="submit" style="margin-top:16px">Cadastrar</button>
+        <p id="msg-form" class="mensagem" hidden></p>
+      </form>
+    </section>
+
+    <!-- Lista de usuários -->
+    <section class="cartao">
+      <h2>Usuários</h2>
+      <div class="tabela-rolagem">
+        <table>
+          <thead>
+            <tr><th>Nome</th><th>E-mail</th><th>Nível</th><th>Criado em</th><th></th></tr>
+          </thead>
+          <tbody id="lista">
+            <tr><td colspan="5" class="vazio">Carregando...</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p id="msg-lista" class="mensagem" hidden></p>
+    </section>
+  </main>
+
+  <script type="module">
+    import { protegerPagina, sair, chamarApi, mostrarMensagem } from "/app.js";
+
+    document.body.hidden = true; // esconde até confirmar que é admin
+    const info = await protegerPagina("admin");
+    const eu = info?.perfil; // se não for admin, protegerPagina já redirecionou
+    if (eu) {
+      document.getElementById("quem").textContent = `${eu.nome || eu.email} · administrador`;
+      document.body.hidden = false;
+    }
+
+    document.getElementById("sair").addEventListener("click", sair);
+
+    const lista = document.getElementById("lista");
+    const msgLista = document.getElementById("msg-lista");
+    const msgForm = document.getElementById("msg-form");
+
+    // ----- Listar -----
+    async function carregar() {
+      try {
+        const { usuarios } = await chamarApi("/api/usuarios");
+        lista.innerHTML = "";
+        if (!usuarios.length) {
+          lista.innerHTML = '<tr><td colspan="5" class="vazio">Nenhum usuário.</td></tr>';
+          return;
+        }
+        for (const u of usuarios) lista.appendChild(linha(u));
+      } catch (e) {
+        mostrarMensagem(msgLista, e.message);
+      }
+    }
+
+    function linha(u) {
+      const tr = document.createElement("tr");
+      const celula = (texto) => {
+        const td = document.createElement("td");
+        td.textContent = texto; // textContent evita injeção de HTML
+        tr.appendChild(td);
+        return td;
+      };
+
+      celula(u.nome || "—");
+      celula(u.email);
+      const tdPapel = celula("");
+      const selo = document.createElement("span");
+      selo.className = `selo ${u.papel}`;
+      selo.textContent = u.papel === "admin" ? "Administrador" : "Comum";
+      tdPapel.appendChild(selo);
+      celula(new Date(u.criado_em).toLocaleDateString("pt-BR"));
+
+      const tdAcao = celula("");
+      if (u.id === eu.id) {
+        tdAcao.textContent = "(você)";
+      } else {
+        const btn = document.createElement("button");
+        btn.className = "perigo";
+        btn.textContent = "Excluir";
+        btn.addEventListener("click", () => excluir(u, btn));
+        tdAcao.appendChild(btn);
+      }
+      return tr;
+    }
+
+    // ----- Excluir -----
+    async function excluir(u, btn) {
+      if (!confirm(`Excluir o usuário ${u.email}? Isso não pode ser desfeito.`)) return;
+      btn.disabled = true;
+      try {
+        await chamarApi(`/api/usuarios?id=${encodeURIComponent(u.id)}`, { method: "DELETE" });
+        mostrarMensagem(msgLista, `Usuário ${u.email} excluído.`, "ok");
+        await carregar();
+      } catch (e) {
+        mostrarMensagem(msgLista, e.message);
+        btn.disabled = false;
+      }
+    }
+
+    // ----- Cadastrar -----
+    const form = document.getElementById("form-novo");
+    const botao = document.getElementById("botao-cadastrar");
+    form.addEventListener("submit", async (ev) => {
+      ev.preventDefault();
+      mostrarMensagem(msgForm, "");
+      botao.disabled = true;
+      try {
+        const corpo = {
+          nome: document.getElementById("nome").value,
+          email: document.getElementById("email").value,
+          senha: document.getElementById("senha").value,
+          papel: document.getElementById("papel").value,
+        };
+        await chamarApi("/api/usuarios", { method: "POST", body: JSON.stringify(corpo) });
+        mostrarMensagem(msgForm, `Usuário ${corpo.email} cadastrado!`, "ok");
+        form.reset();
+        await carregar();
+      } catch (e) {
+        mostrarMensagem(msgForm, e.message);
+      } finally {
+        botao.disabled = false;
+      }
+    });
+
+    if (eu) carregar();
+  </script>
+</body>
+</html>

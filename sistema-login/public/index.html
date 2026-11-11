@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Entrar</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <main class="centro">
+    <form id="form-login" class="cartao">
+      <h1>Mini Sistema</h1>
+      <p class="subtitulo">Entre com seu e-mail e senha</p>
+
+      <label for="email">E-mail</label>
+      <input id="email" type="email" autocomplete="username" required>
+
+      <label for="senha">Senha</label>
+      <input id="senha" type="password" autocomplete="current-password" required>
+
+      <button id="botao" class="largo" type="submit">Entrar</button>
+      <p id="mensagem" class="mensagem" hidden></p>
+    </form>
+  </main>
+
+  <script type="module">
+    import { getSupabase, meuPerfil, telaDoPapel, mostrarMensagem } from "/app.js";
+
+    const form = document.getElementById("form-login");
+    const botao = document.getElementById("botao");
+    const msg = document.getElementById("mensagem");
+
+    // Se já estiver logado, vai direto para a tela certa.
+    try {
+      const info = await meuPerfil();
+      if (info?.perfil) location.replace(telaDoPapel(info.perfil.papel));
+    } catch (e) {
+      mostrarMensagem(msg, e.message);
+    }
+
+    form.addEventListener("submit", async (ev) => {
+      ev.preventDefault();
+      mostrarMensagem(msg, "");
+      botao.disabled = true;
+      botao.textContent = "Entrando...";
+
+      try {
+        const supabase = await getSupabase();
+        const { error } = await supabase.auth.signInWithPassword({
+          email: document.getElementById("email").value.trim(),
+          password: document.getElementById("senha").value,
+        });
+        if (error) throw new Error("E-mail ou senha incorretos.");
+
+        const info = await meuPerfil();
+        if (!info?.perfil) {
+          await supabase.auth.signOut();
+          throw new Error("Seu usuário não tem perfil. Fale com o administrador.");
+        }
+        location.replace(telaDoPapel(info.perfil.papel));
+      } catch (e) {
+        mostrarMensagem(msg, e.message);
+        botao.disabled = false;
+        botao.textContent = "Entrar";
+      }
+    });
+  </script>
+</body>
+</html>
