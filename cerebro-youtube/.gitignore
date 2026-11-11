@@ -17,3 +17,5 @@ config.json
 # Ficam fora do git para não serem publicadas por acidente.
 */videos/
 */_INDEX.md
+
+__pycache__/
